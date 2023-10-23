@@ -1,25 +1,30 @@
-import logo from './logo.svg';
-import './App.css';
+import React, {useState} from 'react';
+import Table from './Table';
+import Form from './Form';
 
-function App() {
+
+
+function MyApp() {
+  const [characters, setCharacters] = useState([]);
+    function removeOneCharacter (index) {
+	    const updated = characters.filter((character, i) => {
+	        return i !== index
+	    });
+	  setCharacters(updated);
+	}
+
+  function updateList(chore) {
+    setCharacters([...characters, chore]);
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="container">
+      <Form handleSubmit={updateList} />
+      <Table characterData={characters} 
+        removeCharacter={removeOneCharacter} />
     </div>
-  );
+  )
 }
 
-export default App;
+
+export default MyApp;
