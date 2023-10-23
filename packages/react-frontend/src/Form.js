@@ -44,7 +44,7 @@ function Form(props) {
             id="job"
             value={chore.date}
             onChange={handleChange} />
-        <input type="button" value="Submit" onClick={submitForm} />
+        <input type="button" value="Post" onClick={submitForm} />
         </form>
     );
 
