@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import Table from './Table';
 import Form from './Form';
+import Navbar from './Navbar';
 
 
 
@@ -19,6 +20,7 @@ function MyApp() {
 
   return (
     <div className="container">
+      <Navbar />
       <Form handleSubmit={updateList} />
       <Table characterData={characters} 
         removeCharacter={removeOneCharacter} />

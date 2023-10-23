@@ -1041,3 +1041,31 @@ caption {
 /**
  * Layout
  */
+
+ /***************NAVBAR STYLING*************/
+
+ nav {
+  background-color: white;
+  padding: 1rem 0;
+}
+
+nav ul {
+  list-style-type: none;
+  padding: 0;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+nav li {
+  margin: 0 1rem;
+}
+
+nav a {
+  text-decoration: none;
+  color: black;
+  transition: color 0.3s ease;
+}
+
+nav a:hover {
+  color: #ddd;
+}
