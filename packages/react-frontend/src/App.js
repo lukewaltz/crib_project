@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
-import Table from './Table';
+// import Table from './Table';
+import Stack from './TaskStack';
 import Form from './Form';
 import Navbar from './Navbar';
 
@@ -22,7 +23,9 @@ function MyApp() {
     <div className="container">
       <Navbar />
       <Form handleSubmit={updateList} />
-      <Table characterData={characters} 
+      {/* <Table characterData={characters} 
+        removeCharacter={removeOneCharacter} /> */}
+      <Stack characterData={characters} 
         removeCharacter={removeOneCharacter} />
     </div>
   )
