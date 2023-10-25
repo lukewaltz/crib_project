@@ -1,33 +1,31 @@
 import React, {useState} from 'react';
-// import Table from './Table';
-import Stack from './TaskStack';
-import Form from './Form';
-import Navbar from './Navbar';
-
+import { BrowserRouter as Router, Routes, Route }
+    from 'react-router-dom';
+import Navbar from './components/Navbar';
+import Account from './pages/account';
+import Home from './pages/home';
+import Signup from './pages/signup';
+import Login from './pages/login';
+import Post from './pages/post';
 
 
 function MyApp() {
-  const [characters, setCharacters] = useState([]);
-    function removeOneCharacter (index) {
-	    const updated = characters.filter((character, i) => {
-	        return i !== index
-	    });
-	  setCharacters(updated);
-	}
-
-  function updateList(chore) {
-    setCharacters([...characters, chore]);
-  }
 
   return (
-    <div className="container">
+    <Router>
       <Navbar />
-      <Form handleSubmit={updateList} />
-      {/* <Table characterData={characters} 
-        removeCharacter={removeOneCharacter} /> */}
-      <Stack characterData={characters} 
-        removeCharacter={removeOneCharacter} />
-    </div>
+        <Routes>
+            <Route path='/' element={<Home />} />
+            {/* <Route path='/login;' element={<Login />} /> */}
+            <Route path='/post' element={<Post />} />
+            <Route path='/home' element={<Home />} />
+            <Route path='/account' element={<Account />} />
+
+            {/* <Route path='/signup' element={<Signup />} /> */}
+        </Routes>
+      
+    </Router>
+
   )
 }
 

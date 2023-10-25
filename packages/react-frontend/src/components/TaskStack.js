@@ -15,17 +15,6 @@ function TaskListHead() {
 function TaskList(props) {
   const boxes = props.characterData.map((box, index) => {
     return (
-    // <tr key={index}>
-    //   <td>{row.task}</td>
-    //   <td>{row.date}</td>
-    //   <td>{row.id}</td>
-    //   <td>
-    //     <button onClick={() => 
-    //       props.removeCharacter(index)}>
-    //       Complete
-    //     </button>
-    //   </td>
-    // </tr>
     <div class='chore-box' key={index}>
       <div class='chore-name'>TASK: {box.task}</div>
       <div class='chore-date'>DEADLINE: {box.date}</div>

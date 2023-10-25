@@ -1,5 +1,4 @@
 {
-<<<<<<< HEAD
   "name": "crib_project",
   "version": "1.0.0",
   "description": "Group Software Project for CSC-307.",
@@ -9,9 +8,4 @@
   },
   "author": "",
   "license": "ISC"
-=======
-  "dependencies": {
-    "crib": "^5.0.1"
-  }
->>>>>>> 6374b36a0fd1120e8c6f39ac66c541dd26e40a0f
 }
