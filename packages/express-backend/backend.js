@@ -4,36 +4,6 @@ import cors from "cors";
 import userServices from './user-services.js';
 import User from "./user.js";
 
-const users = { 
-    users_list : [
-       { 
-          id : 'xyz789',
-          name : 'Charlie',
-          job: 'Janitor',
-       },
-       {
-          id : 'abc123', 
-          name: 'Mac',
-          job: 'Bouncer',
-       },
-       {
-          id : 'ppp222', 
-          name: 'Mac',
-          job: 'Professor',
-       }, 
-       {
-          id: 'yat999', 
-          name: 'Dee',
-          job: 'Aspring actress',
-       },
-       {
-          id: 'zap555', 
-          name: 'Dennis',
-          job: 'Bartender',
-       }
-    ]
- }
-
 const app = express();
 const port = 8000;
 const router = express.Router();
@@ -64,24 +34,68 @@ app.post('/signup', async (req, res) => {
 });
 
 app.get('/', (req, res) => {
-    res.send('Hello World!');
+    res.send('Welcome to Crib');
 });
 
 app.get('/users', (req, res) => {
+    const username = req.query.username;
+    const email = req.query.email;
+    if (username && email) {
+        userServices.findUserByUsernameAndEmail(username, email)
+            .then((user) => {
+                res.status(200).json(user);
+            })
+            .catch(() => {
+                res.status(404).json({ error:'User not found' });
+            })
+    } else if (username) {
+        userServices.findUserByUsername(username)
+            .then((user) => {
+                res.status(200).json(user);
+            })
+            .catch(() => {
+                res.status(404).json({ error:'User not found' });
+            })
+    } else if (email) {
+        userServices.findUserByEmail(email)
+            .then((user) => {
+                res.status(200).json(user);
+            })
+            .catch(() => {
+                res.status(404).json({ error:'User not found' });
+            })
+    } else {
+        userServices.getUsers()
+            .then((users) => {
+                res.status(200).json({ user_list:users })
+            })
+            .catch((error) => {
+                res.status(500).json({ error });
+            });
+    }
+});
+
+app.delete('/users/username', (req, res) => {
+    const username = req.query.username;
+    userServices.deleteUser(username)
+        .then(() => {
+            res.status(203);
+        })
+        .catch(() => {
+            res.status(404).json({ error:'User not found' })
+        })
+});
+
+app.listen(port, () => {
+    console.log(`http://localhost:${port}`);
+})
+
+/*
+app.get('/users', (req, res) => {
     const name = req.query.name;
     const job = req.query.job;
-    if(name !== undefined && job !== undefined){
-        let result = findUserByNameAndJob(name, job);
-        result = {users_list: result};
-        res.send(result);
-    }
-    else if(name !== undefined){
-        userServices.findUserByName(name).then((values) =>{
-            res.send(values);
-        });
-    }
-    else{
-        res.send(users);
+    if (id != undefined) {
+        
     }
 });
 
@@ -126,3 +140,4 @@ app.post('/users', (req, res) => {
 app.listen(port, () => {
     console.log(`Example app listening at http://localhost:${port}`);
 }); 
+*/
