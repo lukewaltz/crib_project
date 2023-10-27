@@ -66,12 +66,13 @@ function addUser(user) {
     return promise;
 }
 
-async function deleteUser(username) {
-    userModel.findOneAndDelete({ username:username }).catch((err) => {
+async function deleteUser(id) {
+    const promise = userModel.findByIdAndRemove(id).catch((err) => {
         if(err) {
             return undefined;
         }
     });
+    return promise;
 }
 
 export default {

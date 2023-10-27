@@ -76,71 +76,16 @@ app.get('/users', (req, res) => {
 });
 
 app.delete('/users/:id', async (req, res) => {
-    try{
-        const id = req.params.id;
-        const item = await User.findByIdAndRemove(id);
-        if (!item) {
-            return res.status(404).json({ error: 'User not found '});
-        }
-        res.json({ message: 'Item deleted successfully' });
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: 'Internal server error' });
-    }
+    const id = req.params.id;
+    await userServices.deleteUser(id)
+        .then(() => {
+            res.json('User deleted successfully')
+        })
+        .catch(() => {
+            res.status(404).json('Server error');
+        })
 });
 
 app.listen(port, () => {
     console.log(`http://localhost:${port}`);
 })
-
-/*
-app.get('/users', (req, res) => {
-    const name = req.query.name;
-    const job = req.query.job;
-    if (id != undefined) {
-        
-    }
-});
-
-app.delete('/users/:id', (req, res) => {
-    const id = req.params['id'];
-    let result = findUserById(id);
-    if (result !== undefined){
-        const index = users['users_list'].indexOf(result);
-        users['users_list'].splice(index,1);
-        res.status(204).send(result);
-    }else{
-        res.status(404).send('Resource not found');
-    }
-});
-
-app.get('/users/:id', (req, res) => {
-    const id = req.params['id']; //or req.params.id
-    let result = findUserById(id);
-    if (result === undefined) {
-        res.status(404).send('Resource not found.');
-    } else {
-        res.send(result);
-    }
-});
-
-const addUser = (user) => {
-    user.id = "" + Math.floor((1+Math.random())*100000);
-    users['users_list'].push(user);
-    return user;
-}
-
-app.post('/login', (req, res) => {
-
-});
-
-app.post('/users', (req, res) => {
-    const userToAdd = req.body;
-    let newUser = addUser(userToAdd);
-    res.status(201).send(newUser);
-});
-
-app.listen(port, () => {
-    console.log(`Example app listening at http://localhost:${port}`);
-}); 
-*/
