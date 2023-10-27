@@ -75,15 +75,18 @@ app.get('/users', (req, res) => {
     }
 });
 
-app.delete('/users/username', (req, res) => {
-    const username = req.query.username;
-    userServices.deleteUser(username)
-        .then(() => {
-            res.status(203);
-        })
-        .catch(() => {
-            res.status(404).json({ error:'User not found' })
-        })
+app.delete('/users/:id', async (req, res) => {
+    try{
+        const id = req.params.id;
+        const item = await User.findByIdAndRemove(id);
+        if (!item) {
+            return res.status(404).json({ error: 'User not found '});
+        }
+        res.json({ message: 'Item deleted successfully' });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Internal server error' });
+    }
 });
 
 app.listen(port, () => {
