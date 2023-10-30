@@ -14,9 +14,9 @@ app.use(express.json());
 app.post('/login', (req, res) => {
     let result = userServices.findUserByUsername(req.body.username);
     console.log(result);
-    if(result === undefined){
+    if (result === undefined) {
         return res.status(404).send('user not found');
-    }else{
+    } else {
         return res.status(200).send('login successful');
     }
 });
