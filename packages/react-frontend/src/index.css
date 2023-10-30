@@ -52,7 +52,6 @@ nav li,
 [type=submit],
 [type=reset],
 [type=button] {
-  -webkit-appearance: none;
   display: inline-block;
   border: 1px solid #fff; /* White border for buttons */
   border-radius: 10px;
