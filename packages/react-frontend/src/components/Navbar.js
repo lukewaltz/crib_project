@@ -5,21 +5,23 @@ import React from 'react';
 
 const Navbar = () => {
     return (
-        <nav>
-            <ul class='nav'>
-                <Link to="/post" activeStyle><li>
-                    Post
-                </li></Link>
+        <div className='container'>
+            <nav>
+                <ul class='nav'>
+                    <Link to="/post" activeStyle><li>
+                        Post
+                    </li></Link>
 
-                <Link to="/home" activeStyle><li>
-                    Home
-                </li></Link>
+                    <Link to="/home" activeStyle><li>
+                        Home
+                    </li></Link>
 
-                <Link to="/account" activeStyle><li>
-                    Account
-                </li></Link>
-            </ul>
-        </nav>
+                    <Link to="/account" activeStyle><li>
+                        Account
+                    </li></Link>
+                </ul>
+            </nav>
+        </div>
     );
 };
 

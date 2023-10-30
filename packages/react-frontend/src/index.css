@@ -13,6 +13,7 @@ body {
   display: flex;
   flex-direction: column-reverse;
   justify-content: space-evenly;
+  align-items: center;
 }
 
 
@@ -26,12 +27,26 @@ nav ul {
   list-style-type: none;
   padding: 0;
   display: flex;
-  justify-content: center;
+  justify-content: space-evenly;
   gap: 15px
+}
+
+nav.col ul {
+  list-style-type: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 15px;
+  width: 300px;
 }
 
 nav li {
   margin: 0 1rem;
+}
+
+nav.col li {
+  width: 100%;
 }
 
 nav a {

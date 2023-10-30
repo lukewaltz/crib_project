@@ -3,18 +3,19 @@ import { Link } from "react-router-dom";
  
 const Account = () => {
     return (
-        <div>
+        <div className="container">
             <h1>
                 Account
             </h1>
-            <h2>
-                Settings
-            </h2>
-            <Link to='/account/login'><h3>Login</h3></Link>
-            <Link to='/account/signup'><h3>Signup</h3></Link>
-            <h3>
-                Log Out
-            </h3>
+            <nav className="col">
+                <ul class='nav'>
+                    <Link to='/account/login'><li>Login</li></Link>
+
+                    <Link to='/account/signup'><li>Signup</li></Link>
+
+                    <li>Log Out</li>
+                </ul>
+            </nav>
         </div>
     );
 };
