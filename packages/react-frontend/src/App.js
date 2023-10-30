@@ -11,6 +11,8 @@ import Post from './pages/post';
 
 function MyApp() {
 
+  
+
   return (
     <Router>
       <Navbar />
@@ -20,7 +22,8 @@ function MyApp() {
             <Route path='/post' element={<Post />} />
             <Route path='/home' element={<Home />} />
             <Route path='/account' element={<Account />} />
-
+            <Route path='/account/signup' element={<Signup />} />
+            <Route path='/account/login' element={<Login />} />
             {/* <Route path='/signup' element={<Signup />} /> */}
         </Routes>
       

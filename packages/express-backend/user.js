@@ -19,14 +19,14 @@ const UserSchema = new mongoose.Schema(
         trim: true,
         //add email validation
     },
-    job: {
-        type: String,
-        trim: true,
-        validate(value) {
-        if (value.length < 2)
-            throw new Error("Invalid job, must be at least 2 characters.");
-        },
-    },
+    // job: {
+    //     type: String,
+    //     trim: true,
+    //     validate(value) {
+    //     if (value.length < 2)
+    //         throw new Error("Invalid job, must be at least 2 characters.");
+    //     },
+    // },
   },
   { collection: "users_list" }
 );

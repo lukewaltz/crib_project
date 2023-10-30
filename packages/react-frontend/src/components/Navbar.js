@@ -6,19 +6,19 @@ import React from 'react';
 const Navbar = () => {
     return (
         <nav>
-                <ul class='nav'>
-                    <Link to="/post" activeStyle><li>
-                        Post
-                    </li></Link>
+            <ul class='nav'>
+                <Link to="/post" activeStyle><li>
+                    Post
+                </li></Link>
 
-                    <Link to="/home" activeStyle><li>
-                        Home
-                    </li></Link>
+                <Link to="/home" activeStyle><li>
+                    Home
+                </li></Link>
 
-                    <Link to="/account" activeStyle><li>
-                        Account
-                    </li></Link>
-                </ul>
+                <Link to="/account" activeStyle><li>
+                    Account
+                </li></Link>
+            </ul>
         </nav>
     );
 };
