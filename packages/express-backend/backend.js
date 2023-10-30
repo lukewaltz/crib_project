@@ -12,7 +12,7 @@ app.use(cors());
 app.use(express.json());
 
 app.post('/login', (req, res) => {
-    let result = userServices.findUserByUserName(req.body.username);
+    let result = userServices.findUserByUsername(req.body.username);
     console.log(result);
     if(result === undefined){
         return res.status(404).send('user not found');
@@ -22,15 +22,27 @@ app.post('/login', (req, res) => {
 });
 
 app.post('/signup', async (req, res) => {
-    userServices.addUser(req.body).then((e) =>{
+    userServices.addUser(req.body).then((error) =>{
         // chang error code to reason unable to signup
-        if(e == 500){
+        if(error == 500){
             return res.status(500).send('Unable to sign up');
         }else{
             return res.status(201).send('Successful signup');
         }
     });
-    
+});
+
+app.put('/users/:username/addTask', (req, res) => {
+    const username = req.params.username;
+    const newTask = req.body.tasks;
+    userServices.addTasks(username, newTask)
+        .then((user) => {
+            res.status(200).json(user);
+        })
+        .catch(() => {
+            res.status(404).json({ error:'User not found' });
+        })
+
 });
 
 app.get('/', (req, res) => {

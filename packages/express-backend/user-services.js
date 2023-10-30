@@ -66,6 +66,19 @@ function addUser(user) {
     return promise;
 }
 
+function addTasks(username, newTask) {
+    const promise = userModel.findOneAndUpdate(
+        { username:username }, 
+        { $push: { tasks: newTask } }, 
+        { new: true },).catch((e) => {
+            if(e) {
+                return 500;
+            }
+        }
+    );
+    return promise;
+}
+
 async function deleteUser(id) {
     const promise = userModel.findByIdAndRemove(id).catch((err) => {
         if(err) {
@@ -77,6 +90,7 @@ async function deleteUser(id) {
 
 export default {
     addUser,
+    addTasks,
     getUsers,
     deleteUser,
     findUserByUsernameAndEmail,

@@ -17,8 +17,12 @@ const UserSchema = new mongoose.Schema(
             type: String,
             required: true,
             trim: true,
-            //add email validation
         },
+        tasks: {
+            type: [String],
+            required: false,
+            trim: true,
+        }
     },
     { collection: "users_list" }
 );
