@@ -13,6 +13,9 @@ const Home = () => {
 	  setCharacters(updated);
 	}
 
+  // TASK OPERATIONS
+
+  // post task
   function postTask(chore){
     const taskData = { task: chore};
 
@@ -47,6 +50,24 @@ const Home = () => {
       // Handle error
     });
   }
+
+  // fetch tasks
+  function fetchTasks() {
+    const promise = fetch("http://localhost:8000/tasks");
+     return promise;
+} 
+
+// delete task
+function deleteTask(_id) {
+  const removeURI = `${"http://localhost:8000/tasks/"}${_id}`;
+  const promise = fetch(removeURI, {
+      method: "DELETE",
+      headers: {
+          "Content-Type": "application/json",
+      }
+  });
+  return promise;
+}
 
   function updateList(chore) {
     postTask(chore)
