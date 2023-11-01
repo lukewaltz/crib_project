@@ -24,13 +24,56 @@ const Login = () => {
     //         });
     //     return promise;
     // }
+// USER OPERATIONS
+
+  // post user
+  function postUser(user){
+    const userData = { user: user};
+
+    fetch("http://localhost:8000/users", 
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application.json",
+      },
+      body: JSON.stringify(userData),
+    })
+    .then((response) => {
+      if (response.status === 201) {
+        // Task added successfully
+        console.log('User added successfully');
+        return response.json();
+      } else if (response.status === 500) {
+        // Could not add task, handle as needed
+        console.log('Could not add user');
+        throw new Error('Could not add user');
+      } else {
+        // Handle other responses as needed
+        throw new Error('User could not be added');
+      }
+    })
+    .then((user) => {
+      // Update your component state with the added task
+      setCharacters([...characters, user]);
+    })
+    .catch((error) => {
+      console.error(error);
+      // Handle error
+    });
+  }
+
+    function updateList(user) {
+        postUser(user)
+          .catch((error) => {console.log(error);})
+          .then(setCharacters([...characters, user]));
+      }
 
     return (
         <div className="container">
             <h1>
                 log in
             </h1>
-        <UserForm />
+        <UserForm handleSubmit={updateList} />
         </div>
     );
 };
