@@ -3,6 +3,8 @@ import express from "express";
 import cors from "cors";
 import userServices from './user-services.js';
 import User from "./user.js";
+import { createRequire } from 'module';
+const require = createRequire(import.meta.url);
 
 const users = { 
     users_list : [
@@ -37,9 +39,11 @@ const users = {
 const app = express();
 const port = 8000;
 const router = express.Router();
+const session = require('express-session');
 
 app.use(cors());
 app.use(express.json());
+app.use(session({secret:"secret", resave:false, saveUninitialized:true}));
 
 app.post('/login', (req, res) => {
     let result = userServices.findUserByUserName(req.body.username);
@@ -60,11 +64,14 @@ app.post('/signup', async (req, res) => {
             return res.status(201).send('Successful signup');
         }
     });
-    
 });
 
 app.get('/', (req, res) => {
-    res.send('Hello World!');
+    if(!req.session.user){
+        return res.status(401).send('not logged in');
+    }
+
+    return res.status(200).send('logged in');
 });
 
 app.get('/users', (req, res) => {
