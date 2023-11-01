@@ -24,6 +24,16 @@ const Login = () => {
     //         });
     //     return promise;
     // }
+    const [users, setUsers] = useState([]);
+
+    function removeOneUser (index) {
+	    const updated = users.filter((user, i) => {
+	        return i !== index
+	    });
+	  setUsers(updated);
+	}
+
+
 // USER OPERATIONS
 
   // post user
@@ -54,7 +64,7 @@ const Login = () => {
     })
     .then((user) => {
       // Update your component state with the added task
-      setCharacters([...characters, user]);
+      setusers([...users, user]);
     })
     .catch((error) => {
       console.error(error);
@@ -65,7 +75,7 @@ const Login = () => {
     function updateList(user) {
         postUser(user)
           .catch((error) => {console.log(error);})
-          .then(setCharacters([...characters, user]));
+          .then(setUsers([...users, user]));
       }
 
     return (
