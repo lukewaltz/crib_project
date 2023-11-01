@@ -49,7 +49,9 @@ const Home = () => {
   }
 
   function updateList(chore) {
-    setCharacters([...characters, chore]);
+    postTask(chore)
+      .catch((error) => {console.log(error);})
+      .then(setCharacters([...characters, chore]));
   }
 
     return (
