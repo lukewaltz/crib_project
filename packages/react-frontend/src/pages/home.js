@@ -5,13 +5,14 @@ import Stack from "../components/TaskStack";
 import Form from "../components/Form";
  
 const Home = () => {
-    const [characters, setCharacters] = useState([]);
-    function removeOneCharacter (index) {
-	    const updated = characters.filter((character, i) => {
+    const [tasks, setTasks] = useState([]);
+
+    function removeOneTask (index) {
+	    const updated = tasks.filter((task, i) => {
 	        return i !== index
 	    });
-	  setCharacters(updated);
-	}
+	  setTasks(updated);
+	  }
 
   // TASK OPERATIONS
 
@@ -43,7 +44,7 @@ const Home = () => {
     })
     .then((task) => {
       // Update your component state with the added task
-      setCharacters([...characters, task]);
+      setTasks([...tasks, task]);
     })
     .catch((error) => {
       console.error(error);
@@ -69,21 +70,21 @@ function deleteTask(_id) {
   return promise;
 }
 
-  function updateList(chore) {
-    postTask(chore)
-      .catch((error) => {console.log(error);})
-      .then(setCharacters([...characters, chore]));
-  }
+function updateList(chore) {
+  postTask(chore)
+    .catch((error) => {console.log(error);})
+    .then(setTasks([...tasks, chore]));
+}
 
-    return (
-        <div className="container">
-        <Form handleSubmit={updateList} />
-        {/* <Table characterData={characters} 
-        removeCharacter={removeOneCharacter} /> */}
-        <Stack characterData={characters} 
-        removeCharacter={removeOneCharacter} />
-    </div>
-    );
+  return (
+      <div className="container">
+      <Form handleSubmit={updateList} />
+      {/* <Table characterData={characters} 
+      removeCharacter={removeOneCharacter} /> */}
+      <Stack taskData={tasks} 
+      removeTask={removeOneTask} />
+  </div>
+  );
 };
  
 export default Home;
