@@ -70,10 +70,22 @@ function deleteTask(_id) {
   return promise;
 }
 
+// function updateList(chore) {
+//   postTask(chore)
+//     .then(setTasks([...tasks, chore]))
+//     .catch(error => {console.log(error);});
+// }
+
 function updateList(chore) {
   postTask(chore)
-    .catch((error) => {console.log(error);})
-    .then(setTasks([...tasks, chore]));
+    .then(() => {
+      // The API call was successful, so update the tasks state
+      setTasks([...tasks, chore]);
+    })
+    .catch(error => {
+      console.log(error);
+      // Handle the error, if needed
+    });
 }
 
   return (
