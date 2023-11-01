@@ -64,7 +64,7 @@ const Login = () => {
     })
     .then((user) => {
       // Update your component state with the added task
-      setusers([...users, user]);
+      setUsers([...users, user]);
     })
     .catch((error) => {
       console.error(error);

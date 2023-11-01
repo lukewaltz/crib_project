@@ -13,7 +13,7 @@ function TaskListHead() {
 }
 
 function TaskList(props) {
-  const boxes = props.characterData.map((box, index) => {
+  const boxes = props.taskData.map((box, index) => {
     return (
     <div class='chore-box' key={index}>
       <div class='chore-name'>TASK: {box.task}</div>
