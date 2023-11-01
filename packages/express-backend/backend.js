@@ -13,7 +13,7 @@ app.use(cors());
 app.use(express.json());
 
 // users
-
+/* may need to change /login and /signup to /users */
 app.post('/login', (req, res) => {
     let result = userServices.findUserByUsername(req.body.username);
     console.log(result);
@@ -98,7 +98,7 @@ app.delete('/users/:id', async (req, res) => {
 });
 
 // tasks
-
+/* when does response get sent? */
 app.get('/tasks', (req, res) => {
     taskServices.getTasks()
         .then((tasks) => {
