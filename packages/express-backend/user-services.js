@@ -4,27 +4,56 @@ import userModel from "./user.js";
 mongoose.set("debug", true);
 
 mongoose
-  .connect("mongodb://127.0.0.1:27017/users", {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
-  .catch((error) => console.log(error));
+    .connect("mongodb://localhost:27017/users", {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+    })
+    .catch((error) => console.log(error));
 
-
-function getUsers(name, job) {
-    let promise;
-    if (name === undefined && job === undefined) {
-    promise = userModel.find();
-    } else if (name && !job) {
-    promise = findUserByName(name);
-    } else if (job && !name) {
-    promise = findUserByJob(job);
-    }
-    return promise;
+function findUserByUsernameAndEmail(username, email) {
+    userModel.find({ username:username }, { email:email }).catch((err) => {
+        if(err) {
+            return undefined;
+        }
+    });
 }
 
-function findUserById(id) {
-    return userModel.findById(id);
+function findUserByUsername(username) {
+    userModel.find({ username:username }).catch((err) => {
+        if(err) {
+            return undefined;
+        }
+    });
+}
+
+function findUserByEmail(email) {
+    userModel.find({ email:email }).catch((err) => {
+        if(err) {
+            return undefined;
+        }
+    });
+}
+
+function findUserByName(name) {
+    userModel.find({ name:name }).catch((err) => {
+        if(err) {
+            return undefined;
+        }
+    });
+}
+
+function getUsers(username, email, name) {
+    let promise;
+    if (username) {
+        promise = findUserByUsername(username)
+    } else if (email) {
+        promise = findUserByEmail(email);
+    } else if (name) {
+        promise = findUserByName(name)
+    } else {
+        promise = userModel.find();
+    }
+    return promise;
 }
 
 function addUser(user) {
@@ -37,27 +66,35 @@ function addUser(user) {
     return promise;
 }
 
-function findUserByName(name) {
-    return userModel.find({ name: name });
+function addTasks(username, newTask) {
+    const promise = userModel.findOneAndUpdate(
+        { username:username }, 
+        { $push: { tasks: newTask } }, 
+        { new: true },).catch((e) => {
+            if(e) {
+                return 500;
+            }
+        }
+    );
+    return promise;
 }
 
-function findUserByUserName(username) {
-    userModel.find({ username: username }).catch((err)=> {
+async function deleteUser(id) {
+    const promise = userModel.findByIdAndRemove(id).catch((err) => {
         if(err) {
             return undefined;
         }
     });
-}
-
-function findUserByJob(job) {
-    return userModel.find({ job: job });
+    return promise;
 }
 
 export default {
     addUser,
+    addTasks,
     getUsers,
-    findUserById,
+    deleteUser,
+    findUserByUsernameAndEmail,
+    findUserByUsername,
+    findUserByEmail,
     findUserByName,
-    findUserByJob,
-    findUserByUserName,
 };
