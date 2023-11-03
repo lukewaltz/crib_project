@@ -145,16 +145,16 @@ app.post('/tasks', (req, res) => {
         res.status(404).send("newTask not found");
     } else {
     taskServices.addTask(newTask)
-        .then(res.status(201)
-        .send(newTask)
-        .catch((error) => console.error("error caught in app.post(task)", error)));
-    //     .then((error) =>{
-    //         if(error == 500){
-    //             return res.status(500).send('Could not add task');
-    //         }else{
-    //             return res.status(201).send('Added task');
-    //         }
-    // });
+        // .then(res.status(201)
+        // .send(newTask)
+        // .catch((error) => console.error("error caught in app.post(task)", error)));
+        .then((error) =>{
+            if(error == 500){
+                return res.status(500).send('Could not add task');
+            }else{
+                return res.status(201).send('Added task');
+            }
+    });
     }
 });
 

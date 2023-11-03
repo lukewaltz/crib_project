@@ -39,6 +39,7 @@ const Login = () => {
   // post user
   function postUser(user){
     const userData = { user: user};
+    console.log(userData);
 
     fetch("http://localhost:8000/users", 
     {
