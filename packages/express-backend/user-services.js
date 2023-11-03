@@ -1,13 +1,30 @@
 import mongoose from "mongoose";
 import userModel from "./user.js";
 
+import dotenv from "dotenv";
+
 mongoose.set("debug", true);
+dotenv.config();
 
 mongoose
-    .connect("mongodb://localhost:27017/users", {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-    })
+    .connect(
+        /*  
+            "mongodb+srv://" +
+            process.env.MONGO_USER +
+            ":" +
+            process.env.MONGO_PWD +
+            "@" +
+            process.env.MONGO_CLUSTER +
+            "/" +
+            process.env.MONGO_DB +
+            "?retryWrites=true&w=majority",
+        */
+        process.env.MONGO_URL,
+        // "mongodb://localhost:27017/users",
+        {
+            useNewUrlParser: true,
+            useUnifiedTopology: true,
+        })
     .catch((error) => console.log(error));
 
 function findUserByUsernameAndEmail(username, email) {
