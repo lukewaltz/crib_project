@@ -48,20 +48,38 @@ app.use(express.json());
 app.use(session({secret:"secret", resave:false, saveUninitialized:true}));
 
 // users
+app.post('/login', async (req, res) => {
+    try {
+        const user = await userServices.findUserByUsername(req.body.username);
 
-app.post('/login', (req, res) => {
-    let result = userServices.findUserByUsername(req.body.username);
-    console.log(result);
-    if (result === undefined) {
-        return res.status(404).send('user not found');
-    } else {
-        return res.status(200).send('login successful');
+        if(!user){
+            return res.status(404).send('User not found');
+        }
+
+        user.comparePassword(req.body.password, function(err, isMatch){
+            if(isMatch){
+                req.session.user = user;
+                return res.status(200).send('Login successful');
+            } else{
+                return res.status(401).send('cannot login');
+            }
+        });
+        
+       
+    } catch (err) {
+        console.error(err);
+        return res.status(500).send('Internal server error');
     }
+});
+
+app.get('/logout', (req, res) => {
+    req.session.destroy();
+    return res.status(200).send();
 });
 
 app.post('/signup', async (req, res) => {
     userServices.addUser(req.body).then((error) =>{
-        // chang error code to reason unable to signup
+        // change error code to reason unable to signup
         if(error == 500){
             return res.status(500).send('Unable to sign up');
         }else{
@@ -176,8 +194,6 @@ app.delete('/tasks/:id', async (req, res) => {
 });
 
 // all
-
-
 app.listen(port, () => {
     console.log(`http://localhost:${port}`);
 })

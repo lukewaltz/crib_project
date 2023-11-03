@@ -10,37 +10,14 @@ mongoose
     })
     .catch((error) => console.log(error));
 
-function findUserByUsernameAndEmail(username, email) {
-    userModel.find({ username:username }, { email:email }).catch((err) => {
+async function findUserByUsername(username) {
+    return await userModel.findOne({ username: username }).catch((err) => {
         if(err) {
             return undefined;
         }
     });
 }
 
-function findUserByUsername(username) {
-    userModel.find({ username:username }).catch((err) => {
-        if(err) {
-            return undefined;
-        }
-    });
-}
-
-function findUserByEmail(email) {
-    userModel.find({ email:email }).catch((err) => {
-        if(err) {
-            return undefined;
-        }
-    });
-}
-
-function findUserByName(name) {
-    userModel.find({ name:name }).catch((err) => {
-        if(err) {
-            return undefined;
-        }
-    });
-}
 
 function getUsers(username, email, name) {
     let promise;
@@ -60,6 +37,7 @@ function addUser(user) {
     const userToAdd = new userModel(user);
     const promise = userToAdd.save().catch((e) =>{
         if(e){
+            console.log(e);
             return 500;
         }
     });
@@ -93,8 +71,5 @@ export default {
     addTasks,
     getUsers,
     deleteUser,
-    findUserByUsernameAndEmail,
     findUserByUsername,
-    findUserByEmail,
-    findUserByName,
 };
