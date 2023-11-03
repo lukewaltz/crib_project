@@ -231,39 +231,84 @@
 
 // Home.js
 // Home.js
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import Stack from "../components/TaskStack"; // Ensure correct import path
 import "./style.css";
 
-export const Home = ({ tasks }) => { // Receive tasks as a prop
-  return (
-    <div className="home-page">
-      <div className="div">
-        <div className="overlap">
-          <div className="group">
-            <img className="logo-group" alt="Logo group" src="logo-group.png" />
+function Home() {
+
+    const [tasks, setTasks] = useState([]);
+
+    useEffect(() =>{
+        listTasks()
+        .then((res)=>res.json())
+        .then((json) => setTasks(json["task_list"]))
+        .catch((error) => {console.log(error);});
+    }, []);
+
+    function listTasks(){
+        const promise = fetch("http://localhost:8000/tasks");
+        return promise;
+    }
+    
+    function completeTask(){
+
+    }
+    
+    return (
+        <div className="home-page">
+        <div className="div">
+            <div className="overlap">
+            <div className="group">
+                <img className="logo-group" alt="Logo group" src="logo-group.png" />
+            </div>
+            <div className="overlap-group">
+                <img className="vector" alt="Vector" src="vector.svg" />
+            </div>
+            </div>
+            {/* Rectangle elements as placeholders
+            <div className="rectangle-4" />
+            <div className="rectangle-5" />
+            <div className="rectangle-6" /> */}
+            {/* tasks are displayed here */}
+            <div className="rectangle-tasks">
+            <Stack taskData={tasks} />
+            </div>
+            <div className="overlap-group-wrapper">
+            <div className="div-wrapper">
+                <div className="text-wrapper">HISTORY</div>
+            </div>
+            </div>
+            <div className="text-wrapper-2">HOME</div>
+        </div>
+        </div>
+    );
+
+    function TaskList(props) {
+  const boxes = props.taskData.map((box, index) => {
+    return (
+      <div className='chore-box' key={index}>
+        <div className='chore-name'>TASK: {box.task}</div>
+        <div className='chore-date'>DEADLINE: {box.dueDate}</div>
+        <div className='chore-id'>{box.id}</div>
+        <div className='button-container'>
+          <div className='claim-button'>
+            {/* <button onClick={() => props.claimTask(box.id)}> */}
+            <button onClick={() => props.removeTask(index)}>
+              Claim
+            </button>
           </div>
-          <div className="overlap-group">
-            <img className="vector" alt="Vector" src="vector.svg" />
+          <div className='complete-button'>
+            {/* <button onClick={() => props.completeTask(box.id)}> */}
+            <button onClick={() => props= props.filter((task) => task.task === box.task)}>
+              Complete
+            </button>
           </div>
         </div>
-        {/* Rectangle elements as placeholders
-        <div className="rectangle-4" />
-        <div className="rectangle-5" />
-        <div className="rectangle-6" /> */}
-        {/* tasks are displayed here */}
-        <div className="rectangle-tasks">
-          <Stack taskData={tasks} />
-        </div>
-        <div className="overlap-group-wrapper">
-          <div className="div-wrapper">
-            <div className="text-wrapper">HISTORY</div>
-          </div>
-        </div>
-        <div className="text-wrapper-2">HOME</div>
       </div>
-    </div>
-  );
+    );
+  });
+    
 };
 
 export default Home;

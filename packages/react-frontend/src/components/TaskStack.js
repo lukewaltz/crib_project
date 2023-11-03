@@ -15,7 +15,7 @@ function TaskList(props) {
     return (
       <div className='chore-box' key={index}>
         <div className='chore-name'>TASK: {box.task}</div>
-        <div className='chore-date'>DEADLINE: {box.date}</div>
+        <div className='chore-date'>DEADLINE: {box.dueDate}</div>
         <div className='chore-id'>{box.id}</div>
         <div className='button-container'>
           <div className='claim-button'>
@@ -26,7 +26,7 @@ function TaskList(props) {
           </div>
           <div className='complete-button'>
             {/* <button onClick={() => props.completeTask(box.id)}> */}
-            <button onClick={() => props.removeTask(index)}>
+            <button onClick={() => props= props.filter((task) => task.task === box.task)}>
               Complete
             </button>
           </div>
