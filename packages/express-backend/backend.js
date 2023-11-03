@@ -8,39 +8,8 @@ import taskServices from "./task-services.js";
 
 const require = createRequire(import.meta.url);
 
-const users = { 
-    users_list : [
-       { 
-          id : 'xyz789',
-          name : 'Charlie',
-          job: 'Janitor',
-       },
-       {
-          id : 'abc123', 
-          name: 'Mac',
-          job: 'Bouncer',
-       },
-       {
-          id : 'ppp222', 
-          name: 'Mac',
-          job: 'Professor',
-       }, 
-       {
-          id: 'yat999', 
-          name: 'Dee',
-          job: 'Aspring actress',
-       },
-       {
-          id: 'zap555', 
-          name: 'Dennis',
-          job: 'Bartender',
-       }
-    ]
- }
-
 const app = express();
 const port = 8000;
-const router = express.Router();
 const session = require('express-session');
 
 app.use(cors());
