@@ -58,9 +58,9 @@ app.post('/signup', async (req, res) => {
 });
 
 app.get('/', (req, res) => {
-    if(!req.session.user){
-        return res.status(401).send('not logged in');
-    }
+    // if(!req.session.user){
+    //     return res.status(401).send('not logged in');
+    // }
 
     return res.status(200).send('logged in');
 });
