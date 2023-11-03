@@ -4,27 +4,32 @@ function Form(props) {
   const [chore, setChore] = useState(
      {
         task: "",
-        date: "",
+        dueDate: "",
+        weight: ""
      }
   );
 
   function submitForm() {
     props.handleSubmit(chore);
-    setChore({task: '', date: ''});
+    setChore({task: '', dueDate: '', weight: ''});
   }
 
 
 
   function handleChange(event) {
     const { name, value } = event.target;
-    if (name === "date")
+    if (name === "dueDate")
       setChore(
-         {task: chore['task'], date: value}
+         {task: chore['task'], dueDate: value, weight: chore['weight']}
       );
-    else     
+    else if (name === "task")
        setChore(
-         {task: value, date: chore['date']}   
+         {task: value, dueDate: chore['dueDate'], weight: chore['weight']}   
        );
+    else if (name === "weight")
+        setChore(
+          {task: chore['task'], dueDate: chore['dueDate'], weight: value}
+        );
   }
 
 
@@ -37,12 +42,19 @@ function Form(props) {
             id="name"
             value={chore.task}
             onChange={handleChange} />
-        <label htmlFor="date">Date</label>
+        <label htmlFor="dueDate">Date</label>
         <input
             type="text"
-            name="date"
-            id="job"
-            value={chore.date}
+            name="dueDate"
+            id="date"
+            value={chore.dueDate}
+            onChange={handleChange} />
+        <label htmlFor="weight">Weight</label>
+        <input
+            type="number"
+            name="weight"
+            id="weight"
+            value={chore.weight}
             onChange={handleChange} />
         <input type="button" value="Post" onClick={submitForm} />
         </form>
