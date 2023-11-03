@@ -3,36 +3,66 @@ import express from "express";
 import cors from "cors";
 import userServices from './user-services.js';
 import User from "./user.js";
+import { createRequire } from 'module';
 import taskServices from "./task-services.js";
+
+const require = createRequire(import.meta.url);
 
 const app = express();
 const port = 8000;
-const router = express.Router();
+const session = require('express-session');
 
 app.use(cors());
 app.use(express.json());
+app.use(session({secret:"secret", resave:false, saveUninitialized:true}));
 
 // users
-/* may need to change /login and /signup to /users */
-app.post('/login', (req, res) => {
-    let result = userServices.findUserByUsername(req.body.username);
-    console.log(result);
-    if (result === undefined) {
-        return res.status(404).send('user not found');
-    } else {
-        return res.status(200).send('login successful');
+app.post('/login', async (req, res) => {
+    try {
+        const user = await userServices.findUserByUsername(req.body.username);
+
+        if(!user){
+            return res.status(404).send('User not found');
+        }
+
+        user.comparePassword(req.body.password, function(err, isMatch){
+            if(isMatch){
+                req.session.user = user;
+                return res.status(200).send('Login successful');
+            } else{
+                return res.status(401).send('cannot login');
+            }
+        });
+        
+       
+    } catch (err) {
+        console.error(err);
+        return res.status(500).send('Internal server error');
     }
+});
+
+app.get('/logout', (req, res) => {
+    req.session.destroy();
+    return res.status(200).send();
 });
 
 app.post('/signup', async (req, res) => {
     userServices.addUser(req.body).then((error) =>{
-        // chang error code to reason unable to signup
+        // change error code to reason unable to signup
         if(error == 500){
             return res.status(500).send('Unable to sign up');
         }else{
             return res.status(201).send('Successful signup');
         }
     });
+});
+
+app.get('/', (req, res) => {
+    if(!req.session.user){
+        return res.status(401).send('not logged in');
+    }
+
+    return res.status(200).send('logged in');
 });
 
 app.put('/users/:username/addTask', (req, res) => {
@@ -133,8 +163,6 @@ app.delete('/tasks/:id', async (req, res) => {
 });
 
 // all
-
-
 app.listen(port, () => {
     console.log(`http://localhost:${port}`);
 })
