@@ -13,7 +13,7 @@ function TaskListHead() {
 }
 
 function TaskList(props) {
-  const boxes = props.characterData.map((box, index) => {
+  const boxes = props.taskData.map((box, index) => {
     return (
     <div class='chore-box' key={index}>
       <div class='chore-name'>TASK: {box.task}</div>
@@ -22,13 +22,13 @@ function TaskList(props) {
       <div class='button-container'>
         <div class='claim-button'>
           <button onClick={() => 
-            props.removeCharacter(index)}>
+            props.removeTask(index)}>
             Claim
           </button>
         </div>
         <div class='complete-button'>
           <button onClick={() => 
-            props.removeCharacter(index)}>
+            props.removeTask(index)}>
             Complete
           </button>
         </div>
@@ -49,8 +49,8 @@ function Stack (props) {
   return (
     <div class='box-container'>
       <TaskListHead />
-      <TaskList characterData={props.characterData} 
-	      removeCharacter={props.removeCharacter} />
+      <TaskList taskData={props.taskData} 
+	      removeTask={props.removeTask} />
     </div>
   );
 }
