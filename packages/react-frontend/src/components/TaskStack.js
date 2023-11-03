@@ -1,56 +1,56 @@
-// src/TaskStack.js
 import React from "react";
 
-// src/TaskStack.js
 function TaskListHead() {
   return (
     <thead>
       <tr>
-        <th>MY TODO LIST:</th>
+        <th>LIST OF CHORES:</th>
       </tr>
     </thead>
   );
 }
 
 function TaskList(props) {
-  const boxes = props.characterData.map((box, index) => {
+  const boxes = props.taskData.map((box, index) => {
     return (
-    <div class='chore-box' key={index}>
-      <div class='chore-name'>TASK: {box.task}</div>
-      <div class='chore-date'>DEADLINE: {box.date}</div>
-      <div class='chore-id'>{box.id}</div>
-      <div class='button-container'>
-        <div class='claim-button'>
-          <button onClick={() => 
-            props.removeCharacter(index)}>
-            Claim
-          </button>
-        </div>
-        <div class='complete-button'>
-          <button onClick={() => 
-            props.removeCharacter(index)}>
-            Complete
-          </button>
+      <div className='chore-box' key={index}>
+        <div className='chore-name'>TASK: {box.task}</div>
+        <div className='chore-date'>DEADLINE: {box.date}</div>
+        <div className='chore-id'>{box.id}</div>
+        <div className='button-container'>
+          <div className='claim-button'>
+            {/* <button onClick={() => props.claimTask(box.id)}> */}
+            <button onClick={() => props.removeTask(index)}>
+              Claim
+            </button>
+          </div>
+          <div className='complete-button'>
+            {/* <button onClick={() => props.completeTask(box.id)}> */}
+            <button onClick={() => props.removeTask(index)}>
+              Complete
+            </button>
+          </div>
         </div>
       </div>
-    </div>
-
     );
-   }
-  );
+  });
   return (
-      <tbody>
-        {boxes}
-       </tbody>
-   );
+    <div>
+      {boxes}
+    </div>
+  );
 }
 
-function Stack (props) {
+function Stack(props) {
   return (
-    <div class='box-container'>
+    <div className='box-container'>
       <TaskListHead />
-      <TaskList characterData={props.characterData} 
-	      removeCharacter={props.removeCharacter} />
+      <TaskList 
+        taskData={props.taskData}
+        removeTask={props.removeTask}
+        // claimTask={props.claimTask}
+        // completeTask={props.completeTask}
+      />
     </div>
   );
 }

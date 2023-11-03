@@ -1,13 +1,21 @@
-body {
-  background: #333; /* Dark background color */
-  color: #fff; /* Light text color */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box; /* This ensures padding doesn't increase the box's size */
+}
+
+/* body {
+  background: #333; 
+   Dark background color 
+  color: #fff; 
+   Light text color 
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
   font-weight: 600;
   font-family: -apple-system, BlinkMacSystemFont, Helvetica Neue, Helvetica, Arial, sans-serif;
   font-size: 1rem;
-}
+} */
 
 .container{
   display: flex;
@@ -17,21 +25,22 @@ body {
 }
 
 
-nav {
-  background-color: #333; /* Dark background color for the navbar */
+/* nav {
+  background-color: #333; 
+  Dark background color for the navbar 
   padding: 1rem 0;
-}
+} */
 
 
-nav ul {
+/* nav ul {
   list-style-type: none;
   padding: 0;
   display: flex;
   justify-content: space-evenly;
   gap: 15px
-}
+} */
 
-nav.col ul {
+/* nav.col ul {
   list-style-type: none;
   padding: 0;
   display: flex;
@@ -39,25 +48,27 @@ nav.col ul {
   justify-content: center;
   gap: 15px;
   width: 300px;
-}
+} */
 
-nav li {
+/* nav li {
   margin: 0 1rem;
 }
 
 nav.col li {
   width: 100%;
-}
+} */
 
-nav a {
+/* nav a {
   text-decoration: none;
-  color: #fff; /* Light text color for links */
+  color: #fff; 
+   Light text color for links 
   transition: color 0.3s ease;
-}
+} */
 
-nav a:hover {
-  color: #ddd; /* Lighter color on hover */
-}
+/* nav a:hover {
+  color: #ddd; 
+  Lighter color on hover 
+} */
 
 
 .button,
@@ -68,9 +79,9 @@ nav li,
 [type=reset],
 [type=button] {
   display: inline-block;
-  border: 1px solid #fff; /* White border for buttons */
+  border: 1px solid #fff; 
   border-radius: 10px;
-  background: lightsalmon; /* White background for buttons */
+  background: #6fb3b8; /* White background for buttons */
   color: white; /* Dark text color for buttons */
   font-weight: 600;
   font-family: -apple-system, BlinkMacSystemFont, Helvetica Neue, Helvetica, Arial, sans-serif;
@@ -83,11 +94,11 @@ nav li,
   cursor: pointer;
   text-decoration: none;
   line-height: 1;
+  position: absolute; 
+  bottom: 20px;
 }
 
-nav li{
-  background-color: #333;
-}
+
 
 
 .button:hover,
@@ -98,9 +109,13 @@ nav li:hover,
 [type=reset]:hover,
 [type=button]:hover {
   border: 1px solid #ddd; /* Lighter border on hover */
-  background: coral; /* Lighter background on hover */
+  background: #ffe78b; /* Lighter background on hover */
 }
 
+
+nav li{
+  background-color: #333;
+}
 
 nav li:hover, 
 .button-container button:hover{
@@ -114,9 +129,9 @@ form{
 }
 
 input{
-  background-color: #333;
-  border-color: lightsalmon;
-  color: lightsalmon;
+  background-color: #008080;
+  border-color: #008080;
+  color: #264447;
   border-style: double;
   border-radius: 8px;
   margin-bottom: 30px;
@@ -141,6 +156,7 @@ table{
 }
 
 .chore-box{
+  background-color: #badfe7;
   width: 300px;
   height: fit-content;
   border-radius: 15px;
@@ -154,29 +170,25 @@ table{
 
   display: flex;
   flex-direction: column;
-  align-items: left;
+  align-items: center;
   justify-content: space-evenly;
   /* padding-left: 60px; */
 }
 
 .chore-box div{
   margin-bottom: 10px;
-  text-align: left;
+  text-align: center;
 }
 
 .button-container{
   display: flex;
   flex-direction: row;
-  gap: 20px;
+  gap: 120px;
   width: 100%;
   align-items: center;
   justify-content: center;
 }
 
-.button-container button{
-  width: 100%;
-  background-color:#333;
-}
 
 
 
@@ -200,4 +212,56 @@ table::content{
 
 label{
   padding-bottom: 10px;
+}
+
+/* nav bar */ 
+.box {
+  position: relative;
+  width: 430px;
+  }
+  
+.box .group {
+  background-color: #ecece9;
+  height: 44px;
+  position: absolute;  /* This will fix the position relative to the viewport */
+  bottom: -940px;  /* Place it 10px above the bottom. Adjust as needed. */
+  left: 115%;  /* Move the left edge of the element to the center of the viewport */
+    /* Move the element back half of its width to center it */
+  width: 430px;
+  z-index: 1000;  /* Ensure it's on top of other elements */
+}
+
+
+.box .rectangle {
+    border: 1px solid;
+    border-color: #388087;
+    border-radius: 12px;
+    height: 9px;
+    left: 184px;
+    position: absolute;
+    top: 14px;
+    width: 9px;
+}
+
+.box .div {
+    background-color: #ffe78b;
+    border: 1px solid;
+    border-color: #388087;
+    border-radius: 12px;
+    height: 9px;
+    left: 214px;
+    position: absolute;
+    top: 14px;
+    width: 9px;
+}
+
+.box .rectangle-2 {
+    border: 1px solid;
+    border-color: #388087;
+    border-radius: 12px;
+    height: 9px;
+    left: 244px;
+    position: absolute;
+    top: 14px;
+    width: 9px;
 }
