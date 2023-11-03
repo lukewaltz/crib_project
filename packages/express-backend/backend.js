@@ -139,16 +139,23 @@ app.get('/tasks', (req, res) => {
         });
 });
 
-app.put('/tasks', (req, res) => {
+app.post('/tasks', (req, res) => {
     const newTask = req.body
-    taskServices.addTask(newTask).then((error) =>{
-        // chang error code to reason unable to signup
-        if(error == 500){
-            return res.status(500).send('Could not add task');
-        }else{
-            return res.status(201).send('Added task');
-        }
-    });
+    if (newTask === undefined){
+        res.status(404).send("newTask not found");
+    } else {
+    taskServices.addTask(newTask)
+        .then(res.status(201)
+        .send(newTask)
+        .catch((error) => console.error("error caught in app.post(task)", error)));
+    //     .then((error) =>{
+    //         if(error == 500){
+    //             return res.status(500).send('Could not add task');
+    //         }else{
+    //             return res.status(201).send('Added task');
+    //         }
+    // });
+    }
 });
 
 app.delete('/tasks/:id', async (req, res) => {

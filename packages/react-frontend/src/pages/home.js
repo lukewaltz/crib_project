@@ -1,4 +1,3 @@
-
 import React from "react";
 import { useState } from "react";
 import Stack from "../components/TaskStack";
@@ -18,9 +17,10 @@ const Home = () => {
 
   // post task
   function postTask(chore){
+    console.log("in posttask");
     const taskData = { task: chore};
 
-    fetch("http://localhost:8000/tasks", 
+    const promise = fetch("http://localhost:8000/tasks", 
     {
       method: "POST",
       headers: {
@@ -44,12 +44,14 @@ const Home = () => {
     })
     .then((task) => {
       // Update your component state with the added task
+      console.log('Task data posted');
       setTasks([...tasks, task]);
     })
     .catch((error) => {
       console.error(error);
       // Handle error
     });
+    return promise;
   }
 
   // fetch tasks
