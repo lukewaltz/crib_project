@@ -15,7 +15,7 @@ const TaskSchema = new mongoose.Schema(
         },
         weight: {
             type: Number,
-            required: true,
+            required: false,
             trim: true,
         },
     }, { collection: "task_list" }
