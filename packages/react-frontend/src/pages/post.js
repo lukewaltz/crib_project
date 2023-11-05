@@ -5,6 +5,7 @@ import Form from '../components/Form'; // Make sure this import path is correct
 export const Post = (props) => {
 
     function handleSubmit(task) {
+        //checking that the data points are the string stuff here and in backend.js 
         fetch('http://localhost:8000/tasks', {
             method: 'POST',
             headers: {
