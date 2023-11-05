@@ -132,6 +132,18 @@ app.delete('/tasks/:id', async (req, res) => {
         })
 });
 
+app.post('/tasks', (req, res) => {
+    const newTask = req.body;
+    taskServices.addTask(newTask)
+        .then(() => {
+            res.status(201).json({ message: 'Task added successfully' });
+        })
+        .catch((error) => {
+            // Handle specific error or use a general error message
+            res.status(500).json({ error: 'Could not add task' });
+        });
+});
+
 // all
 
 

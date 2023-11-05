@@ -1,8 +1,31 @@
-import React, { useState } from 'react';
+import React from 'react';
 import "./style.css";
-import { Form } from '../components/Form';
+import Form from '../components/Form'; // Make sure this import path is correct
 
 export const Post = (props) => {
+
+    function handleSubmit(task) {
+        fetch('http://localhost:8000/tasks', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(task),
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Task submitted:', data);
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        });
+    }
+
     return (
         <div className="post-something">
             <div className="div">
@@ -15,7 +38,7 @@ export const Post = (props) => {
                     </div>
                     <div className="group">
                         <div className="div-wrapper">
-                            <Form handleSubmit = {props.handleSubmit} />
+                            <Form handleSubmit = {handleSubmit} />
 
                         </div>
                     </div>

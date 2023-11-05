@@ -21,12 +21,12 @@ function MyApp() {
       <Navbar />
         <Routes>
             {/* pass tasks state and handlePostSubmit to relevant components */}
-            <Route path='/' element={<Home/>} />
-            {/* <Route path='/post' element={<Post handleSubmit={handlePostSubmit} />} />
+            <Route path="/" element={<Home tasks={tasks} setTasks={setTasks} />} />
+            <Route path='/post' element={<Post handleSubmit={handlePostSubmit} />} />
             <Route path='/home' element={<Home tasks={tasks} />} />
             <Route path='/account' element={<Account />} />
             <Route path='/account/signup' element={<Signup />} />
-            <Route path='/account/login' element={<Login />} /> */}
+            <Route path='/account/login' element={<Login />} />
         </Routes>
     </Router>
   )

@@ -1,110 +1,9 @@
-// import React, {useState} from 'react';
-
-// function Form(props) {
-//   const [chore, setChore] = useState(
-//      {
-//         task: "",
-//         date: "",
-//      }
-//   );
-
-  // function submitForm() {
-  //   props.handleSubmit(chore);
-  //   setChore({task: '', date: ''});
-  // }
-
-
-
-//   function handleChange(event) {
-//     const { name, value } = event.target;
-//     if (name === "date")
-//       setChore(
-//          {task: chore['task'], date: value}
-//       );
-//     else     
-//        setChore(
-//          {task: value, date: chore['date']}   
-//        );
-//   }
-
-
-//   return (
-//         <form>
-//         <label htmlFor="task">Task</label>
-//         <input
-//             type="text"
-//             name="task"
-//             id="name"
-//             value={chore.task}
-//             onChange={handleChange} />
-//         <label htmlFor="date">Date</label>
-//         <input
-//             type="text"
-//             name="date"
-//             id="job"
-//             value={chore.date}
-//             onChange={handleChange} />
-//         <input type="button" value="Post" onClick={submitForm} />
-//         </form>
-//     );
-
-// }
-
-// export default Form;
-
-// import React, { useState } from 'react';
-
-// export function Form(props) {
-//     const [chore, setChore] = useState({
-//         task: "",
-//         date: ""
-//     });
-
-//     function submitForm() {
-//         props.handleSubmit(chore);
-//         setChore({ task: '', date: '' });
-//     }
-
-//     function handleChange(event) {
-//         const { name, value } = event.target;
-//         if (name === "date")
-//             setChore(
-//                 { task: chore['task'], date: value }
-//             );
-//         else
-//             setChore(
-//                 { task: value, date: chore['date'] }
-//             );
-//     }
-
-//     return (
-//         <form onSubmit={submitForm}>
-//             <input
-//                 type="text"
-//                 name="task"
-//                 value={chore.task}
-//                 onChange={handleChange}
-//                 className="rectangle-2"
-//             />
-//             <input
-//                 type="date"
-//                 name="date"
-//                 value={chore.date}
-//                 onChange={handleChange}
-//                 className="rectangle-3"
-//             />
-//             <input type="button" value="Post" onClick={submitForm} />
-//         </form>
-//     );
-// }
-
-
 import React, { useState } from 'react';
 
 export function Form(props) {
     const [chore, setChore] = useState({
         task: "",
-        date: ""
+        dueDate: ""
     });
 
     function submitForm(event) {
@@ -114,16 +13,16 @@ export function Form(props) {
             props.handleSubmit(chore);
         }
 
-        setChore({ task: '', date: '' });
+        setChore({ task: '', dueDate: '' });
     }
-
+  
   
     function handleChange(event) {
         const { name, value } = event.target;
         if (name === "date") {
-            setChore({ task: chore['task'], date: value });
+            setChore({ task: chore['task'], dueDate: value });
         } else {
-            setChore({ task: value, date: chore['date'] });
+            setChore({ task: value, dueDate: chore['date'] });
         }
     }
 
@@ -139,7 +38,7 @@ export function Form(props) {
             <input
                 type="date"
                 name="date"
-                value={chore.date}
+                value={chore.dueDate}
                 onChange={handleChange}
                 className="rectangle-3"
             />
