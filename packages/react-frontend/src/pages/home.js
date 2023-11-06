@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import "./style.css";
-import "../index.css";
-import Form from "../components/Form";
+import "./home.css";
 
 function Home() {
   const [tasks, setTasks] = useState([]);
@@ -17,15 +15,40 @@ function Home() {
     const promise = fetch("http://localhost:8000/tasks");
     return promise;
 }
+
   function completeTask(taskId) {
-    const updatedTasks = tasks.filter(task => task.id !== taskId);
-    setTasks(updatedTasks);
+    deleteTaskFromBackend(taskId)
+      .then(() => {
+        //keep all tasks that don't match task id
+        const updatedTasks = tasks.filter(task => task._id !== taskId);
+        setTasks(updatedTasks);
+      })
+      .catch(error => console.error('Error deleting task:', error));
   }
-
-  function removeTask(index) {
-
+  
+  function removeTask(taskId) {
+    deleteTaskFromBackend(taskId)
+      .then(() => {
+        //keep all tasks that don't match task id
+        const updatedTasks = tasks.filter(task => task._id !== taskId);
+        setTasks(updatedTasks);
+      })
+      .catch(error => console.error('Error deleting task:', error));
   }
-
+  
+  function deleteTaskFromBackend(taskId) {
+    return fetch(`http://localhost:8000/tasks/${taskId}`, {
+      method: 'DELETE'
+    })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      console.log(`Task with ID ${taskId} deleted successfully`);
+    });
+  }
+  
+  
     // merged tasklisthead component
     function TaskListHead() {
         return (
@@ -41,20 +64,18 @@ function Home() {
     function TaskList() {
       const boxes = tasks.map((box) => {
         return (
-          <div className='chore-box' >
+          <div className='chore-box' key = {box._id} >
             <div className='chore-name'>TASK: {box.task}</div>
             <div className='chore-date'>DEADLINE: {box.dueDate}</div>
-            <div className='chore-id'>{box.id}</div>
+            {/* <div className='chore-id'>{box._id}</div> */}
             <div className='button-container'>
               <div className='claim-button'>
-                {/* <button onClick={() => props.claimTask(box.id)}> */}
-                <button onClick={() => removeTask()}>
+                <button onClick={() => removeTask(box._id)}>
                   Claim
                 </button>
               </div>
               <div className='complete-button'>
-                {/* <button onClick={() => props.completeTask(box.id)}> */}
-                <button onClick={() => completeTask(box.id)}>
+                <button onClick={() => completeTask(box._id)}>
                   Complete
                 </button>
               </div>
