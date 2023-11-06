@@ -3,6 +3,7 @@
   .box {
     position: relative;
     width: 430px;
+
     }
     
   .box .group {
@@ -10,7 +11,7 @@
     height: 44px;
     position: absolute;  /* This will fix the position relative to the viewport */
     bottom: -940px;  /* Place it 10px above the bottom. Adjust as needed. */
-    left: 115%;  /* Move the left edge of the element to the center of the viewport */
+    left: 105%;  /* Move the left edge of the element to the center of the viewport */
       /* Move the element back half of its width to center it */
     width: 430px;
     z-index: 1000;  /* Ensure it's on top of other elements */
