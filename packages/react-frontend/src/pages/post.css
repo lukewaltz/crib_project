@@ -14,6 +14,7 @@
     width: 430px;
 }
 
+/* entire thing*/ 
 .post-something .overlap {
     background-color: #badfe7;
     height: 265px;
@@ -22,7 +23,7 @@
     top: 319px;
     width: 401px;
 }
-
+ /* assigned to: text */ 
 .post-something .overlap-group {
     height: 32px;
     left: 19px;
@@ -30,18 +31,6 @@
     top: 130px;
     width: 355px;
 }
-
-
-/* task field*/ 
-/* .post-something .rectangle {
-    background-color: #f2fbe0;
-    border-radius: 49px;
-    height: 32px;
-    left: 86px;
-    position: absolute;
-    top: 36px;
-    width: 290px;
-} */
 
 
 .post-something .rectangle-2 {
@@ -81,29 +70,6 @@
     width: 170px;
 }
 
-/* post text and boxes  */
-
-
-/* .post-something .div-wrapper {
-    background-color: #6fb3b8;
-    border-radius: 49px;
-    height: 37px;
-    position: relative;
-    width: 147px;
-}
-
-.post-something .text-wrapper-2 {
-    color: #ffffff;
-    font-family: "Inter-Medium", Helvetica;
-    font-size: 30px;
-    font-weight: 500;
-    left: 33px;
-    letter-spacing: 0;
-    line-height: normal;
-    position: absolute;
-    top: 0;
-    white-space: nowrap;
-} */
 
 /* task */
 .post-something .text-wrapper-3 {
@@ -119,6 +85,7 @@
     width: 59px;
 }
 
+/* due date text */ 
 .post-something .text-wrapper-4 {
     color: #388087;
     font-family: "Inter-Regular", Helvetica;
@@ -386,3 +353,43 @@
     top: 603px;
     white-space: nowrap;
 }
+
+.button,
+a.button,
+button,
+nav li,
+[type=submit],
+[type=reset],
+[type=button] {
+  display: inline-block;
+  border: 1px solid #fff; 
+  border-radius: 10px;
+  background: #6fb3b8; /* White background for buttons */
+  color: white; /* Dark text color for buttons */
+  font-weight: 600;
+  font-family: -apple-system, BlinkMacSystemFont, Helvetica Neue, Helvetica, Arial, sans-serif;
+  font-size: 1rem;
+  text-transform: none;
+  padding: 0.75rem 1.25rem;
+  margin: 0 0 0.5rem 0;
+  vertical-align: middle;
+  text-align: center;
+  cursor: pointer;
+  text-decoration: none;
+  line-height: 1;
+  bottom: 20px;
+  position: relative;
+  top: 180px;
+}
+
+.button:hover,
+a.button:hover,
+button:hover,
+nav li:hover,
+[type=submit]:hover,
+[type=reset]:hover,
+[type=button]:hover {
+  border: 1px solid #ddd; /* Lighter border on hover */
+  background: #ffe78b; /* Lighter background on hover */
+}
+

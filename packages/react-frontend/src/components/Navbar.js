@@ -1,6 +1,6 @@
 import React from 'react';
-    import { Link } from 'react-router-dom';
-    import "../index.css";
+import { Link } from 'react-router-dom';
+import "./navbar.css";
 
 
 const Navbar = () => {
@@ -26,6 +26,3 @@ const Navbar = () => {
 };
 
 export default Navbar;
-
-
-

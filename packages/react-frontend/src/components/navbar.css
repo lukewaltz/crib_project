@@ -1,0 +1,52 @@
+
+/* nav bar */ 
+  .box {
+    position: relative;
+    width: 430px;
+    }
+    
+  .box .group {
+    background-color: #ecece9;
+    height: 44px;
+    position: absolute;  /* This will fix the position relative to the viewport */
+    bottom: -940px;  /* Place it 10px above the bottom. Adjust as needed. */
+    left: 115%;  /* Move the left edge of the element to the center of the viewport */
+      /* Move the element back half of its width to center it */
+    width: 430px;
+    z-index: 1000;  /* Ensure it's on top of other elements */
+  }
+  
+  .box .rectangle {
+      border: 1px solid;
+      border-color: #388087;
+      border-radius: 12px;
+      height: 9px;
+      left: 184px;
+      position: absolute;
+      top: 14px;
+      width: 9px;
+  }
+  
+  .box .div {
+      background-color: #ffe78b;
+      border: 1px solid;
+      border-color: #388087;
+      border-radius: 12px;
+      height: 9px;
+      left: 214px;
+      position: absolute;
+      top: 14px;
+      width: 9px;
+  }
+  
+  .box .rectangle-2 {
+      border: 1px solid;
+      border-color: #388087;
+      border-radius: 12px;
+      height: 9px;
+      left: 244px;
+      position: absolute;
+      top: 14px;
+      width: 9px;
+  }
+  
