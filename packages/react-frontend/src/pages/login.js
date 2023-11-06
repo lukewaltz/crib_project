@@ -81,10 +81,11 @@ const Login = () => {
 
     return (
         <div className="container">
+          <UserForm handleSubmit={updateList} />
+          <h2>Log In</h2>
             <h1>
-                log in
+                Welcome Back!
             </h1>
-        <UserForm handleSubmit={updateList} />
         </div>
     );
 };
