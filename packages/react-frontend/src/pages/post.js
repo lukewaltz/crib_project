@@ -1,5 +1,5 @@
 import React from 'react';
-import "./style.css";
+import "./post.css";
 import Form from '../components/Form'; // Make sure this import path is correct
 
 export const Post = (props) => {

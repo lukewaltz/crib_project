@@ -13,10 +13,10 @@ function Home() {
       .catch(error => console.log(error));
   }, []);
 
-  function listTasks() {
-    return fetch("http://localhost:8000/tasks");
-  }
-
+  function listTasks(){
+    const promise = fetch("http://localhost:8000/tasks");
+    return promise;
+}
   function completeTask(taskId) {
     const updatedTasks = tasks.filter(task => task.id !== taskId);
     setTasks(updatedTasks);
@@ -39,16 +39,16 @@ function Home() {
 
     // merged tasklist component
     function TaskList() {
-      const boxes = tasks.map((box, index) => {
+      const boxes = tasks.map((box) => {
         return (
-          <div className='chore-box' key={index}>
+          <div className='chore-box' >
             <div className='chore-name'>TASK: {box.task}</div>
             <div className='chore-date'>DEADLINE: {box.dueDate}</div>
             <div className='chore-id'>{box.id}</div>
             <div className='button-container'>
               <div className='claim-button'>
                 {/* <button onClick={() => props.claimTask(box.id)}> */}
-                <button onClick={() => removeTask(index)}>
+                <button onClick={() => removeTask()}>
                   Claim
                 </button>
               </div>
