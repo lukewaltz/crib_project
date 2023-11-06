@@ -1,13 +1,17 @@
 import React, { useState } from 'react';
 
 export function Form(props) {
+
     const [chore, setChore] = useState({
         task: "",
-        dueDate: ""
-    });
+        dueDate: "",
+        weight: ""
+     }
+  );
 
-    function submitForm(event) {
-        event.preventDefault(); /* prevent default form submission was running into errors when refreshing*/ 
+  function submitForm() {
+    props.handleSubmit(chore);
+    setChore({task: '', dueDate: '', weight: ''});
 
         if (props.handleSubmit) {
             props.handleSubmit(chore);
