@@ -4,30 +4,30 @@ function UserForm(props) {
   const [user, setUser] = useState(
      {
         username: "",
-        name: "",
-        email: "",
+        password: "",
+        email: ""
      }
   );
 
   function submitForm() {
     props.handleSubmit(user);
-    setUser({username: '', name: '', email: ''});
+    setUser({username: '', password: '', email: ''});
   }
 
 
   function handleChange(event) {
     const { name, value } = event.target;
-    if (name === "name")
+    if (name === "password")
       setUser(
-         {username: user['username'], name: value, email: user['email']}
+         {username: user['username'], password: value, email: user['email']}
       );
     else if (name === "username")    
        setUser(
-         {username: value, name: user['name'], email: user['email']}   
+         {username: value, password: user['password'], email: user['email']}   
        );
-    else
+    else if (name === "email")
         setUser(
-            {username: user['username'], name: user['name'], email: value}
+            {username: user['username'], password: user['password'], email: value}
         );
   }
 
@@ -37,21 +37,21 @@ function UserForm(props) {
         <label htmlFor="username">Username</label>
         <input
             type="text"
-            name="Username"
+            name="username"
             id="username"
             value={user.username}
             onChange={handleChange} />
-        <label htmlFor="name">Name</label>
+        <label htmlFor="password">Password</label>
         <input
             type="text"
-            name="Name"
-            id="name"
-            value={user.name}
+            name="password"
+            id="password"
+            value={user.password}
             onChange={handleChange} />
         <label htmlFor="email">Email</label>
         <input
             type="text"
-            name="Email"
+            name="email"
             id="email"
             value={user.email}
             onChange={handleChange} />
