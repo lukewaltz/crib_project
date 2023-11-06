@@ -1,9 +1,7 @@
-
 import React, { useState } from "react";
 import UserForm from "../components/UserForm";
  
 const Login = () => {
-    // const [characters, setCharacters] = useState([])
 
     // function postUser(user){
     //     const promise = fetch("http://localhost:8000/users", {
@@ -86,6 +84,7 @@ const Login = () => {
             <h1>
                 Welcome Back!
             </h1>
+        <UserForm handleSubmit={updateList} />
         </div>
     );
 };

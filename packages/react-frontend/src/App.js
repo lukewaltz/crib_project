@@ -1,6 +1,5 @@
-import React, {useState} from 'react';
-import { BrowserRouter as Router, Routes, Route }
-    from 'react-router-dom';
+import React, { useState } from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Account from './pages/account';
 import Home from './pages/home';
@@ -8,29 +7,29 @@ import Signup from './pages/signup';
 import Login from './pages/login';
 import Post from './pages/post';
 
-
 function MyApp() {
+  // State to hold tasks
+  const [tasks, setTasks] = useState([]);
 
-  
+  // Function to handle task submission from Post component
+  const handlePostSubmit = (newTask) => {
+    setTasks([...tasks, newTask]);
+  };
 
   return (
     <Router>
       <Navbar />
         <Routes>
-            <Route path='/' element={<Home />} />
-            {/* <Route path='/login;' element={<Login />} /> */}
-            <Route path='/post' element={<Post />} />
-            <Route path='/home' element={<Home />} />
+            {/* pass tasks state and handlePostSubmit to relevant components */}
+            <Route path="/" element={<Home tasks={tasks} setTasks={setTasks} />} />
+            <Route path='/post' element={<Post handleSubmit={handlePostSubmit} />} />
+            <Route path='/home' element={<Home tasks={tasks} />} />
             <Route path='/account' element={<Account />} />
             <Route path='/account/signup' element={<Signup />} />
             <Route path='/account/login' element={<Login />} />
-            {/* <Route path='/signup' element={<Signup />} /> */}
         </Routes>
-      
     </Router>
-
   )
 }
-
 
 export default MyApp;

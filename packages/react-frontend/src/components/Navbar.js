@@ -4,25 +4,28 @@ import React from 'react';
 
 
 const Navbar = () => {
+
     return (
-        <div className='container'>
-            <nav>
-                <ul class='nav'>
-                    <Link to="/post" activeStyle><li>
-                        Post
-                    </li></Link>
+            <div className="box">
+                <div className="group">
+                    <Link to="/post" activeStyle>
+                        <div className="rectangle" />
+                    </Link>
 
-                    <Link to="/home" activeStyle><li>
-                        Home
-                    </li></Link>
+                    <Link to="/home" activeStyle>
+                        <div className="div" />
+                    </Link>
 
-                    <Link to="/account" activeStyle><li>
-                        Account
-                    </li></Link>
-                </ul>
-            </nav>
-        </div>
+                    <Link to="/account" activeStyle>
+                        <div className="rectangle-2" />
+                    </Link>
+                </div>
+            </div>
     );
+    
 };
 
 export default Navbar;
+
+
+

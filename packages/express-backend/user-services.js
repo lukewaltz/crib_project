@@ -61,6 +61,7 @@ function addUser(user) {
     return promise;
 }
 
+/* add error handling */ 
 function addTasks(username, newTask) {
     const promise = userModel.findOneAndUpdate(
         { username:username }, 
