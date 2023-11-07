@@ -8,17 +8,6 @@ dotenv.config();
 
 mongoose
     .connect(
-        /*  
-            "mongodb+srv://" +
-            process.env.MONGO_USER +
-            ":" +
-            process.env.MONGO_PWD +
-            "@" +
-            process.env.MONGO_CLUSTER +
-            "/" +
-            process.env.MONGO_DB +
-            "?retryWrites=true&w=majority",
-        */
         process.env.MONGO_URL,
         // "mongodb://localhost:27017/users",
         {
@@ -61,16 +50,29 @@ function addUser(user) {
     return promise;
 }
 
-function addTasks(username, newTask) {
+function addTask(username, newTask) {
     const promise = userModel.findOneAndUpdate(
-        { username:username }, 
+        { username: username }, 
         { $push: { tasks: newTask } }, 
-        { new: true },).catch((e) => {
-            if(e) {
-                return 500;
-            }
-        }
-    );
+        { new: true }
+    ).catch((error) => {
+        console.error("Error adding task:", error);
+        return Promise.reject(error);
+    });
+
+    return promise;
+}
+
+function removeTask(username, taskId) {
+    const promise = userModel.findOneAndUpdate(
+        { username: username }, 
+        { $pull: { tasks: taskId } }, 
+        { new: true }
+    ).catch((error) => {
+        console.error("Error removing task:", error);
+        return Promise.reject(error);
+    });
+
     return promise;
 }
 
@@ -85,7 +87,8 @@ async function deleteUser(id) {
 
 export default {
     addUser,
-    addTasks,
+    addTask,
+    removeTask,
     getUsers,
     deleteUser,
     findUserByUsername,

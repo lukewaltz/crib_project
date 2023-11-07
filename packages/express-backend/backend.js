@@ -16,12 +16,14 @@ app.use(cors());
 app.use(express.json());
 app.use(session({secret:"secret", resave:false, saveUninitialized:true}));
 
-// users
+//Users Endpoints
+
+// Login and create new user
 app.post('/login', async (req, res) => {
     try {
         const user = await userServices.findUserByUsername(req.body.username);
 
-        if(!user){
+        if (!user) {
             return res.status(404).send('User not found');
         }
 
@@ -41,11 +43,13 @@ app.post('/login', async (req, res) => {
     }
 });
 
+// logout of current user session
 app.get('/logout', (req, res) => {
     req.session.destroy();
     return res.status(200).send();
 });
 
+// create new user
 app.post('/signup', async (req, res) => {
     userServices.addUser(req.body).then((error) =>{
         // change error code to reason unable to signup
@@ -57,27 +61,44 @@ app.post('/signup', async (req, res) => {
     });
 });
 
+// homescreen
 app.get('/', (req, res) => {
     if(!req.session.user){
         return res.status(401).send('not logged in');
     }
-
     return res.status(200).send('logged in');
 });
 
-app.put('/users/:username/addTask', (req, res) => {
+// give user a task that is already in task list given it has not been assigned already
+app.put('/users/:username/assign/:id', (req, res) => {
     const username = req.params.username;
-    const newTask = req.body.tasks;
-    userServices.addTasks(username, newTask)
+    const id = req.params.id;
+
+    taskServices.findTask(id)
+    .then((task) => {
+        if (task && task.assigned === false) {
+            return userServices.addTask(username, task)
+                .then((user) => {
+                    // Update the task's "assigned" field to true
+                    task.assigned = true;
+                    return task.save()
+                        .then(() => user); // Return the updated user
+                });
+        } else if (task && task.assigned === true) {
+            throw new Error("Task is already assigned");
+        } else {
+            throw new Error("Task not found");
+        }
+    })
         .then((user) => {
             res.status(200).json(user);
         })
-        .catch(() => {
-            res.status(404).json({ error:'User not found' });
-        })
-
+        .catch((error) => {
+            res.status(404).json({ error: error.message });
+        });
 });
 
+// get users, either by url field or just entire user list
 app.get('/users', (req, res) => {
     const username = req.query.username;
     const email = req.query.email;
@@ -116,6 +137,7 @@ app.get('/users', (req, res) => {
     }
 });
 
+// remove a user from the user list
 app.delete('/users/:id', async (req, res) => {
     const id = req.params.id;
     await userServices.deleteUser(id)
@@ -129,6 +151,7 @@ app.delete('/users/:id', async (req, res) => {
 
 // tasks
 /* when does response get sent? */
+// get tasks field
 app.get('/tasks', (req, res) => {
     taskServices.getTasks()
         .then((tasks) => {
@@ -139,25 +162,24 @@ app.get('/tasks', (req, res) => {
         });
 });
 
+// add new task to task list, will be marked with assigned=false
 app.post('/tasks', (req, res) => {
     const newTask = req.body
     if (newTask === undefined){
         res.status(404).send("newTask not found");
     } else {
     taskServices.addTask(newTask)
-        .then(res.status(201)
-        .send(newTask)
-        .catch((error) => console.error("error caught in app.post(task)", error)));
-    //     .then((error) =>{
-    //         if(error == 500){
-    //             return res.status(500).send('Could not add task');
-    //         }else{
-    //             return res.status(201).send('Added task');
-    //         }
-    // });
+        .then((error) =>{
+            if(error == 500){
+                return res.status(500).send('Could not add task');
+            } else {
+                return res.status(201).send('Added task');
+            }
+        });
     }
 });
 
+// remove a task from the task list
 app.delete('/tasks/:id', async (req, res) => {
     const id = req.params.id;
     await taskServices.deleteTask(id)
