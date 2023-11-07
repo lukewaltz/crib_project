@@ -24,7 +24,6 @@ async function findUserByUsername(username) {
     });
 }
 
-
 function getUsers(username, email, name) {
     let promise;
     if (username) {
