@@ -8,16 +8,6 @@ dotenv.config();
 
 mongoose
     .connect(
-        /*"mongodb+srv://" +
-          process.env.MONGO_USER +
-          ":" +
-          process.env.MONGO_PWD +
-          "@" +
-          process.env.MONGO_CLUSTER +
-          "/" +
-          process.env.MONGO_DB +
-          "?retryWrites=true&w=majority",
-          */
         process.env.MONGO_URL,
         // "mongodb://localhost:27017/users",
         {
@@ -27,11 +17,19 @@ mongoose
     .catch((error) => console.log(error));
 
 function findTask(id) {
-    taskModel.findById(id).catch((err) => {
-        if(err) {
-            return undefined;
-        }
-    });
+    return taskModel.findById(id)
+        .exec() // Add .exec() to return a promise
+        .then((task) => {
+            if (!task) {
+                // Task not found
+                return null;
+            }
+            return task; // Return the found task
+        })
+        .catch((error) => {
+            console.error("Error finding task:", error);
+            throw error; // Rethrow the error for proper handling
+        });
 }
 
 function getTasks() {

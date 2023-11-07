@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
-// import bcrypt from "bcrypt";
+import bcrypt from "bcrypt";
+import task from "./task.js";
 
 var SALT_WORK_FACTOR = 10;
 
@@ -25,11 +26,12 @@ const UserSchema = new mongoose.Schema(
             required: true,
             trim: true,
         },
-        tasks: {
-            type: [String],
-            required: false,
-            trim: true,
-        }
+        tasks: [
+            {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: "Task",
+            }
+        ]
     },
     { collection: "users_list" }
 );
