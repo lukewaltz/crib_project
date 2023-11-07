@@ -5,6 +5,7 @@ import userServices from './user-services.js';
 import User from "./user.js";
 import { createRequire } from 'module';
 import taskServices from "./task-services.js";
+import backlogServices from "./backlog-services.js";
 
 const require = createRequire(import.meta.url);
 
@@ -97,6 +98,31 @@ app.put('/users/:username/assign/:id', (req, res) => {
         .catch((error) => {
             res.status(404).json({ error: error.message });
         });
+});
+
+//complete a task -> remove it from list
+app.put('/users/:username/complete/:id', async (req, res) => {
+    const username = req.params.username;
+    const taskId = req.params.id;
+    try {
+        // remove task from user's list
+        await userServices.removeTask(username, taskId);
+
+        // add task to backlog
+        taskServices.findTask(taskId)
+            .then((task) => {
+                return backlogServices.addTask(username, task);
+            })
+
+        // delete task from task list
+        await taskServices.deleteTask(taskId);
+
+        // If both operations are successful, send a success response
+        res.json({ message: 'Task completed successfully' });
+    } catch (error) {
+        // Handle errors appropriately
+        res.status(500).json({ error: 'Failed to delete task' });
+    }
 });
 
 // get users, either by url field or just entire user list
@@ -202,6 +228,28 @@ app.post('/tasks', (req, res) => {
             // Handle specific error or use a general error message
             res.status(500).json({ error: 'Could not add task' });
         });
+});
+
+//backlog services
+app.get('/backlog', (req, res) => {
+    backlogServices.getTasks()
+        .then((tasks) => {
+            res.status(200).json({ backlog:tasks });
+        })
+        .catch((error) => {
+            res.status(500).json({ error })
+        });
+});
+
+app.delete('/backlog/:id', async (req, res) => {
+    const id = req.params.id;
+    await backlogServices.deleteTask(id)
+        .then(() => {
+            res.json('Task deleted successfully')
+        })
+        .catch(() => {
+            res.status(404).json('Could not delete task');
+        })
 });
 
 // all
