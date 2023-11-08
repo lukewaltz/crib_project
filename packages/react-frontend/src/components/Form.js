@@ -49,7 +49,7 @@ function Form(props) {
             onChange={handleChange} />
         <label htmlFor="dueDate">Date</label>
         <input
-            type="text"
+            type="date"
             name="dueDate"
             id="date"
             value={chore.dueDate}
