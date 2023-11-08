@@ -9,15 +9,15 @@
   .box .group {
     background-color: #ecece9;
     height: 44px;
-    position: fixed;  /* fixed position relative to the viewport */
+    position: fixed; 
     bottom: 10px;  
     left: 50%; 
     transform: translateX(-50%);
     width: 430px;
-    z-index: 1000;  
+    z-index: 1;  
   }
   
-  
+
   .box .rectangle {
       border: 1px solid;
       border-color: #388087;

@@ -23,17 +23,9 @@
     top: 319px;
     width: 401px;
 }
- /* assigned to: text */ 
-.post-something .overlap-group {
-    height: 32px;
-    left: 19px;
-    position: absolute;
-    top: 130px;
-    width: 355px;
-}
 
 
-.post-something .rectangle-2 {
+.post-something .task-field {
     background-color: #f2fbe0;
     border-radius: 49px;
     height: 32px;
@@ -43,10 +35,8 @@
     width: 290px;
 }
 
-
-
 /* date field*/ 
-.post-something .rectangle-3 {
+.post-something .duedate-field{
     background-color: #f2fbe0;
     border-radius: 49px;
     height: 35px;
@@ -56,23 +46,21 @@
     width: 206px;
 }
 
-/* assigned to */
-.post-something .text-wrapper {
-    color: #388087;
-    font-family: "Inter-Regular", Helvetica;
-    font-size: 20px;
-    font-weight: 400;
-    left: 0;
-    letter-spacing: 0;
-    line-height: normal;
+/* weight field */ 
+.post-something .weight-field{
+    background-color: #f2fbe0;
+    border-radius: 49px;
+    height: 35px;
+    left: 149px;
     position: absolute;
-    top: 3px;
-    width: 170px;
+    top: 80px;
+    width: 206px;
 }
 
 
+
 /* task */
-.post-something .text-wrapper-3 {
+.post-something .task-text {
     color: #388087;
     font-family: "Inter-Regular", Helvetica;
     font-size: 20px;
@@ -86,7 +74,7 @@
 }
 
 /* due date text */ 
-.post-something .text-wrapper-4 {
+.post-something .due-date-text{
     color: #388087;
     font-family: "Inter-Regular", Helvetica;
     font-size: 20px;
@@ -99,7 +87,37 @@
     width: 103px;
 }
 
-/* entire group*/ 
+/* weight text */
+.post-something .weight-text {
+    color: #388087;
+    font-family: "Inter-Regular", Helvetica;
+    font-size: 20px;
+    font-weight: 400;
+    left: 19px;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    top: 130px;
+    width: 170px;
+}
+
+/* assignee text */
+.post-something .assignee-text {
+    color: #388087;
+    font-family: "Inter-Regular", Helvetica;
+    font-size: 20px;
+    font-weight: 400;
+    left: 19px;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    top: 175px;
+    width: 170px;
+}
+
+
+
+/* entire group */
 .post-something .overlap-2 {
     background-color: #badfe7;
     height: 217px;
@@ -107,7 +125,7 @@
     position: absolute;
     top: 652px;
     width: 401px;
-}
+} 
 
 /* title, option 1, option 2 text*/ 
 

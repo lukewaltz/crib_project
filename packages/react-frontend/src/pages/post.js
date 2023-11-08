@@ -32,20 +32,15 @@ export const Post = (props) => {
         <div className="post-something">
             <div className="div">
                 <div className="overlap">
-                    
-                    <div className="rectangle" />
-                    <div className="rectangle-2" />
-                    <div className="overlap-group">
-                        <div className="text-wrapper">ASSIGNED TO:</div>
-                    </div>
                     <div className="group">
                         <div className="div-wrapper">
                             <Form handleSubmit = {handleSubmit} />
-
                         </div>
                     </div>
-                    <div className="text-wrapper-3">TASK</div>
-                    <div className="text-wrapper-4">DUE DATE</div>
+                    <div className="task-text">TASK</div>
+                    <div className="due-date-text">DUE DATE</div>
+                    <div className="weight-text">WEIGHT:</div>
+                    <div className = "assignee-text"> ASSIGNEE:</div>
                 </div>
                 <div className="overlap-2">
                     <div className="text-wrapper-5">TITLE</div>
@@ -55,9 +50,7 @@ export const Post = (props) => {
                     <div className="rectangle-5" />
                     <div className="rectangle-6" />
                     <div className="overlap-wrapper">
-                        <div className="div-wrapper">
-                            <div className="text-wrapper-2">POST</div>
-                        </div>
+                    <div className="2nd-post">POST</div>
                     </div>
                     <div className="overlap-3">
                         <div className="ellipse" />
