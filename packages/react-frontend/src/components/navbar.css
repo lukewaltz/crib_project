@@ -9,13 +9,14 @@
   .box .group {
     background-color: #ecece9;
     height: 44px;
-    position: absolute;  /* This will fix the position relative to the viewport */
-    bottom: -940px;  /* Place it 10px above the bottom. Adjust as needed. */
-    left: 105%;  /* Move the left edge of the element to the center of the viewport */
-      /* Move the element back half of its width to center it */
+    position: fixed;  /* fixed position relative to the viewport */
+    bottom: 10px;  
+    left: 50%; 
+    transform: translateX(-50%);
     width: 430px;
-    z-index: 1000;  /* Ensure it's on top of other elements */
+    z-index: 1000;  
   }
+  
   
   .box .rectangle {
       border: 1px solid;
