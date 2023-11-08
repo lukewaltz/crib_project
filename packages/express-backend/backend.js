@@ -104,7 +104,10 @@ app.put('/users/:username/assign/:id', (req, res) => {
 app.put('/users/:username/complete/:id', async (req, res) => {
     const username = req.params.username;
     const taskId = req.params.id;
+
+    const user = userServices.findUserByUsername(username)
     try {
+
         // remove task from user's list
         await userServices.removeTask(username, taskId);
 
