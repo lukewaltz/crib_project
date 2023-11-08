@@ -379,7 +379,7 @@ nav li,
   line-height: 1;
   bottom: 20px;
   position: relative;
-  top: 180px;
+  /* top: 200px; */
 }
 
 .button:hover,
