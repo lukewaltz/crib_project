@@ -3,6 +3,7 @@ import "./home.css";
 
 function Home() {
   const [tasks, setTasks] = useState([]);
+  const [polls, setPolls] = useState([]);
 
   useEffect(() => {
     listTasks()
@@ -11,8 +12,20 @@ function Home() {
       .catch(error => console.log(error));
   }, []);
 
-  function listTasks(){
+  useEffect(() => {
+    listPolls()
+      .then(res => res.json())
+      .then(json => setPolls(json["poll_list"]))
+      .catch(error => console.log(error));
+  })
+
+function listTasks(){
     const promise = fetch("http://localhost:8000/tasks");
+    return promise;
+}
+
+function listPolls(){
+    const promise = fetch("http://localhost:8000/polls");
     return promise;
 }
 
@@ -25,6 +38,16 @@ function Home() {
       })
       .catch(error => console.error('Error deleting task:', error));
   }
+
+    function completePoll(pollId) {
+    deletePollFromBackend(pollId)
+      .then(() => {
+        //keep all tasks that don't match task id
+        const updatedPolls = polls.filter(poll => poll._id !== pollId);
+        setTasks(updatedPolls);
+      })
+      .catch(error => console.error('Error deleting poll:', error));
+  }
   
   function removeTask(taskId) {
     deleteTaskFromBackend(taskId)
@@ -35,17 +58,35 @@ function Home() {
       })
       .catch(error => console.error('Error deleting task:', error));
   }
+
+  function removePoll(pollId) {
+    deleteTaskFromBackend(pollId)
+      .then(() => {
+        //keep all polls that don't match polls id
+        const updatedPolls = polls.filter(poll => poll._id !== pollId);
+        setTasks(updatedPolls);
+      })
+      .catch(error => console.error('Error deleting task:', error));
+  }
   
-  function deleteTaskFromBackend(taskId) {
-    return fetch(`http://localhost:8000/tasks/${taskId}`, {
+  async function deleteTaskFromBackend(taskId) {
+    const response = await fetch(`http://localhost:8000/tasks/${taskId}`, {
       method: 'DELETE'
-    })
-    .then(response => {
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-      console.log(`Task with ID ${taskId} deleted successfully`);
     });
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    console.log(`Task with ID ${taskId} deleted successfully`);
+  }
+
+  async function deletePollFromBackend(pollId) {
+    const response = await fetch(`http://localhost:8000/polls/${pollId}`, {
+      method: 'DELETE'
+    });
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    console.log(`Poll with ID ${pollId} deleted successfully`);
   }
   
   
@@ -59,6 +100,17 @@ function Home() {
             </thead>
         );
     }
+
+        // merged polllisthead component
+        function PollListHead() {
+          return (
+              <thead>
+                  <tr>
+                      <th>LIST OF POLLS:</th>
+                  </tr>
+              </thead>
+          );
+      }
 
     // merged tasklist component
     function TaskList() {
@@ -90,9 +142,46 @@ function Home() {
       );
     }
 
+        // merged polllist component
+        function PollList() {
+          const boxes = polls.map((box) => {
+            return (
+              <div className='poll-box' key = {box._id} >
+                <div className='poll-title'>POLL: {box.title}</div>
+                <div className='poll-option1'>DEADLINE: {box.option1}</div>
+                {/* <div className='chore-id'>{box._id}</div> */}
+                <div className='button-container'>
+                  <div className='remove-button'>
+                    <button onClick={() => removeTask(box._id)}> 
+                      Remove
+                    </button>
+                  </div>
+                  <div className='vote-button'>
+                    <button onClick={() => completeTask(box._id)}>
+                                          {/* onClick NEEDS TO CHANGE TO TRACK VOTES */}
+                      Vote
+                    </button>
+                  </div>
+                </div>
+              </div>
+            );
+          });
+          return (
+            <div>
+              {boxes}
+            </div>
+          );
+        }
+
     function Stack(props) {
         return (
             <div className='box-container'>
+                <PollListHead />
+                <PollList 
+                  pollData={polls}
+                  removePoll={removePoll}
+                  completePoll={completePoll}
+                  />
                 <TaskListHead />
                 <TaskList 
                     taskData={tasks} 

@@ -32,7 +32,7 @@ export const Post = (props) => {
     function handlePollSubmit(poll){
         console.log(poll.poll)
         
-        fetch('http://localhost:8000/tasks', {
+        fetch('http://localhost:8000/polls', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -57,20 +57,11 @@ export const Post = (props) => {
         <div className="post-something">
             <div className="div">
                 <div className="overlap">
-                    
-                    <div className="rectangle" />
-                    {/* <div className="rectangle-2" /> */}
-                    <div className="overlap-group">
-                        {/* <div className="text-wrapper">ASSIGNED TO:</div> */}
-                    </div>
                     <div className="group">
                         <div className="div-wrapper">
                             <Form handleSubmit = {handleSubmit} />
-
                         </div>
                     </div>
-                    {/* <div className="text-wrapper-3">TASK</div>
-                    <div className="text-wrapper-4">DUE DATE</div> */}
                 </div>
                 <div className="overlap-2">
                     <PollForm handleSubmit = {handlePollSubmit}/>
