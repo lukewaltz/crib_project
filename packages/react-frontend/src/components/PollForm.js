@@ -24,11 +24,11 @@ function PollForm(props) {
       );
     else if (name === "option1")
     setPoll(
-        {title: value, option1: poll['option1'], option2: poll['option2']}
+        {title: poll['title'], option1: value, option2: poll['option2']}
      );
     else if (name === "option2")
     setPoll(
-        {title: value, option1: poll['option1'], option2: poll['option2']}
+        {title: poll['title'], option1: poll['option1'], option2: value}
      );
   }
 
