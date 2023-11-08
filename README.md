@@ -24,7 +24,7 @@ Design Standards:
 2. All other helper files should be camelCase. (non-component files)
 3. All the folder names should be camelCase.
 4. CSS files should be named the same as the component PascalCase. Global CSS which applies to all components should be placed in global.css and should be named in camelCase
-5. CSS class names should use a standard naming convention (personally use kebab-case because it's used by most of the CSS framework classes) or any standard practice. Document with several conventions: CSS naming conventions.
+5. CSS class names should use a standard naming convention.
 6. Use the DRY principle (Don't repeat yourself).
 7. Create multiple files instead of writing a big file. (Componentization of code: fix to small functionality for each file)
 8. Place all your CSS files in one common folder.
