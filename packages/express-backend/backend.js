@@ -230,6 +230,17 @@ app.get('/polls', (req, res) => {
         });
 });
 
+app.delete('/polls/:id', async (req, res) => {
+    const id = req.params.id;
+    await pollServices.deletePoll(id)
+    .then(() => {
+        res.json('Poll deleted successfully')
+    })
+    .catch(() => {
+        res.status(404).json('could not delete poll');
+    })
+});
+
 // post poll
 app.post("/polls", function (req, res) {  
     const newPoll = req.body;

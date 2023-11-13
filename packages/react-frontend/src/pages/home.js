@@ -17,7 +17,7 @@ function Home() {
       .then(res => res.json())
       .then(json => setPolls(json["poll_list"]))
       .catch(error => console.log(error));
-  })
+  }, []);
 
 function listTasks(){
     const promise = fetch("http://localhost:8000/tasks");
@@ -44,7 +44,7 @@ function listPolls(){
       .then(() => {
         //keep all tasks that don't match task id
         const updatedPolls = polls.filter(poll => poll._id !== pollId);
-        setTasks(updatedPolls);
+        setPolls(updatedPolls);
       })
       .catch(error => console.error('Error deleting poll:', error));
   }
@@ -64,7 +64,7 @@ function listPolls(){
       .then(() => {
         //keep all polls that don't match polls id
         const updatedPolls = polls.filter(poll => poll._id !== pollId);
-        setTasks(updatedPolls);
+        setPolls(updatedPolls);
       })
       .catch(error => console.error('Error deleting poll:', error));
   }
@@ -152,13 +152,13 @@ function listPolls(){
             {/* <div className='chore-id'>{box._id}</div> */}
             <div className='button-container'>
               <div className='poll-option1'>
-              <button onClick={() => completeTask(box._id)}>
-                  Option1: {box.option2}
+              <button onClick={() => removePoll(box._id)}>
+                  {box.option1}
                 </button>
               </div>
               <div className='poll-option2'>
-                <button onClick={() => completeTask(box._id)}>
-                  Option2: {box.option2}
+                <button onClick={() => completePoll(box._id)}>
+                  {box.option2}
                 </button>
               </div>
             </div>
