@@ -1,6 +1,7 @@
 import React from 'react';
 import "./post.css";
 import Form from '../components/Form'; // Make sure this import path is correct
+import PollForm from '../components/PollForm';
 
 export const Post = (props) => {
 
@@ -28,15 +29,20 @@ export const Post = (props) => {
         });
     }
 
+    function handlePollSubmit(poll){
+        console.log(poll.poll)
+
+    }
+
     return (
         <div className="post-something">
             <div className="div">
                 <div className="overlap">
                     
                     <div className="rectangle" />
-                    <div className="rectangle-2" />
+                    {/* <div className="rectangle-2" /> */}
                     <div className="overlap-group">
-                        <div className="text-wrapper">ASSIGNED TO:</div>
+                        {/* <div className="text-wrapper">ASSIGNED TO:</div> */}
                     </div>
                     <div className="group">
                         <div className="div-wrapper">
@@ -44,21 +50,11 @@ export const Post = (props) => {
 
                         </div>
                     </div>
-                    <div className="text-wrapper-3">TASK</div>
-                    <div className="text-wrapper-4">DUE DATE</div>
+                    {/* <div className="text-wrapper-3">TASK</div>
+                    <div className="text-wrapper-4">DUE DATE</div> */}
                 </div>
                 <div className="overlap-2">
-                    <div className="text-wrapper-5">TITLE</div>
-                    <div className="text-wrapper-6">OPTION 1</div>
-                    <div className="text-wrapper-7">OPTION 2</div>
-                    <div className="rectangle-4" />
-                    <div className="rectangle-5" />
-                    <div className="rectangle-6" />
-                    <div className="overlap-wrapper">
-                        <div className="div-wrapper">
-                            <div className="text-wrapper-2">POST</div>
-                        </div>
-                    </div>
+                    <PollForm handleSubmit = {handlePollSubmit}/>
                     <div className="overlap-3">
                         <div className="ellipse" />
                         <div className="text-wrapper-8">+</div>
