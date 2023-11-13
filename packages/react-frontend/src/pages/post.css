@@ -134,8 +134,7 @@
     left: 19px;
     position: absolute;
     top: 652px;
-    width: 401px;
-    padding: 10px;
+    width: 400px;
     overflow: auto; /* adding a scroller if content exceeds space  */
 }
 

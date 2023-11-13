@@ -147,7 +147,7 @@ function listPolls(){
     function PollList() {
       const boxes = polls.map((box) => {
         return (
-          <div className='poll-box' key = {box._id} >
+          <div className='chore-box' key = {box._id} >
             <div className='poll-title'>POLL: {box.title}</div>
             {/* <div className='chore-id'>{box._id}</div> */}
             <div className='button-container'>

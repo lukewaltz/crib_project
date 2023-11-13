@@ -68,20 +68,14 @@ export const Post = (props) => {
                     <div className = "assignee-text"> ASSIGNEE</div>
                 </div>
                 <div className="poll-box ">
+                <div className="group">
+                        <div className="div-wrapper">
+                            <PollForm handleSubmit = {handlePollSubmit} />
+                        </div>
+                    </div>
                     <div className="title2-text">TITLE</div>
                     <div className="option1-text ">OPTION 1</div>
                     <div className="option2-text ">OPTION 2</div>
-                            <PollForm handleSubmit = {handlePollSubmit} />
-                    {/* <div className="title2-field" />
-                    <div className="option1-field" />
-                    <div className="option2-field" />
-                    <div className="overlap-wrapper">
-                    <div className="2nd-post">POST</div>
-                    </div> */}
-                    <div className="overlap-3">
-                        <div className="ellipse" />
-                        <div className="text-wrapper-8">+</div>
-                    </div>
                 </div>
                 <div className="overlap-4">
                     <div className="text-wrapper-9">TASK</div>

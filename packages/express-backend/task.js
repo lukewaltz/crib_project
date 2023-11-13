@@ -18,8 +18,8 @@ const TaskSchema = new mongoose.Schema(
             required: false,
             trim: true,
         },
-        assigned: {
-            type: Boolean,
+        assignee: {
+            type: String,
             required: false,
             default: false,
             trim: true,
