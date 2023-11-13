@@ -218,6 +218,22 @@ app.delete('/tasks/:id', async (req, res) => {
         })
 });
 
+
+// post poll
+app.post("/polls", function (req, res) {  
+    if (req.body) {
+      fs.writeFileSync("data.json", JSON.stringify(req.body));
+      res.send({
+        message: "Data Saved",
+      });
+    } else {
+      res.status(400).send({
+        message: "Error No Data",
+      });
+    }
+  });
+
+
 app.post('/tasks', (req, res) => {
     const newTask = req.body;
     taskServices.addTask(newTask)
