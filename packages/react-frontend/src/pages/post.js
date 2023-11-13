@@ -1,6 +1,6 @@
 import React from 'react';
 import "./post.css";
-import Form from '../components/Form'; // Make sure this import path is correct
+import Form from '../components/Form'; 
 import PollForm from '../components/PollForm';
 
 export const Post = (props) => {
@@ -56,15 +56,28 @@ export const Post = (props) => {
     return (
         <div className="post-something">
             <div className="div">
-                <div className="overlap">
+                <div className="task-box">
                     <div className="group">
                         <div className="div-wrapper">
                             <Form handleSubmit = {handleSubmit} />
                         </div>
                     </div>
+                    <div className="task-text">TASK</div>
+                    <div className="due-date-text">DUE DATE</div>
+                    <div className="weight-text">WEIGHT</div>
+                    <div className = "assignee-text"> ASSIGNEE</div>
                 </div>
-                <div className="overlap-2">
-                    <PollForm handleSubmit = {handlePollSubmit}/>
+                <div className="poll-box ">
+                    <div className="title2-text">TITLE</div>
+                    <div className="option1-text ">OPTION 1</div>
+                    <div className="option2-text ">OPTION 2</div>
+                    <PollForm handleSubmit = {handleSubmit} />
+                    {/* <div className="title2-field" />
+                    <div className="option1-field" />
+                    <div className="option2-field" />
+                    <div className="overlap-wrapper">
+                    <div className="2nd-post">POST</div>
+                    </div> */}
                     <div className="overlap-3">
                         <div className="ellipse" />
                         <div className="text-wrapper-8">+</div>
@@ -84,11 +97,11 @@ export const Post = (props) => {
                                 POST <br />
                                 SOMETHING
                             </div>
-                            <div className="text-wrapper-10">!</div>
+                            <div className="explanationpoint">!</div>
                         </div>
                     </div>
                 </div>
-                <div className="text-wrapper-11">POLL</div>
+                <div className="poll-text">POLL</div>
             </div>
         </div>
     );
@@ -96,4 +109,3 @@ export const Post = (props) => {
 
  
 export default Post;
-

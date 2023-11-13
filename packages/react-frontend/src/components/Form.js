@@ -40,36 +40,41 @@ function Form(props) {
 
   return (
         <form>
-        <label htmlFor="task">Task</label>
         <input
             type="text"
             name="task"
             id="name"
             value={chore.task}
-            onChange={handleChange} />
-        <label htmlFor="dueDate">Date</label>
+            onChange={handleChange}
+            className="task-field"
+        />
         <input
             type="date"
             name="dueDate"
             id="date"
             value={chore.dueDate}
-            onChange={handleChange} />
-        <label htmlFor="assignee">Assign To</label>
+            onChange={handleChange}
+            className="duedate-field"
+        />
         <input
             type="text"
             name="assignee"
             id="assignee"
             value={chore.assignee}
-            onChange={handleChange} />
-        <label htmlFor="weight">Weight</label>
+            onChange={handleChange}
+            className="assignee-field"
+        />
         <input
             type="number"
             name="weight"
             id="weight"
             value={chore.weight}
-            onChange={handleChange} />
-        <input type="button" value="Post" onClick={submitForm} />
+            onChange={handleChange}
+            className="weight-field"
+        />
+        <input type="submit" value="Post" />
         </form>
+        
     );
 
 }
