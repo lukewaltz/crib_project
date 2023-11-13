@@ -59,7 +59,7 @@ function PollForm(props) {
             onChange={handleChange} 
             className="option2-field"
             />
-        <input type="submit" value="Post" />
+        <input type="submit" value="Post" onClick={submitForm}/>
         </form>
     );
 
