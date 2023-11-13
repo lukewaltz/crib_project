@@ -35,28 +35,31 @@ function PollForm(props) {
 
   return (
         <form>
-        <label htmlFor="title">Title</label>
         <input
             type="text"
             name="title"
             id="title"
             value={poll.title}
-            onChange={handleChange} />
-        <label htmlFor="option1">Option 1</label>
+            onChange={handleChange} 
+            className="title2-field"
+            />
         <input
             type="text"
             name="option1"
             id="option1"
             value={poll.option1}
-            onChange={handleChange} />
-        <label htmlFor="option2">Option 2</label>
+            onChange={handleChange}
+            className="option1-field"
+            />
         <input
             type="text"
             name="option2"
             id="option2"
             value={poll.option2}
-            onChange={handleChange} />
-        <input type="button" value="Post" onClick={submitForm} />
+            onChange={handleChange} 
+            className="option2-field"
+            />
+        <input type="submit" value="Post" />
         </form>
     );
 
