@@ -90,135 +90,135 @@ function listPolls(){
   }
   
   
-    // merged tasklisthead component
-    function TaskListHead() {
-        return (
-            <thead>
-                <tr>
-                    <th>LIST OF CHORES:</th>
-                </tr>
-            </thead>
-        );
-    }
+  // merged tasklisthead component
+  function TaskListHead() {
+      return (
+          <thead>
+              <tr>
+                  <th>LIST OF CHORES:</th>
+              </tr>
+          </thead>
+      );
+  }
 
-        // merged polllisthead component
-        function PollListHead() {
-          return (
-              <thead>
-                  <tr>
-                      <th>LIST OF POLLS:</th>
-                  </tr>
-              </thead>
-          );
-      }
+  // merged polllisthead component
+  function PollListHead() {
+    return (
+        <thead>
+            <tr>
+                <th>LIST OF POLLS:</th>
+            </tr>
+        </thead>
+    );
+}
 
-    // merged tasklist component
-    function TaskList() {
-      const boxes = tasks.map((box) => {
-        return (
-          <div className='chore-box' key = {box._id} >
-            <div className='chore-name'>TASK: {box.task}</div>
-            <div className='chore-date'>DEADLINE: {box.dueDate}</div>
-            {/* <div className='chore-id'>{box._id}</div> */}
-            <div className='button-container'>
-              <div className='claim-button'>
-                <button onClick={() => removeTask(box._id)}>
-                  Claim
-                </button>
-              </div>
-              <div className='complete-button'>
-                <button onClick={() => completeTask(box._id)}>
-                  Complete
-                </button>
-              </div>
+  // merged tasklist component
+  function TaskList() {
+    const boxes = tasks.map((box) => {
+      return (
+        <div className='chore-box' key = {box._id} >
+          <div className='chore-name'>TASK: {box.task}</div>
+          <div className='chore-date'>DEADLINE: {box.dueDate}</div>
+          <div className = 'chore-assignee'> ASSIGNED TO: {box.assignee}</div>
+          <div className='button-container'>
+            <div className='claim-button'>
+              <button onClick={() => removeTask(box._id)}>
+                Claim
+              </button>
+            </div>
+            <div className='complete-button'>
+              <button onClick={() => completeTask(box._id)}>
+                Complete
+              </button>
             </div>
           </div>
-        );
-      });
-      return (
-        <div>
-          {boxes}
         </div>
       );
-    }
-
-        // merged polllist component
-        function PollList() {
-          const boxes = polls.map((box) => {
-            return (
-              <div className='poll-box' key = {box._id} >
-                <div className='poll-title'>POLL: {box.title}</div>
-                <div className='poll-option1'>DEADLINE: {box.option1}</div>
-                {/* <div className='chore-id'>{box._id}</div> */}
-                <div className='button-container'>
-                  <div className='remove-button'>
-                    <button onClick={() => removeTask(box._id)}> 
-                      Remove
-                    </button>
-                  </div>
-                  <div className='vote-button'>
-                    <button onClick={() => completeTask(box._id)}>
-                                          {/* onClick NEEDS TO CHANGE TO TRACK VOTES */}
-                      Vote
-                    </button>
-                  </div>
-                </div>
-              </div>
-            );
-          });
-          return (
-            <div>
-              {boxes}
-            </div>
-          );
-        }
-
-    function Stack(props) {
-        return (
-            <div className='box-container'>
-                <PollListHead />
-                <PollList 
-                  pollData={polls}
-                  removePoll={removePoll}
-                  completePoll={completePoll}
-                  />
-                <TaskListHead />
-                <TaskList 
-                    taskData={tasks} 
-                    removeTask={removeTask} 
-                    completeTask={completeTask}
-                />
-            </div>
-        );
-    }
-
+    });
     return (
-        <div className="home-page">
-            <div className="div">
-                <div className="overlap">
-                    <div className="group">
-                        <img className="logo-group" alt="Logo group" src="logo-group.png" />
-                    </div>
-                    <div className="overlap-group">
-                        <img className="vector" alt="Vector" src="vector.svg" />
-                    </div>
-                </div>
-                <div className="rectangle-tasks">
-                    <Stack 
-                        taskData={tasks} 
-                        removeTask={removeTask} 
-                        completeTask={completeTask} 
-                    />
-                </div>
-                <div className="overlap-group-wrapper">
-                    <div className="div-wrapper">
-                        <div className="text-wrapper">HISTORY</div>
-                    </div>
-                </div>
-                <div className="text-wrapper-2">HOME</div>
-            </div>
-        </div>
+      <div>
+        {boxes}
+      </div>
     );
+  }
+
+  // merged polllist component
+  function PollList() {
+    const boxes = polls.map((box) => {
+      return (
+        <div className='poll-box' key = {box._id} >
+          <div className='poll-title'>POLL: {box.title}</div>
+          <div className='poll-option1'>DEADLINE: {box.option1}</div>
+          
+          <div className='button-container'>
+            <div className='remove-button'>
+              <button onClick={() => removeTask(box._id)}> 
+                Remove
+              </button>
+            </div>
+            <div className='vote-button'>
+              <button onClick={() => completeTask(box._id)}>
+                                    {/* onClick NEEDS TO CHANGE TO TRACK VOTES */}
+                Vote
+              </button>
+            </div>
+          </div>
+        </div>
+      );
+    });
+    return (
+      <div>
+        {boxes}
+      </div>
+    );
+  }
+
+  function Stack(props) {
+      return (
+          <div className='box-container'>
+              <PollListHead />
+              <PollList 
+                pollData={polls}
+                removePoll={removePoll}
+                completePoll={completePoll}
+                />
+              <TaskListHead />
+              <TaskList 
+                  taskData={tasks} 
+                  removeTask={removeTask} 
+                  completeTask={completeTask}
+              />
+          </div>
+      );
+  }
+
+  return (
+      <div className="home-page">
+          <div className="div">
+              <div className="overlap">
+                  <div className="group">
+                      <img className="logo-group" alt="Logo group" src="logo-group.png" />
+                  </div>
+                  <div className="overlap-group">
+                      <img className="vector" alt="Vector" src="vector.svg" />
+                  </div>
+              </div>
+              <div className="rectangle-tasks">
+                  <Stack 
+                      taskData={tasks} 
+                      removeTask={removeTask} 
+                      completeTask={completeTask} 
+                  />
+              </div>
+              <div className="overlap-group-wrapper">
+                  <div className="div-wrapper">
+                      <div className="text-wrapper">HISTORY</div>
+                  </div>
+              </div>
+              <div className="text-wrapper-2">HOME</div>
+          </div>
+      </div>
+  );
 }
 
 export default Home;
