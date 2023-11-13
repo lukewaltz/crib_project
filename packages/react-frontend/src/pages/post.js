@@ -31,6 +31,7 @@ export const Post = (props) => {
 
     function handlePollSubmit(poll){
         console.log(poll.poll)
+        console.log("change");
         
         fetch('http://localhost:8000/polls', {
             method: 'POST',
