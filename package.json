@@ -4,7 +4,10 @@
   "description": "Group Software Project for CSC-307.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "lint": "npx eslint . && npx prettier --check .",
+	"test": "npx jest",
+	"dev": "nodee backend.js",
+	"start": "node backend.js"
   },
   "author": "",
   "license": "ISC",
