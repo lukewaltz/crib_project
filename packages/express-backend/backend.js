@@ -6,6 +6,7 @@ import User from "./user.js";
 import { createRequire } from 'module';
 import taskServices from "./task-services.js";
 import backlogServices from "./backlog-services.js";
+import pollServices from "./poll-services.js";
 
 const require = createRequire(import.meta.url);
 
@@ -218,20 +219,28 @@ app.delete('/tasks/:id', async (req, res) => {
         })
 });
 
+//get poll
+app.get('/polls', (req, res) => {
+    pollServices.getPolls()
+        .then((polls) => {
+            res.status(200).json( { poll_list:polls });
+        })
+        .catch((error) => {
+            res.status(500).json({ error })
+        });
+});
 
 // post poll
 app.post("/polls", function (req, res) {  
-    if (req.body) {
-      fs.writeFileSync("data.json", JSON.stringify(req.body));
-      res.send({
-        message: "Data Saved",
-      });
-    } else {
-      res.status(400).send({
-        message: "Error No Data",
-      });
-    }
-  });
+    const newPoll = req.body;
+    pollServices.addPoll(newPoll)
+        .then(() => {
+            res.status(201).json({ message: "poll added successfully" });
+        })
+        .catch((err) => {
+            res.status(500).json({ err: "could not add poll"});
+        });
+});
 
 
 app.post('/tasks', (req, res) => {

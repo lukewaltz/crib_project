@@ -119,6 +119,7 @@ function listPolls(){
           <div className='chore-box' key = {box._id} >
             <div className='chore-name'>TASK: {box.task}</div>
             <div className='chore-date'>DEADLINE: {box.dueDate}</div>
+            <div className='chore-assignee'>ASSIGNED TO: {box.assignee}</div>
             {/* <div className='chore-id'>{box._id}</div> */}
             <div className='button-container'>
               <div className='claim-button'>
@@ -203,6 +204,9 @@ function listPolls(){
                 </div>
                 <div className="rectangle-tasks">
                     <Stack 
+                        pollData={polls}
+                        removePoll={removePoll}
+                        completePoll={completePoll}
                         taskData={tasks} 
                         removeTask={removeTask} 
                         completeTask={completeTask} 
