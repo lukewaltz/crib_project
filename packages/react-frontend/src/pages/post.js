@@ -31,6 +31,7 @@ export const Post = (props) => {
 
     function handlePollSubmit(poll){
         console.log(poll.poll)
+        console.log("change");
         
         fetch('http://localhost:8000/polls', {
             method: 'POST',
@@ -71,13 +72,9 @@ export const Post = (props) => {
                     <div className="title2-text">TITLE</div>
                     <div className="option1-text ">OPTION 1</div>
                     <div className="option2-text ">OPTION 2</div>
-                            <PollForm handleSubmit = {handlePollSubmit} />
-                    {/* <div className="title2-field" />
-                    <div className="option1-field" />
-                    <div className="option2-field" />
-                    <div className="overlap-wrapper">
-                    <div className="2nd-post">POST</div>
-                    </div> */}
+
+                    <PollForm handleSubmit = {handleSubmit} />
+                      
                     <div className="overlap-3">
                         <div className="ellipse" />
                         <div className="text-wrapper-8">+</div>

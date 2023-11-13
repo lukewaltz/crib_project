@@ -79,15 +79,15 @@ app.put('/users/:username/assign/:id', (req, res) => {
 
     taskServices.findTask(id)
     .then((task) => {
-        if (task && task.assigned === false) {
+        if (task && task.assignee === false) {
             return userServices.addTask(username, task)
                 .then((user) => {
                     // Update the task's "assigned" field to true
-                    task.assigned = true;
+                    task.assignee = true;
                     return task.save()
                         .then(() => user); // Return the updated user
                 });
-        } else if (task && task.assigned === true) {
+        } else if (task && task.assignee === true) {
             throw new Error("Task is already assigned");
         } else {
             throw new Error("Task not found");

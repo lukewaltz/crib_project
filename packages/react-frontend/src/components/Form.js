@@ -72,7 +72,7 @@ function Form(props) {
             onChange={handleChange}
             className="weight-field"
         />
-        <input type="submit" value="Post" onClick={submitForm} />
+        <input type="submit" value="Post" onClick = {submitForm}/>
         </form>
         
     );
