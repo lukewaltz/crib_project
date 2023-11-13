@@ -74,6 +74,14 @@ app.get('/', (req, res) => {
     return res.status(200).send('logged in');
 });
 
+// give a random user a task by ID
+app.put('/users/rassign/:id', (req, res) => {
+    userServices.randomUser()
+        .then((user) => {
+            res.json(user);
+        });
+});
+
 // give user a task that is already in task list given it has not been assigned already
 app.put('/users/:username/assign/:id', (req, res) => {
     const username = req.params.username;
