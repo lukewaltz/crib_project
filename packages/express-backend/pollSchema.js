@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 
+
 const PollSchema = new mongoose.Schema(
     {
         title: {
@@ -17,6 +18,14 @@ const PollSchema = new mongoose.Schema(
             type: String,
             required: true,
             trim: true,
+        },
+        option1Votes: {
+            type: Number,
+            default: 0, // Default to zero votes
+        },
+        option2Votes: {
+            type: Number,
+            default: 0, // Default to zero votes
         }
     }, { collection: "poll_list" }
 );

@@ -53,6 +53,37 @@ async function deletePoll(id){
     return promise;
 }
 
+async function voteForOption(pollId, option) {
+    try {
+        const poll = await pollModel.findById(pollId);
+
+        if (!poll) {
+            return {
+                success: false,
+                message: 'Poll not found',
+            };
+        }
+
+        // Increment the vote count for the selected option
+        poll[`${option}Votes`] += 1;
+
+        // Save the updated poll document
+        await poll.save();
+
+        return {
+            success: true,
+            message: `Vote for ${option} recorded successfully`,
+        };
+    } catch (error) {
+        console.error(`Error recording vote: ${error.message}`);
+        return {
+            success: false,
+            message: `Error recording vote: ${error.message}`,
+        };
+    }
+}
+
+
 
 
 export default {
@@ -60,4 +91,5 @@ export default {
     getPolls,
     addPoll,
     deletePoll,
+    voteForOption
 };

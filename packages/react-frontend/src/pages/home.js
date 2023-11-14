@@ -88,6 +88,36 @@ function listPolls(){
     }
     console.log(`Poll with ID ${pollId} deleted successfully`);
   }
+
+  async function voteForOption(pollId, option) {
+    const response = await fetch(`http://localhost:8000/polls/${pollId}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ option }),
+    });
+    if (!response.ok) {
+      throw new Error('Error recording vote');
+    }
+
+    setPolls((prevPolls) => {
+      const updatedPolls = prevPolls.map((poll) => {
+        if (poll._id === pollId) {
+          // Update the optionVotes based on the voted option
+          return {
+            ...poll,
+            option1Votes: option === 'option1' ? poll.option1Votes + 1 : poll.option1Votes,
+            option2Votes: option === 'option2' ? poll.option2Votes + 1 : poll.option2Votes,
+          };
+        }
+        return poll;
+      });
+      return updatedPolls;
+    });
+
+    console.log(`Vote for ${option} in poll with ID ${pollId} recorded successfully`);
+  }
   
   
     // merged tasklisthead component
@@ -152,16 +182,23 @@ function listPolls(){
             {/* <div className='chore-id'>{box._id}</div> */}
             <div className='button-container'>
               <div className='poll-option1'>
-              <button onClick={() => removePoll(box._id)}>
-                  {box.option1}
+              <button onClick={() => voteForOption(box._id, 'option1')}>
+                  {box.option1}<br></br>
+                  {box.option1Votes}
                 </button>
               </div>
               <div className='poll-option2'>
-                <button onClick={() => completePoll(box._id)}>
-                  {box.option2}
+                <button onClick={() => voteForOption(box._id, 'option2')}>
+                  {box.option2}<br></br>
+                  {box.option2Votes}
                 </button>
               </div>
             </div>
+            <div className='complete-button'>
+                <button onClick={() => completePoll(box._id)}>
+                  Delete Poll
+                </button>
+              </div>
           </div>
         );
       });
