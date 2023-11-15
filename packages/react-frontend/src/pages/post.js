@@ -5,10 +5,13 @@ import PollForm from '../components/PollForm';
 
 export const Post = (props) => {
 
+    const connection_URL = "http://crib-app.azurewebsites.net";
+    // const connection_URL = "http://localhost:8000"
+
     function handleTaskSubmit(task) {
         console.log(task.task)
         
-        fetch('http://crib-app.azurewebsites.net/tasks', {
+        fetch(`${connection_URL}/tasks`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -32,7 +35,7 @@ export const Post = (props) => {
     function handlePollSubmit(poll){
         console.log(poll.poll)
         
-        fetch('http://crib-app.azurewebsites.net/polls', {
+        fetch(`${connection_URL}/polls`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

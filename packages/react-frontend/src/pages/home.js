@@ -5,6 +5,9 @@ function Home() {
   const [tasks, setTasks] = useState([]);
   const [polls, setPolls] = useState([]);
 
+  const connection_URL = "http://crib-app.azurewebsites.net";
+  // const connection_URL = "http://localhost:8000"
+
   useEffect(() => {
     listTasks()
       .then(res => res.json())
@@ -20,12 +23,12 @@ function Home() {
   }, []);
 
 function listTasks(){
-    const promise = fetch("http://crib-app.azurewebsites.net/tasks");
+    const promise = fetch(`${connection_URL}/tasks`);
     return promise;
 }
 
 function listPolls(){
-    const promise = fetch("http://crib-app.azurewebsites.net/polls");
+    const promise = fetch(`${connection_URL}/polls`);
     return promise;
 }
 
@@ -70,7 +73,7 @@ function listPolls(){
   }
   
   async function deleteTaskFromBackend(taskId) {
-    const response = await fetch(`http://crib-app.azurewebsites.net/tasks/${taskId}`, {
+    const response = await fetch(`${connection_URL}/tasks/${taskId}`, {
       method: 'DELETE'
     });
     if (!response.ok) {
@@ -80,7 +83,7 @@ function listPolls(){
   }
 
   async function deletePollFromBackend(pollId) {
-    const response = await fetch(`http://crib-app.azurewebsites.net/polls/${pollId}`, {
+    const response = await fetch(`${connection_URL}/polls/${pollId}`, {
       method: 'DELETE'
     });
     if (!response.ok) {
@@ -90,7 +93,7 @@ function listPolls(){
   }
 
   async function voteForOption(pollId, option) {
-    const response = await fetch(`http://crib-app.azurewebsites.net/polls/${pollId}`, {
+    const response = await fetch(`${connection_URL}/polls/${pollId}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

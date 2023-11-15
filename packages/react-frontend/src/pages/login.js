@@ -31,6 +31,9 @@ const Login = () => {
 	//   setUsers(updated);
 	// }
 
+  const connection_URL = "http://crib-app.azurewebsites.net";
+  // const connection_URL = "http://localhost:8000"
+
 
 // USER OPERATIONS
 
@@ -39,7 +42,7 @@ const Login = () => {
     const userData = { user: user};
     console.log(userData);
 
-    fetch("http://crib-app.azurewebsites.net/users", 
+    fetch(`${connection_URL}/users`, 
     {
       method: "POST",
       headers: {
