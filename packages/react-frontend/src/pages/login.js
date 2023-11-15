@@ -24,12 +24,12 @@ const Login = () => {
     // }
     const [users, setUsers] = useState([]);
 
-    function removeOneUser (index) {
-	    const updated = users.filter((user, i) => {
-	        return i !== index
-	    });
-	  setUsers(updated);
-	}
+    // function removeOneUser (index) {
+	//     const updated = users.filter((user, i) => {
+	//         return i !== index
+	//     });
+	//   setUsers(updated);
+	// }
 
 
 // USER OPERATIONS

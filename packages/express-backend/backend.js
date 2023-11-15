@@ -18,7 +18,9 @@ app.use(cors());
 app.use(express.json());
 app.use(session({secret:"secret", resave:false, saveUninitialized:true}));
 
+
 //Users Endpoints
+
 
 // Login and create new user
 app.post('/login', async (req, res) => {
@@ -105,7 +107,19 @@ app.put('/users/:username/assign/:id', (req, res) => {
 app.put('/users/:username/complete/:id', async (req, res) => {
     const username = req.params.username;
     const taskId = req.params.id;
+
+    userServices.findUserByUsername(username)
+        .then((user) => {
+            if (user.tasks.indexOf(taskId) < 0) {
+                res.json({ message:'User does not have that task'});
+                return;
+            }
+        })
+        .catch((error) => {
+            res.status(500).json(error);
+        })
     try {
+
         // remove task from user's list
         await userServices.removeTask(username, taskId);
 
@@ -177,7 +191,10 @@ app.delete('/users/:id', async (req, res) => {
         })
 });
 
+
 // tasks
+
+
 /* when does response get sent? */
 // get tasks field
 app.get('/tasks', (req, res) => {
@@ -296,7 +313,10 @@ app.post('/tasks', (req, res) => {
         });
 });
 
+
 //backlog services
+
+
 app.get('/backlog', (req, res) => {
     backlogServices.getTasks()
         .then((tasks) => {
@@ -319,6 +339,6 @@ app.delete('/backlog/:id', async (req, res) => {
 });
 
 // all
-app.listen(port, () => {
-    console.log(`http://localhost:${port}`);
+app.listen(process.env.PORT || port, () => {
+    console.log(`rest api is listening`);
 })
