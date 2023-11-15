@@ -21,7 +21,7 @@ const TaskSchema = new mongoose.Schema(
         assignee: {
             type: String,
             required: false,
-            default: false,
+            default: "none",
             trim: true,
         }
     }, { collection: "task_list" }

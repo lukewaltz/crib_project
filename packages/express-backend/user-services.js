@@ -38,6 +38,11 @@ function getUsers(username, email, name) {
     return promise;
 }
 
+async function randomUser() {
+    let promise = await userModel.aggregate([{ $sample: { size: 1 } }]);
+    return promise;
+}
+
 function addUser(user) {
     const userToAdd = new userModel(user);
     const promise = userToAdd.save().catch((e) =>{
@@ -88,6 +93,7 @@ export default {
     addUser,
     addTask,
     removeTask,
+    randomUser,
     getUsers,
     deleteUser,
     findUserByUsername,
