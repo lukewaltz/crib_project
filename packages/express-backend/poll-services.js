@@ -12,7 +12,8 @@ mongoose
             useNewUrlParser: true,
             useUnifiedTopology: true,
         })
-    .catch((error) => console.log(error));
+        .then(() => console.log("Connected to MongoDB in poll-services"))
+        .catch((error) => console.error("MongoDB Connection Error:", error));
 
 async function findPoll(id) {
     return pollModel.findById(id)

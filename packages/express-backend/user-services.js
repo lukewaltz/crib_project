@@ -13,7 +13,8 @@ mongoose
             useNewUrlParser: true,
             useUnifiedTopology: true,
         })
-    .catch((error) => console.log(error));
+        .then(() => console.log("Connected to MongoDB in user-services"))
+        .catch((error) => console.error("MongoDB Connection Error:", error));
 
 async function findUserByUsername(username) {
     return await userModel.findOne({ username: username }).catch((err) => {
