@@ -6,6 +6,7 @@ import User from "./user.js";
 import { createRequire } from 'module';
 import taskServices from "./task-services.js";
 import backlogServices from "./backlog-services.js";
+import pollServices from "./poll-services.js";
 
 const require = createRequire(import.meta.url);
 
@@ -17,7 +18,9 @@ app.use(cors());
 app.use(express.json());
 app.use(session({secret:"secret", resave:false, saveUninitialized:true}));
 
+
 //Users Endpoints
+
 
 // Login and create new user
 app.post('/login', async (req, res) => {
@@ -104,7 +107,19 @@ app.put('/users/:username/assign/:id', (req, res) => {
 app.put('/users/:username/complete/:id', async (req, res) => {
     const username = req.params.username;
     const taskId = req.params.id;
+
+    userServices.findUserByUsername(username)
+        .then((user) => {
+            if (user.tasks.indexOf(taskId) < 0) {
+                res.json({ message:'User does not have that task'});
+                return;
+            }
+        })
+        .catch((error) => {
+            res.status(500).json(error);
+        })
     try {
+
         // remove task from user's list
         await userServices.removeTask(username, taskId);
 
@@ -176,7 +191,10 @@ app.delete('/users/:id', async (req, res) => {
         })
 });
 
+
 // tasks
+
+
 /* when does response get sent? */
 // get tasks field
 app.get('/tasks', (req, res) => {
@@ -218,6 +236,41 @@ app.delete('/tasks/:id', async (req, res) => {
         })
 });
 
+//get poll
+app.get('/polls', (req, res) => {
+    pollServices.getPolls()
+        .then((polls) => {
+            res.status(200).json( { poll_list:polls });
+        })
+        .catch((error) => {
+            res.status(500).json({ error })
+        });
+});
+
+app.delete('/polls/:id', async (req, res) => {
+    const id = req.params.id;
+    await pollServices.deletePoll(id)
+    .then(() => {
+        res.json('Poll deleted successfully')
+    })
+    .catch(() => {
+        res.status(404).json('could not delete poll');
+    })
+});
+
+// post poll
+app.post("/polls", function (req, res) {  
+    const newPoll = req.body;
+    pollServices.addPoll(newPoll)
+        .then(() => {
+            res.status(201).json({ message: "poll added successfully" });
+        })
+        .catch((err) => {
+            res.status(500).json({ err: "could not add poll"});
+        });
+});
+
+
 app.post('/tasks', (req, res) => {
     const newTask = req.body;
     taskServices.addTask(newTask)
@@ -230,7 +283,10 @@ app.post('/tasks', (req, res) => {
         });
 });
 
+
 //backlog services
+
+
 app.get('/backlog', (req, res) => {
     backlogServices.getTasks()
         .then((tasks) => {

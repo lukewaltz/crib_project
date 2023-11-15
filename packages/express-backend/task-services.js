@@ -1,6 +1,5 @@
 import mongoose from "mongoose";
 import taskModel from "./task.js";
-
 import dotenv from "dotenv";
 
 mongoose.set("debug", true);

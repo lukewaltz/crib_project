@@ -5,7 +5,7 @@ import PollForm from '../components/PollForm';
 
 export const Post = (props) => {
 
-    function handleSubmit(task) {
+    function handleTaskSubmit(task) {
         console.log(task.task)
         
         fetch('http://localhost:8000/tasks', {
@@ -60,7 +60,7 @@ export const Post = (props) => {
                 <div className="task-box">
                     <div className="group">
                         <div className="div-wrapper">
-                            <Form handleSubmit = {handleSubmit} />
+                            <Form handleSubmit = {handleTaskSubmit} />
                         </div>
                     </div>
                     <div className="task-text">TASK</div>
@@ -72,7 +72,9 @@ export const Post = (props) => {
                     <div className="title2-text">TITLE</div>
                     <div className="option1-text ">OPTION 1</div>
                     <div className="option2-text ">OPTION 2</div>
+
                     <PollForm handleSubmit = {handleSubmit} />
+                      
                     <div className="overlap-3">
                         <div className="ellipse" />
                         <div className="text-wrapper-8">+</div>
