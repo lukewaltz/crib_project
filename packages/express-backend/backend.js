@@ -67,10 +67,6 @@ app.post('/signup', async (req, res) => {
 
 // homescreen
 app.get('/', (req, res) => {
-    // if(!req.session.user){
-    //     return res.status(401).send('not logged in');
-    // }
-
     return res.status(200).send('logged in');
 });
 
@@ -301,17 +297,17 @@ app.post('/polls/:pollId', async (req, res) => {
   
 
 
-app.post('/tasks', (req, res) => {
-    const newTask = req.body;
-    taskServices.addTask(newTask)
-        .then(() => {
-            res.status(201).json({ message: 'Task added successfully' });
-        })
-        .catch((error) => {
-            // Handle specific error or use a general error message
-            res.status(500).json({ error: 'Could not add task' });
-        });
-});
+// app.post('/tasks', (req, res) => {
+//     const newTask = req.body;
+//     taskServices.addTask(newTask)
+//         .then(() => {
+//             res.status(201).json({ message: 'Task added successfully' });
+//         })
+//         .catch((error) => {
+//             // Handle specific error or use a general error message
+//             res.status(500).json({ error: 'Could not add task' });
+//         });
+// });
 
 
 //backlog services
@@ -341,4 +337,5 @@ app.delete('/backlog/:id', async (req, res) => {
 // all
 app.listen(process.env.PORT || port, () => {
     console.log(`rest api is listening`);
+    console.log("mongo: ", process.env.MONGO_URL)
 })
