@@ -73,7 +73,7 @@ export const Post = (props) => {
                     <div className="option1-text ">OPTION 1</div>
                     <div className="option2-text ">OPTION 2</div>
 
-                    <PollForm handleSubmit = {handleSubmit} />
+                    <PollForm handleSubmit = {handlePollSubmit} />
                       
                     <div className="overlap-3">
                         <div className="ellipse" />
