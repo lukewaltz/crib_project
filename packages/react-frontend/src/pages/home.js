@@ -20,12 +20,12 @@ function Home() {
   }, []);
 
 function listTasks(){
-    const promise = fetch("http://localhost:8000/tasks");
+    const promise = fetch("http://crib-app.azurewebsites.net/tasks");
     return promise;
 }
 
 function listPolls(){
-    const promise = fetch("http://localhost:8000/polls");
+    const promise = fetch("http://crib-app.azurewebsites.net/polls");
     return promise;
 }
 
@@ -70,7 +70,7 @@ function listPolls(){
   }
   
   async function deleteTaskFromBackend(taskId) {
-    const response = await fetch(`http://localhost:8000/tasks/${taskId}`, {
+    const response = await fetch(`http://crib-app.azurewebsites.net/tasks/${taskId}`, {
       method: 'DELETE'
     });
     if (!response.ok) {
@@ -80,7 +80,7 @@ function listPolls(){
   }
 
   async function deletePollFromBackend(pollId) {
-    const response = await fetch(`http://localhost:8000/polls/${pollId}`, {
+    const response = await fetch(`http://crib-app.azurewebsites.net/polls/${pollId}`, {
       method: 'DELETE'
     });
     if (!response.ok) {
@@ -90,7 +90,7 @@ function listPolls(){
   }
 
   async function voteForOption(pollId, option) {
-    const response = await fetch(`http://localhost:8000/polls/${pollId}`, {
+    const response = await fetch(`http://crib-app.azurewebsites.net/polls/${pollId}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

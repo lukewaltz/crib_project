@@ -4,7 +4,7 @@ import UserForm from "../components/UserForm";
 const Login = () => {
 
     // function postUser(user){
-    //     const promise = fetch("http://localhost:8000/users", {
+    //     const promise = fetch("http://crib-app.azurewebsites.net/users", {
     //         method: "POST",
     //         headers: {
     //             "Content-Type": "application/json",
@@ -39,7 +39,7 @@ const Login = () => {
     const userData = { user: user};
     console.log(userData);
 
-    fetch("http://localhost:8000/users", 
+    fetch("http://crib-app.azurewebsites.net/users", 
     {
       method: "POST",
       headers: {

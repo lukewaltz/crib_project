@@ -21,7 +21,7 @@ const Signup = () => {
     const userData = { user: user};
     console.log(userData);
 
-    fetch("http://localhost:8000/users", 
+    fetch("http://crib-app.azurewebsites.net/users", 
     {
       method: "POST",
       headers: {

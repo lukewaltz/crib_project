@@ -8,7 +8,7 @@ export const Post = (props) => {
     function handleTaskSubmit(task) {
         console.log(task.task)
         
-        fetch('http://localhost:8000/tasks', {
+        fetch('http://crib-app.azurewebsites.net/tasks', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -32,7 +32,7 @@ export const Post = (props) => {
     function handlePollSubmit(poll){
         console.log(poll.poll)
         
-        fetch('http://localhost:8000/polls', {
+        fetch('http://crib-app.azurewebsites.net/polls', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
