@@ -40,7 +40,6 @@ app.post('/login', async (req, res) => {
             }
         });
         
-       
     } catch (err) {
         console.error(err);
         return res.status(500).send('Internal server error');
@@ -70,22 +69,46 @@ app.get('/', (req, res) => {
     return res.status(200).send('logged in');
 });
 
+app.put('/users/rassign/:id', (req, res) => {
+    const id = req.params.id;
+    return userServices.randomUser()
+        .then((randuser) => {
+            const username = randuser[0].username;
+            taskServices.findTask(id)
+                .then((task) => {
+                    if (task && task.assignee === "none") {
+                        return userServices.addTask(username, task)
+                            .then(async (user) => {
+                                task.assignee = username;
+                                await task.save();
+                                res.status(200).json({ message: 'Task assigned successfully', user, randuser });
+                            });
+                    } else if (task && task.assignee !== "none") {
+                        throw new Error("Task is already assigned");
+                    } else {
+                        throw new Error("Task not found");
+                    }
+                })
+                .catch((error) => {
+                    res.status(404).json({ error: error.message });
+                });
+        });
+    });
+
 // give user a task that is already in task list given it has not been assigned already
 app.put('/users/:username/assign/:id', (req, res) => {
     const username = req.params.username;
     const id = req.params.id;
 
     taskServices.findTask(id)
-    .then((task) => {
-        if (task && task.assignee === false) {
-            return userServices.addTask(username, task)
-                .then((user) => {
-                    // Update the task's "assigned" field to true
-                    task.assignee = true;
-                    return task.save()
-                        .then(() => user); // Return the updated user
-                });
-        } else if (task && task.assignee === true) {
+    .then(async (task) => {
+        if (task && task.assignee === "none") {
+            const user = await userServices.addTask(username, task);
+            // Update the task's "assigned" field to true
+            task.assignee = username;
+            await task.save();
+            return user;
+        } else if (task && task.assignee !== "none") {
             throw new Error("Task is already assigned");
         } else {
             throw new Error("Task not found");
