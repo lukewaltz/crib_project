@@ -93,6 +93,7 @@ export default {
     addUser,
     addTask,
     removeTask,
+    randomUser,
     getUsers,
     deleteUser,
     findUserByUsername,
