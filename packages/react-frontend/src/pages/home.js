@@ -135,7 +135,6 @@ function listPolls(){
               </div>
             </div>
           </div>
-        </div>
       );
     });
     return (
@@ -145,55 +144,55 @@ function listPolls(){
     );
   }
 
-  // merged polllist component
-  function PollList() {
-    const boxes = polls.map((box) => {
-      return (
-        <div className='poll-box' key = {box._id} >
-          <div className='poll-title'>POLL: {box.title}</div>
-          <div className='poll-option1'>DEADLINE: {box.option1}</div>
+//   // merged polllist component
+//   function PollList() {
+//     const boxes = polls.map((box) => {
+//       return (
+//         <div className='poll-box' key = {box._id} >
+//           <div className='poll-title'>POLL: {box.title}</div>
+//           <div className='poll-option1'>DEADLINE: {box.option1}</div>
           
-          <div className='button-container'>
-            <div className='remove-button'>
-              <button onClick={() => removeTask(box._id)}> 
-                Remove
-              </button>
-            </div>
-            <div className='vote-button'>
-              <button onClick={() => completeTask(box._id)}>
-                                    {/* onClick NEEDS TO CHANGE TO TRACK VOTES */}
-                Vote
-              </button>
-            </div>
-          </div>
-        </div>
-      );
-    });
-    return (
-      <div>
-        {boxes}
-      </div>
-    );
-  }
+//           <div className='button-container'>
+//             <div className='remove-button'>
+//               <button onClick={() => removeTask(box._id)}> 
+//                 Remove
+//               </button>
+//             </div>
+//             <div className='vote-button'>
+//               <button onClick={() => completeTask(box._id)}>
+//                                     {/* onClick NEEDS TO CHANGE TO TRACK VOTES */}
+//                 Vote
+//               </button>
+//             </div>
+//           </div>
+//         </div>
+//       );
+//     });
+//     return (
+//       <div>
+//         {boxes}
+//       </div>
+//     );
+//   }
 
-  function Stack(props) {
-      return (
-          <div className='box-container'>
-              <PollListHead />
-              <PollList 
-                pollData={polls}
-                removePoll={removePoll}
-                completePoll={completePoll}
-                />
-              <TaskListHead />
-              <TaskList 
-                  taskData={tasks} 
-                  removeTask={removeTask} 
-                  completeTask={completeTask}
-              />
-          </div>
-      );
-  }
+//   function Stack(props) {
+//       return (
+//           <div className='box-container'>
+//               <PollListHead />
+//               <PollList 
+//                 pollData={polls}
+//                 removePoll={removePoll}
+//                 completePoll={completePoll}
+//                 />
+//               <TaskListHead />
+//               <TaskList 
+//                   taskData={tasks} 
+//                   removeTask={removeTask} 
+//                   completeTask={completeTask}
+//               />
+//           </div>
+//       );
+//   }
 
   // merged polllist component
     function PollList() {

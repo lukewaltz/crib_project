@@ -29,30 +29,30 @@ export const Post = (props) => {
         });
     }
 
-    // function handlePollSubmit(poll){
-    //     console.log(poll.poll)
-    //     console.log("change");
+    function handlePollSubmit(poll){
+        console.log(poll.poll)
+        console.log("change");
         
-    //     fetch('http://localhost:8000/polls', {
-    //         method: 'POST',
-    //         headers: {
-    //             'Content-Type': 'application/json',
-    //         },
-    //         body: JSON.stringify(poll),
-    //     })
-    //     .then(response => {
-    //         if (!response.ok) {
-    //             throw new Error(`HTTP error! status: ${response.status}`);
-    //         }
-    //         return response.json();
-    //     })
-    //     .then(data => {
-    //         console.log('Poll posted:', data);
-    //     })
-    //     .catch((error) => {
-    //         console.error('Error:', error);
-    //     });
-    // }
+        fetch('http://localhost:8000/polls', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(poll),
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Poll posted:', data);
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        });
+    }
 
     return (
         <div className="post-something">
@@ -73,7 +73,7 @@ export const Post = (props) => {
                     <div className="option1-text ">OPTION 1</div>
                     <div className="option2-text ">OPTION 2</div>
 
-                    <PollForm handleSubmit = {handleSubmit} />
+                    <PollForm handleSubmit = {handlePollSubmit} />
                       
                     <div className="overlap-3">
                         <div className="ellipse" />
