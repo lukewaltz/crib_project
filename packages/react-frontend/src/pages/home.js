@@ -5,7 +5,7 @@ function Home() {
   const [tasks, setTasks] = useState([]);
   const [polls, setPolls] = useState([]);
 
-  const connection_URL = "http://crib-app.azurewebsites.net";
+  const connection_URL = "https://crib-app.azurewebsites.net";
   // const connection_URL = "http://localhost:8000"
 
   useEffect(() => {

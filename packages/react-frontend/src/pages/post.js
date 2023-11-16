@@ -5,7 +5,7 @@ import PollForm from '../components/PollForm';
 
 export const Post = (props) => {
 
-    const connection_URL = "http://crib-app.azurewebsites.net";
+    const connection_URL = "https://crib-app.azurewebsites.net";
     // const connection_URL = "http://localhost:8000"
 
     function handleTaskSubmit(task) {

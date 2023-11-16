@@ -31,7 +31,7 @@ const Login = () => {
 	//   setUsers(updated);
 	// }
 
-  const connection_URL = "http://crib-app.azurewebsites.net";
+  const connection_URL = "https://crib-app.azurewebsites.net";
   // const connection_URL = "http://localhost:8000"
 
 
