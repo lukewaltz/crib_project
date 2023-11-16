@@ -33,3 +33,6 @@ Design Standards:
 11. Review your code before creating a pull request.
 12. Name your files logically according to the job that they perform.
 13. Destructuring your props is a good way to help make your coder cleaner and more maintainable.
+
+Azure Frontend: https://black-beach-047e9eb1e.4.azurestaticapps.net/
+Azure Backend: https://crib-app.azurewebsites.net/
