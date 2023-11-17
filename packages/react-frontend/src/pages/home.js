@@ -1,14 +1,30 @@
 import React, { useState, useEffect } from 'react';
 import "./home.css";
+import { useNavigate } from 'react-router-dom';
 
 function Home() {
   const [tasks, setTasks] = useState([]);
   const [polls, setPolls] = useState([]);
+  const navigate = useNavigate();
 
-  const connection_URL = "https://crib-app.azurewebsites.net";
-  // const connection_URL = "http://localhost:8000"
+//   const connection_URL = "https://crib-app.azurewebsites.net";
+  const connection_URL = "http://localhost:8000"
+
+    async function checkLogin(){
+        fetch(`${connection_URL}/isLoggedIn`, {
+            method: 'GET',
+            credentials: 'include',
+        })
+        .then((response) => {
+            if(response.status !== 200){
+                navigate('/account/');
+            }
+        });
+        
+    }
 
   useEffect(() => {
+    checkLogin();
     listTasks()
       .then(res => res.json())
       .then(json => setTasks(json["task_list"]))
@@ -23,12 +39,18 @@ function Home() {
   }, []);
 
 function listTasks(){
-    const promise = fetch(`${connection_URL}/tasks`);
+    const promise = fetch(`${connection_URL}/tasks`, {
+        method: 'GET',
+        credentials: 'include',
+    });
     return promise;
 }
 
 function listPolls(){
-    const promise = fetch(`${connection_URL}/polls`);
+    const promise = fetch(`${connection_URL}/polls`, {
+        method: 'GET',
+        credentials: 'include',
+    });
     return promise;
 }
 
@@ -233,19 +255,20 @@ function listPolls(){
 
     function Stack(props) {
         return (
-            <div className='box-container'>
-                
-                <PollList 
-                  pollData={polls}
-                  removePoll={removePoll}
-                  completePoll={completePoll}
-                  />
-                
-                <TaskList 
-                    taskData={tasks} 
-                    removeTask={removeTask} 
-                    completeTask={completeTask}
-                />
+            <div className='scroll-container'>
+                <div className='box-container'>
+                    <PollList 
+                    pollData={polls}
+                    removePoll={removePoll}
+                    completePoll={completePoll}
+                    />
+                    
+                    <TaskList 
+                        taskData={tasks} 
+                        removeTask={removeTask} 
+                        completeTask={completeTask}
+                    />
+                </div>
             </div>
         );
     }

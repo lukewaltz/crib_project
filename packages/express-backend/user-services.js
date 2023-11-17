@@ -24,6 +24,14 @@ async function findUserByUsername(username) {
     });
 }
 
+async function findUserByEmail(email) {
+    return await userModel.findOne({ email: email }).catch((err) => {
+        if(err) {
+            return undefined;
+        }
+    });
+}
+
 function getUsers(username, email, name) {
     let promise;
     if (username) {
@@ -97,4 +105,5 @@ export default {
     getUsers,
     deleteUser,
     findUserByUsername,
+    findUserByEmail,
 };
