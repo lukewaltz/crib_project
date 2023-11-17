@@ -9,12 +9,12 @@ dotenv.config();
 mongoose
     .connect(
         process.env.MONGO_URL,
-        // "mongodb://localhost:27017/users",
         {
             useNewUrlParser: true,
             useUnifiedTopology: true,
         })
-    .catch((error) => console.log(error));
+        .then(() => console.log("Connected to MongoDB in user-services"))
+        .catch((error) => console.error("MongoDB Connection Error:", error));
 
 async function findUserByUsername(username) {
     return await userModel.findOne({ username: username }).catch((err) => {
@@ -35,6 +35,11 @@ function getUsers(username, email, name) {
     } else {
         promise = userModel.find();
     }
+    return promise;
+}
+
+async function randomUser() {
+    let promise = await userModel.aggregate([{ $sample: { size: 1 } }]);
     return promise;
 }
 
@@ -88,6 +93,7 @@ export default {
     addUser,
     addTask,
     removeTask,
+    randomUser,
     getUsers,
     deleteUser,
     findUserByUsername,

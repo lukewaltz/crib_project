@@ -2,15 +2,21 @@ import React from 'react';
 import "./post.css";
 import Form from '../components/Form'; 
 import PollForm from '../components/PollForm';
+<<<<<<< HEAD
 import SettingsVector from "./vector.svg"
 
+=======
+>>>>>>> origin
 
 export const Post = (props) => {
 
-    function handleSubmit(task) {
+    const connection_URL = "https://crib-app.azurewebsites.net";
+    // const connection_URL = "http://localhost:8000"
+
+    function handleTaskSubmit(task) {
         console.log(task.task)
         
-        fetch('http://localhost:8000/tasks', {
+        fetch(`${connection_URL}/tasks`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -31,17 +37,49 @@ export const Post = (props) => {
         });
     }
 
+    function handlePollSubmit(poll){
+        console.log(poll.poll)
+        
+        fetch(`${connection_URL}/polls`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(poll),
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Poll posted:', data);
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        });
+    }
+
     return (
         <div className="post-something">
             <div className="div">
+<<<<<<< HEAD
                 <div className="overlap">
                     <div className="group">
                         <div className="div-wrapper">
                             <Form handleSubmit = {handleSubmit} />
+=======
+                <div className="task-box">
+                    <div className="group">
+                        <div className="div-wrapper">
+                            <Form handleSubmit = {handleTaskSubmit} />
+>>>>>>> origin
                         </div>
                     </div>
                     <div className="task-text">TASK</div>
                     <div className="due-date-text">DUE DATE</div>
+<<<<<<< HEAD
                     <div className="weight-text">WEIGHT:</div>
                     <div className = "assignee-text"> ASSIGNEE:</div>
                 </div>
@@ -54,11 +92,20 @@ export const Post = (props) => {
                     <div className="rectangle-6" />
                     <div className="overlap-wrapper">
                     <div className="2nd-post">POST</div>
+=======
+                    <div className="weight-text">WEIGHT</div>
+                    <div className = "assignee-text"> ASSIGNEE</div>
+                </div>
+                <div className="poll-box ">
+                <div className="group">
+                        <div className="div-wrapper">
+                            <PollForm handleSubmit = {handlePollSubmit} />
+                        </div>
+>>>>>>> origin
                     </div>
-                    <div className="overlap-3">
-                        <div className="ellipse" />
-                        <div className="text-wrapper-8">+</div>
-                    </div>
+                    <div className="title2-text">TITLE</div>
+                    <div className="option1-text ">OPTION 1</div>
+                    <div className="option2-text ">OPTION 2</div>
                 </div>
                 <div className="overlap-4">
                     <div className="text-wrapper-9">TASK</div>
@@ -72,11 +119,11 @@ export const Post = (props) => {
                                 POST <br />
                                 SOMETHING
                             </div>
-                            <div className="text-wrapper-10">!</div>
+                            <div className="explanationpoint">!</div>
                         </div>
                     </div>
                 </div>
-                <div className="text-wrapper-11">POLL</div>
+                <div className="poll-text">POLL</div>
             </div>
         </div>
     );
@@ -84,4 +131,3 @@ export const Post = (props) => {
 
  
 export default Post;
-

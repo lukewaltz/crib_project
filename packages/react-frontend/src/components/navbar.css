@@ -1,9 +1,19 @@
+<<<<<<< HEAD
 
 .box {
   position: relative;
   width: 430px;
 }
 
+=======
+/* nav bar */ 
+.box {
+  position: relative;
+  width: 430px;
+
+  }
+  
+>>>>>>> origin
 .box .group {
   background-color: #ecece9;
   height: 44px;
@@ -15,6 +25,7 @@
   z-index: 1;  
 }
 
+<<<<<<< HEAD
 .box .post-button {
   border: 1px solid;
   border-color: #388087;
@@ -61,4 +72,39 @@
 
 .box .group .active-button {
   background-color: #FFE78B;
+=======
+
+.box .rectangle {
+  border: 1px solid;
+  border-color: #388087;
+  border-radius: 12px;
+  height: 9px;
+  left: 184px;
+  position: absolute;
+  top: 14px;
+  width: 9px;
+}
+
+.box .div {
+  background-color: #ffe78b;
+  border: 1px solid;
+  border-color: #388087;
+  border-radius: 12px;
+  height: 9px;
+  left: 214px;
+  position: absolute;
+  top: 14px;
+  width: 9px;
+}
+
+.box .rectangle-2 {
+  border: 1px solid;
+  border-color: #388087;
+  border-radius: 12px;
+  height: 9px;
+  left: 244px;
+  position: absolute;
+  top: 14px;
+  width: 9px;
+>>>>>>> origin
 }

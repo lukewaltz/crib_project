@@ -8,7 +8,7 @@ import Arrow from "./arrow.svg"
 const Login = () => {
 
     // function postUser(user){
-    //     const promise = fetch("http://localhost:8000/users", {
+    //     const promise = fetch("http://crib-app.azurewebsites.net/users", {
     //         method: "POST",
     //         headers: {
     //             "Content-Type": "application/json",
@@ -28,12 +28,15 @@ const Login = () => {
     // }
     const [users, setUsers] = useState([]);
 
-    function removeOneUser (index) {
-	    const updated = users.filter((user, i) => {
-	        return i !== index
-	    });
-	  setUsers(updated);
-	}
+    // function removeOneUser (index) {
+	//     const updated = users.filter((user, i) => {
+	//         return i !== index
+	//     });
+	//   setUsers(updated);
+	// }
+
+  const connection_URL = "https://crib-app.azurewebsites.net";
+  // const connection_URL = "http://localhost:8000"
 
 
 // USER OPERATIONS
@@ -43,7 +46,7 @@ const Login = () => {
     const userData = { user: user};
     console.log(userData);
 
-    fetch("http://localhost:8000/users", 
+    fetch(`${connection_URL}/users`, 
     {
       method: "POST",
       headers: {

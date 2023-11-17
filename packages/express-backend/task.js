@@ -18,10 +18,10 @@ const TaskSchema = new mongoose.Schema(
             required: false,
             trim: true,
         },
-        assigned: {
-            type: Boolean,
+        assignee: {
+            type: String,
             required: false,
-            default: false,
+            default: "none",
             trim: true,
         }
     }, { collection: "task_list" }

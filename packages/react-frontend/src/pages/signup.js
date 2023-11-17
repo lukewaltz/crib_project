@@ -8,13 +8,15 @@ import Arrow from "./arrow.svg"
 const Signup = () => {
     const [users, setUsers] = useState([]);
 
-    function removeOneUser (index) {
-	    const updated = users.filter((user, i) => {
-	        return i !== index
-	    });
-	  setUsers(updated);
-	}
-
+    // function removeOneUser (index) {
+	//     const updated = users.filter((user, i) => {
+	//         return i !== index
+	//     });
+	//   setUsers(updated);
+	// }
+  
+  const connection_URL = "https://crib-app.azurewebsites.net";
+  // const connection_URL = "http://localhost:8000"
 
 // USER OPERATIONS
 
@@ -23,7 +25,7 @@ const Signup = () => {
     const userData = { user: user};
     console.log(userData);
 
-    fetch("http://localhost:8000/users", 
+    fetch(`${connection_URL}/users`, 
     {
       method: "POST",
       headers: {

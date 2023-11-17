@@ -15,7 +15,7 @@
 }
 
 /* entire thing*/ 
-.post-something .overlap {
+.post-something .task-box {
     background-color: #badfe7;
     height: 265px;
     left: 15px;
@@ -31,21 +31,46 @@
     height: 32px;
     left: 86px;
     position: absolute;
-    top: 36px;
+    top: 20px;
     width: 290px;
 }
 
 /* date field*/ 
 .post-something .duedate-field{
+<<<<<<< HEAD
+=======
     background-color: #f2fbe0;
     border-radius: 49px;
     height: 35px;
-    left: 149px;
+    left: 140px;
     position: absolute;
-    top: 80px;
-    width: 206px;
+    top: 70px;
+    width: 233px;
 }
 
+/* weight field */ 
+.post-something .weight-field{
+    background-color: #f2fbe0;
+    border-radius: 49px;
+    height: 35px;
+    left: 140px;
+    position: absolute;
+    top: 120px;
+    width: 233px;
+}
+
+.post-something .assignee-field{
+>>>>>>> origin
+    background-color: #f2fbe0;
+    border-radius: 49px;
+    height: 35px;
+    left: 140px;
+    position: absolute;
+    top: 170px;
+    width: 233px;
+}
+
+<<<<<<< HEAD
 /* weight field */ 
 .post-something .weight-field{
     background-color: #f2fbe0;
@@ -55,7 +80,7 @@
     position: absolute;
     top: 80px;
     width: 206px;
-}
+=======
 
 
 
@@ -69,8 +94,9 @@
     letter-spacing: 0;
     line-height: normal;
     position: absolute;
-    top: 40px;
+    top: 30px;
     width: 59px;
+>>>>>>> origin
 }
 
 /* due date text */ 
@@ -83,10 +109,50 @@
     letter-spacing: 0;
     line-height: normal;
     position: absolute;
-    top: 85px;
+    top: 80px;
     width: 103px;
 }
 
+<<<<<<< HEAD
+
+/* task */
+.post-something .task-text {
+=======
+/* weight text */
+.post-something .weight-text {
+>>>>>>> origin
+    color: #388087;
+    font-family: "Inter-Regular", Helvetica;
+    font-size: 20px;
+    font-weight: 400;
+    left: 19px;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    top: 130px;
+    width: 170px;
+}
+
+<<<<<<< HEAD
+/* due date text */ 
+.post-something .due-date-text{
+=======
+/* assignee text */
+.post-something .assignee-text {
+>>>>>>> origin
+    color: #388087;
+    font-family: "Inter-Regular", Helvetica;
+    font-size: 20px;
+    font-weight: 400;
+    left: 19px;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    top: 180px;
+    width: 170px;
+}
+
+<<<<<<< HEAD
 /* weight text */
 .post-something .weight-text {
     color: #388087;
@@ -136,8 +202,22 @@
     top: 319px;
     width: 401px;
 } */
+=======
 
-.post-something .text-wrapper-5 {
+
+.post-something .poll-box {
+    background-color: #badfe7;
+    min-height: 200px; 
+    left: 19px;
+    position: absolute;
+    top: 652px;
+    width: 400px;
+    overflow: auto; /* adding a scroller if content exceeds space  */
+}
+
+>>>>>>> origin
+
+.post-something .title2-text {
     color: #388087;
     font-family: "Inter-Regular", Helvetica;
     font-size: 20px;
@@ -150,7 +230,9 @@
     white-space: nowrap;
 }
 
-.post-something .text-wrapper-6 {
+
+
+.post-something .option1-text  {
     color: #388087;
     font-family: "Inter-Regular", Helvetica;
     font-size: 20px;
@@ -163,7 +245,7 @@
     white-space: nowrap;
 }
 
-.post-something .text-wrapper-7 {
+.post-something .option2-text {
     color: #388087;
     font-family: "Inter-Regular", Helvetica;
     font-size: 20px;
@@ -176,8 +258,10 @@
     white-space: nowrap;
 }
 
+
+
 /* title*/ 
-.post-something .rectangle-4 {
+.post-something .title2-field{
     background-color: #f2fbe0;
     border-radius: 49px;
     height: 32px;
@@ -188,7 +272,7 @@
 }
 
 /* option 1*/ 
-.post-something .rectangle-5 {
+.post-something .option1-field {
     background-color: #f2fbe0;
     border-radius: 49px;
     height: 32px;
@@ -198,8 +282,8 @@
     width: 246px;
 }
 
-/* option 2  */ 
-.post-something .rectangle-6 {
+/* option 2   */
+.post-something .option2-field{
     background-color: #f2fbe0;
     border-radius: 49px;
     height: 32px;
@@ -214,7 +298,7 @@
     height: 37px;
     left: 122px;
     position: absolute;
-    top: 164px;
+    top: 200px;
     width: 149px;
 }
 
@@ -352,7 +436,7 @@
 }
 
 /* ! */
-.post-something .text-wrapper-10 {
+.post-something .explanationpoint {
     color: #ffe78b;
     font-family: "Inter-Bold", Helvetica;
     font-size: 200px;
@@ -365,8 +449,7 @@
     transform: rotate(-30.88deg);
 }
 
-/* Poll text  */
-.post-something .text-wrapper-11 {
+.post-something .poll-text {
     -webkit-text-stroke: 0.3px #388087;
     color: #ffe78b;
     font-family: "Inter-Medium", Helvetica;
@@ -380,13 +463,13 @@
     white-space: nowrap;
 }
 
-.button,
-a.button,
-button,
-nav li,
-[type=submit],
-[type=reset],
-[type=button] {
+.post-something .button,
+.post-something a.button,
+.post-something button,
+.post-something nav li,
+.post-something [type=submit],
+.post-something [type=reset],
+.post-something [type=button] {
   display: inline-block;
   border: 1px solid #fff; 
   border-radius: 10px;
@@ -403,19 +486,17 @@ nav li,
   cursor: pointer;
   text-decoration: none;
   line-height: 1;
-  bottom: 20px;
   position: relative;
-  top: 180px;
+  top: 220px;
 }
 
-.button:hover,
-a.button:hover,
-button:hover,
-nav li:hover,
-[type=submit]:hover,
-[type=reset]:hover,
-[type=button]:hover {
+.post-something .button:hover,
+.post-something a.button:hover,
+.post-something button:hover,
+.post-something nav li:hover,
+.post-something [type=submit]:hover,
+.post-something [type=reset]:hover,
+.post-something [type=button]:hover {
   border: 1px solid #ddd; /* Lighter border on hover */
   background: #ffe78b; /* Lighter background on hover */
 }
-
