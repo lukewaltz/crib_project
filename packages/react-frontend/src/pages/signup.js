@@ -1,6 +1,8 @@
 import React, {useState} from "react";
 import UserForm from "../components/UserForm";
-
+import "./signup.css";
+import Logo from "../logo-group.png"
+import Arrow from "./arrow.svg"
  
 
 const Signup = () => {
@@ -59,14 +61,41 @@ const Signup = () => {
         // .then(setUsers([...users, user]));
     }
 
-    return(
-    <div className="container">
-          <UserForm handleSubmit={updateList} />
-          <h2>Sign Up</h2>
-            <h1>
-                Welcome To CRIB!
-            </h1>
-    </div>);
+    return (
+      <div className="sign-up">
+          <div className="div">
+              <div className="overlap">
+                  <div className="overlap-group">
+                      <div className="rectangle" />
+                      <div className="group">
+                          <img className="logo-group" alt="Logo group" src={Logo}/>
+                      </div>
+                  </div>
+                  <div className="text-wrapper">SIGN UP</div>
+              </div>
+              <div className="overlap-2">
+                  <div className="overlap-3">
+                      <div className="rectangle" />
+                      <div className="text-wrapper-2">CREATE PASSWORD</div>
+                      <div className="rectangle-2" />
+                      <p className="p">already have an account? log in here!</p>
+                      <div className="ellipse" />
+                      <img className="vector" alt="Vector" src={Arrow} />
+                  </div>
+                  <div className="text-wrapper-3">CREATE USERNAME</div>
+                  <div className="rectangle-3" />
+              </div>
+              <div className="overlap-group-2">
+                  <div className="text-wrapper-4">ENTER NAME</div>
+                  <div className="rectangle-4" />
+              </div>
+          </div>
+      </div>
+  );
 };
  
 export default Signup;
+
+
+
+

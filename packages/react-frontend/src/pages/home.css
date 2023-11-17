@@ -235,10 +235,21 @@
   background: #ffe78b; /* Lighter background on hover */
 }
 
+.button-container{
+    display: flex;
+    flex-direction: row;
+    gap: 40px;
+    width: 90%;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  
 nav li:hover, 
 .button-container button:hover{
   background-color: #008080;
 }
+
 
 form{
     display: flex;
@@ -297,14 +308,4 @@ form{
     margin-bottom: 10px;
     text-align: center;
   }
-  
-  .button-container{
-    display: flex;
-    flex-direction: row;
-    gap: 40px;
-    width: 90%;
-    align-items: center;
-    justify-content: center;
-  }
-  
   

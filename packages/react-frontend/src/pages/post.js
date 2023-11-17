@@ -1,6 +1,9 @@
 import React from 'react';
 import "./post.css";
-import Form from '../components/Form'; // Make sure this import path is correct
+import Form from '../components/Form'; 
+import PollForm from '../components/PollForm';
+import SettingsVector from "./vector.svg"
+
 
 export const Post = (props) => {
 
@@ -63,8 +66,6 @@ export const Post = (props) => {
                     <div className="logo-group-wrapper">
                         <img className="logo-group" alt="Logo group" src="logo-group.png" />
                     </div>
-                    <div className="ellipse-2" />
-                    <img className="vector" alt="Vector" src="vector.svg" />
                     <div className="overlap-group-wrapper">
                         <div className="overlap-group-2">
                             <div className="POST-SOMETHING">

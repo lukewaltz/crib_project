@@ -120,14 +120,22 @@
 /* entire group */
 .post-something .overlap-2 {
     background-color: #badfe7;
-    height: 217px;
-    left: 19px;
+    min-height: 200px; 
+    left: 15px;
     position: absolute;
     top: 652px;
     width: 401px;
 } 
 
-/* title, option 1, option 2 text*/ 
+/* entire thing*/ 
+/* .post-something .task-box {
+    background-color: #badfe7;
+    height: 265px;
+    left: 15px;
+    position: absolute;
+    top: 319px;
+    width: 401px;
+} */
 
 .post-something .text-wrapper-5 {
     color: #388087;
