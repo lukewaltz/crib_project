@@ -1,9 +1,5 @@
 import React, {useState} from 'react';
 function UserForm(props) {
-<<<<<<< HEAD
-=======
-
->>>>>>> origin
   const [user, setUser] = useState(
      {
         username: "",

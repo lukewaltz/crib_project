@@ -134,7 +134,6 @@ function listPolls(){
         );
     }
 
-<<<<<<< HEAD
   // merged tasklist component
   function TaskList() {
     const boxes = tasks.map((box) => {
@@ -153,39 +152,6 @@ function listPolls(){
               <button onClick={() => completeTask(box._id)}>
                 Complete
               </button>
-=======
-        // merged polllisthead component
-        function PollListHead() {
-          return (
-              <thead>
-                  <tr>
-                      <th>LIST OF POLLS:</th>
-                  </tr>
-              </thead>
-          );
-      }
-
-    // merged tasklist component
-    function TaskList() {
-      const boxes = tasks.map((box) => {
-        return (
-          <div className='chore-box' key = {box._id} >
-            <div className='chore-name'>TASK: {box.task}</div>
-            <div className='chore-date'>DEADLINE: {box.dueDate}</div>
-            <div className='chore-assignee'>ASSIGNED TO: {box.assignee}</div>
-            {/* <div className='chore-id'>{box._id}</div> */}
-            <div className='button-container'>
-              <div className='claim-button'>
-                <button onClick={() => removeTask(box._id)}>
-                  Claim
-                </button>
-              </div>
-              <div className='complete-button'>
-                <button onClick={() => completeTask(box._id)}>
-                  Complete
-                </button>
-              </div>
->>>>>>> origin
             </div>
           </div>
         </div>
@@ -268,13 +234,13 @@ function listPolls(){
     function Stack(props) {
         return (
             <div className='box-container'>
-                <PollListHead />
+                
                 <PollList 
                   pollData={polls}
                   removePoll={removePoll}
                   completePoll={completePoll}
                   />
-                <TaskListHead />
+                
                 <TaskList 
                     taskData={tasks} 
                     removeTask={removeTask} 
@@ -284,32 +250,6 @@ function listPolls(){
         );
     }
 
-<<<<<<< HEAD
-  return (
-      <div className="home-page">
-          <div className="div">
-              <div className="overlap">
-                  <div className="group">
-                      <img className="logo-group" alt="Logo group" src="logo-group.png" />
-                  </div>
-              </div>
-              <div className="rectangle-tasks">
-                  <Stack 
-                      taskData={tasks} 
-                      removeTask={removeTask} 
-                      completeTask={completeTask} 
-                  />
-              </div>
-              <div className="overlap-group-wrapper">
-                  <div className="div-wrapper">
-                      <div className="text-wrapper">HISTORY</div>
-                  </div>
-              </div>
-              <div className="text-wrapper-2">HOME</div>
-          </div>
-      </div>
-  );
-=======
     return (
         <div className="home-page">
             <div className="div">
@@ -340,7 +280,6 @@ function listPolls(){
             </div>
         </div>
     );
->>>>>>> origin
 }
 
 export default Home;

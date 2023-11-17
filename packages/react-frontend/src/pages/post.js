@@ -2,16 +2,13 @@ import React from 'react';
 import "./post.css";
 import Form from '../components/Form'; 
 import PollForm from '../components/PollForm';
-<<<<<<< HEAD
-import SettingsVector from "./vector.svg"
 
-=======
->>>>>>> origin
+
 
 export const Post = (props) => {
 
     const connection_URL = "https://crib-app.azurewebsites.net";
-    // const connection_URL = "http://localhost:8000"
+    // const connection_URL = "http://localhost:8000";
 
     function handleTaskSubmit(task) {
         console.log(task.task)
@@ -64,35 +61,14 @@ export const Post = (props) => {
     return (
         <div className="post-something">
             <div className="div">
-<<<<<<< HEAD
-                <div className="overlap">
-                    <div className="group">
-                        <div className="div-wrapper">
-                            <Form handleSubmit = {handleSubmit} />
-=======
                 <div className="task-box">
                     <div className="group">
                         <div className="div-wrapper">
                             <Form handleSubmit = {handleTaskSubmit} />
->>>>>>> origin
                         </div>
                     </div>
                     <div className="task-text">TASK</div>
                     <div className="due-date-text">DUE DATE</div>
-<<<<<<< HEAD
-                    <div className="weight-text">WEIGHT:</div>
-                    <div className = "assignee-text"> ASSIGNEE:</div>
-                </div>
-                <div className="overlap-2">
-                    <div className="text-wrapper-5">TITLE</div>
-                    <div className="text-wrapper-6">OPTION 1</div>
-                    <div className="text-wrapper-7">OPTION 2</div>
-                    <div className="rectangle-4" />
-                    <div className="rectangle-5" />
-                    <div className="rectangle-6" />
-                    <div className="overlap-wrapper">
-                    <div className="2nd-post">POST</div>
-=======
                     <div className="weight-text">WEIGHT</div>
                     <div className = "assignee-text"> ASSIGNEE</div>
                 </div>
@@ -101,7 +77,6 @@ export const Post = (props) => {
                         <div className="div-wrapper">
                             <PollForm handleSubmit = {handlePollSubmit} />
                         </div>
->>>>>>> origin
                     </div>
                     <div className="title2-text">TITLE</div>
                     <div className="option1-text ">OPTION 1</div>
