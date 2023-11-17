@@ -3,10 +3,12 @@ import "./post.css";
 import Form from '../components/Form'; 
 import PollForm from '../components/PollForm';
 
+
+
 export const Post = (props) => {
 
     const connection_URL = "https://crib-app.azurewebsites.net";
-    // const connection_URL = "http://localhost:8000"
+    // const connection_URL = "http://localhost:8000";
 
     function handleTaskSubmit(task) {
         console.log(task.task)
@@ -86,8 +88,6 @@ export const Post = (props) => {
                     <div className="logo-group-wrapper">
                         <img className="logo-group" alt="Logo group" src="logo-group.png" />
                     </div>
-                    <div className="ellipse-2" />
-                    <img className="vector" alt="Vector" src="vector.svg" />
                     <div className="overlap-group-wrapper">
                         <div className="overlap-group-2">
                             <div className="POST-SOMETHING">

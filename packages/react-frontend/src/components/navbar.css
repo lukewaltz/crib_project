@@ -16,37 +16,50 @@
   z-index: 1;  
 }
 
-
-.box .rectangle {
+.box .post-button {
   border: 1px solid;
   border-color: #388087;
   border-radius: 12px;
-  height: 9px;
-  left: 184px;
+  height: 20px;
+  left: 138px;
   position: absolute;
-  top: 14px;
-  width: 9px;
+  top: 12px;
+  width: 20px;
 }
 
-.box .div {
-  background-color: #ffe78b;
+
+.box .home-button {
   border: 1px solid;
   border-color: #388087;
   border-radius: 12px;
-  height: 9px;
-  left: 214px;
+  height: 20px;
+  left: 205px;
   position: absolute;
-  top: 14px;
-  width: 9px;
+  top: 12px;
+  width: 20px;
 }
 
-.box .rectangle-2 {
+
+.box .profile-button {
   border: 1px solid;
   border-color: #388087;
   border-radius: 12px;
-  height: 9px;
-  left: 244px;
+  height: 20px;
+  left: 271px;
   position: absolute;
-  top: 14px;
-  width: 9px;
+  top: 12px;
+  width: 20px;
+}
+
+.box .post-button, .box .home-button, .box .profile-button {
+
+  transition: background-color 0.3s ease;
+}
+
+.box .post-button:hover, .box .home-button:hover, .box .profile-button:hover {
+  background-color: #FFE78B; 
+}
+
+.box .group .active-button {
+  background-color: #FFE78B;
 }

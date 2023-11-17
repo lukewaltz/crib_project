@@ -46,16 +46,18 @@
     width: 233px;
 }
 
-/* weight field */ 
+
 .post-something .weight-field{
     background-color: #f2fbe0;
     border-radius: 49px;
     height: 35px;
     left: 140px;
-    position: absolute;
+    position: absolute; 
     top: 120px;
     width: 233px;
 }
+
+
 
 .post-something .assignee-field{
     background-color: #f2fbe0;
@@ -66,8 +68,6 @@
     top: 170px;
     width: 233px;
 }
-
-
 
 
 /* task */
@@ -127,10 +127,9 @@
 }
 
 
-
 .post-something .poll-box {
     background-color: #badfe7;
-    min-height: 200px; 
+    min-height: 250px; 
     left: 19px;
     position: absolute;
     top: 652px;
@@ -151,8 +150,6 @@
     top: 24px;
     white-space: nowrap;
 }
-
-
 
 .post-something .option1-text  {
     color: #388087;
@@ -207,7 +204,7 @@
 /* option 2   */
 .post-something .option2-field{
     background-color: #f2fbe0;
-    border-radius: 49px;
+    border-radius: 15px;
     height: 32px;
     left: 124px;
     position: absolute;
@@ -243,18 +240,6 @@
     width: 21px;
 }
 
-.post-something .text-wrapper-8 {
-    color: #6fb3b8;
-    font-family: "Inter-Medium", Helvetica;
-    font-size: 30px;
-    font-weight: 500;
-    left: 1px;
-    letter-spacing: 0;
-    line-height: normal;
-    position: absolute;
-    top: 0;
-    white-space: nowrap;
-}
 
 /* top rectangle */
 .post-something .overlap-4 {
@@ -385,13 +370,34 @@
     white-space: nowrap;
 }
 
+.post-something .poll-submit {
+    display: inline-block;
+    border: 1px solid #fff; 
+    border-radius: 10px;
+    background: #6fb3b8; /* White background for buttons */
+    color: white; /* Dark text color for buttons */
+    font-weight: 600;
+    font-family: -apple-system, BlinkMacSystemFont, Helvetica Neue, Helvetica, Arial, sans-serif;
+    font-size: 1rem;
+    text-transform: none;
+    padding: 0.75rem 1.25rem;
+    margin: 0 0 0.5rem 0;
+    vertical-align: middle;
+    text-align: center;
+    cursor: pointer;
+    text-decoration: none;
+    line-height: 1;
+    position: relative;
+    top: 170px;
+}
+
 .post-something .button,
 .post-something a.button,
 .post-something button,
 .post-something nav li,
-.post-something [type=submit],
+/* .post-something [type=submit], */
 .post-something [type=reset],
-.post-something [type=button] {
+.post-something  .task-submit{
   display: inline-block;
   border: 1px solid #fff; 
   border-radius: 10px;

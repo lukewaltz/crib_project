@@ -1,0 +1,223 @@
+.login {
+    background-color: #ffffff;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 100%;
+}
+
+.login .div {
+    background-color: #ffffff;
+    height: 932px;
+    overflow: hidden;
+    position: relative;
+    width: 430px;
+}
+
+.login .overlap {
+    height: 741px;
+    left: -115px;
+    position: absolute;
+    top: -327px;
+    width: 699px;
+}
+
+.login .background1 {
+    background-color: #ecece9;
+    border-radius: 26px;
+    height: 519px;
+    left: 94px;
+    position: absolute;
+    top: 92px;
+    transform: rotate(-150.78deg);
+    width: 511px;
+}
+
+.login .text-wrapper {
+    color: #388087;
+    font-family: "Inter-Black", Helvetica;
+    font-size: 67px;
+    font-weight: 900;
+    left: 135px;
+    letter-spacing: 4.36px;
+    line-height: normal;
+    position: absolute;
+    text-align: center;
+    top: 604px;
+    width: 390px;
+}
+
+.login .logo {
+    background: linear-gradient(180deg, rgba(217, 217, 217, 0) 0%, rgb(186, 223, 231) 100%);
+    border-radius: 88.5px;
+    height: 177px;
+    left: 242px;
+    position: absolute;
+    top: 366px;
+    width: 177px;
+}
+
+.login .logo-group {
+    background-size: 100% 100%;
+    height: 144px;
+    left: 21px;
+    position: relative;
+    top: 16px;
+    width: 124px;
+}
+
+.login .overlap-group {
+    height: 728px;
+    left: -40px;
+    position: absolute;
+    top: 567px;
+    width: 728px;
+}
+
+.login .overlap-group-2 {
+    height: 728px;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 728px;
+}
+
+.login .background2 {
+    background-color: #ecece9;
+    border-radius: 26px;
+    height: 519px;
+    left: 109px;
+    position: absolute;
+    top: 105px;
+    transform: rotate(-134.66deg);
+    width: 511px;
+}
+
+.login .password-field{
+    background-color: #ffe78b;
+    border-radius: 21px;
+    height: 48px;
+    left: 75px;
+    position: absolute;
+    top: 86px;
+    width: 360px;
+}
+
+.login .email-text{
+    color: #008080;
+    font-family: "Inter-Regular", Helvetica;
+    font-size: 40px;
+    font-weight: 400;
+    left: 138px;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    text-align: center;
+    top: 163px;
+    width: 233px;
+}
+
+.login .email-field {
+    background-color: #ffe78b;
+    border-radius: 21px;
+    height: 48px;
+    left: 75px;
+    position: absolute;
+    top: 229px;
+    width: 360px;
+}
+
+.login .username-field {
+    background-color: #ffe78b;
+    border-radius: 21px;
+    height: 48px;
+    left: 75px;
+    position: absolute;
+    top: -55px;
+    width: 360px;
+}
+
+
+.login .p {
+    color: #388087;
+    font-family: "Inter-Regular", Helvetica;
+    font-size: 15px;
+    font-weight: 400;
+    left: 145px;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    top: 318px;
+    white-space: nowrap;
+}
+
+.login .ellipse {
+    background-color: #f2fbe0;
+    border: 1px solid;
+    border-color: #388087;
+    border-radius: 22.5px;
+    height: 45px;
+    left: 390px;
+    position: absolute;
+    top: 300px;
+    width: 45px;
+}
+
+.login .arrowbutton {
+    background: url('./arrow.svg') no-repeat center center; 
+    border: none;
+    height: 23px;
+    width: 24px;
+    cursor: pointer;
+    position: absolute;
+    left: 401px;
+    top: 312px;
+    z-index: 10;
+}
+
+
+.login .password-text {
+    color: #008080;
+    font-family: "Inter-Regular", Helvetica;
+    font-size: 40px;
+    font-weight: 400;
+    left: 138px;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    text-align: center;
+    top: 20px;
+    width: 233px;
+}
+
+.login .username-text{
+    color: #008080;
+    font-family: "Inter-Regular", Helvetica;
+    font-size: 40px;
+    font-weight: 400;
+    left: 99px;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    text-align: center;
+    top: 444px;
+    width: 233px;
+}
+
+
+.login .button,
+.login a.button,
+.login button,
+.login nav li,
+.login [type=submit],
+.login [type=reset],
+.login [type=button] {
+    height: 23px;
+    left: 401px;
+    position: absolute;
+    top: 312px;
+    width: 24px;
+    z-index: 10;
+}
+
+

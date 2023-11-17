@@ -1,5 +1,9 @@
 import React, { useState } from "react";
 import UserForm from "../components/UserForm";
+import "./login.css";
+import Logo from "../logo-group.png"
+import Arrow from "./arrow.svg"
+
  
 const Login = () => {
 
@@ -80,16 +84,34 @@ const Login = () => {
           .then(setUsers([...users, user]));
       }
 
-    return (
-        <div className="container">
-          <UserForm handleSubmit={updateList} />
-          <h2>Log In</h2>
-            <h1>
-                Welcome Back!
-            </h1>
-        <UserForm handleSubmit={updateList} />
-        </div>
-    );
+  return (
+      <div className="login">
+          <div className="div">
+              <div className="overlap">
+                  <div className="background1" />
+                  <div className="text-wrapper">WELCOME BACK</div>
+                  <div className="logo">
+                    <img className="logo-group" alt="Logo group" src={Logo} />
+                  </div>
+              </div>
+              <div className="overlap-group">
+                  <div className="overlap-group-2">
+                      <div className="background2" />
+                      <UserForm handleSubmit={updateList} />
+                      <div className="email-text">EMAIL</div>
+                      <p className="p">dont have a login? sign up here</p>
+                      <div className="ellipse" />
+                      <img className="arrow" alt="arrow" src={Arrow} />
+                  </div>
+                  <div className="password-text">PASSWORD</div>
+              </div>
+              <div className="username-text">USERNAME</div>
+          </div>
+      </div>
+  );
 };
+      
+{/* <UserForm handleSubmit={updateList} /> */}
+
  
 export default Login;

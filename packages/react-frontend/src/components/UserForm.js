@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
 function UserForm(props) {
-
   const [user, setUser] = useState(
      {
         username: "",
@@ -32,28 +31,31 @@ function UserForm(props) {
 
   return (
         <form>
-        <label htmlFor="username">Username</label>
         <input
             type="text"
             name="username"
             id="username"
             value={user.username}
-            onChange={handleChange} />
-        <label htmlFor="password">Password</label>
+            onChange={handleChange} 
+            className = "username-field"
+            />
         <input
             type="text"
             name="password"
             id="password"
             value={user.password}
-            onChange={handleChange} />
-        <label htmlFor="email">Email</label>
+            onChange={handleChange} 
+            className = "password-field"
+            />
         <input
             type="text"
             name="email"
             id="email"
             value={user.email}
-            onChange={handleChange} />
-        <input type="button" value="Login" onClick={submitForm} />
+            onChange={handleChange} 
+            className = "email-field"
+            />
+        <button type="button" className="arrowbutton" onClick={submitForm}></button>
         </form>
     );
 
