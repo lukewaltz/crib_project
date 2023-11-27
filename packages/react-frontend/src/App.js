@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Account from './pages/account';
 import Home from './pages/home';
@@ -21,7 +21,8 @@ function MyApp() {
       <Navbar />
         <Routes>
             {/* pass tasks state and handlePostSubmit to relevant components */}
-            <Route path="/" element={<Home tasks={tasks} setTasks={setTasks} />} />
+            {/* <Route path="/" element={<Home tasks={tasks} setTasks={setTasks} />} /> */}
+            <Route path="/" element={<Navigate to="/home" />} />
             <Route path='/post' element={<Post handleSubmit={handlePostSubmit} />} />
             <Route path='/home' element={<Home tasks={tasks} />} />
             <Route path='/account' element={<Account />} />

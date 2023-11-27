@@ -1,5 +1,7 @@
 // backend.js
 import express from "express";
+// import session from "express";
+import cookieParser from "cookie-parser";
 import cors from "cors";
 import userServices from './user-services.js';
 import User from "./user.js";
@@ -10,22 +12,38 @@ import pollServices from "./poll-services.js";
 
 const require = createRequire(import.meta.url);
 
-const app = express();
-const port = 8000;
 const session = require('express-session');
 
-app.use(cors());
+const app = express();
+const port = 8000;
+
+app.use(session({
+    secret: 'secret',
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+        secure: false,
+        // sameSite: 'none', 
+    },
+}));
+
+app.use(cors({
+    origin: "http://localhost:3000",
+    credentials: true
+}));
+
 app.use(express.json());
-app.use(session({secret:"secret", resave:false, saveUninitialized:true}));
+app.use(cookieParser());
 
 
 //Users Endpoints
 
 
+
 // Login and create new user
 app.post('/login', async (req, res) => {
     try {
-        const user = await userServices.findUserByUsername(req.body.username);
+        const user = await userServices.findUserByEmail(req.body.email);
 
         if (!user) {
             return res.status(404).send('User not found');
@@ -33,7 +51,8 @@ app.post('/login', async (req, res) => {
 
         user.comparePassword(req.body.password, function(err, isMatch){
             if(isMatch){
-                req.session.user = user;
+                req.session.username = user.username;
+                // console.log(req.session.username);
                 return res.status(200).send('Login successful');
             } else{
                 return res.status(401).send('cannot login');
@@ -46,8 +65,18 @@ app.post('/login', async (req, res) => {
     }
 });
 
+app.get('/isLoggedIn', (req, res) => {
+    // console.log('Session in /isLoggedIn:', req.session.username);
+    if(req.session.username) {
+        return res.status(200).send('Logged in');
+    }else{
+        return res.status(401).send('Not logged in');
+    }
+});
+
 // logout of current user session
 app.get('/logout', (req, res) => {
+    res.clearCookie('connect.sid');
     req.session.destroy();
     return res.status(200).send();
 });
@@ -59,6 +88,7 @@ app.post('/signup', async (req, res) => {
         if(error == 500){
             return res.status(500).send('Unable to sign up');
         }else{
+            req.session.username = req.body.username;
             return res.status(201).send('Successful signup');
         }
     });
@@ -217,13 +247,19 @@ app.delete('/users/:id', async (req, res) => {
 /* when does response get sent? */
 // get tasks field
 app.get('/tasks', (req, res) => {
-    taskServices.getTasks()
+    // console.log('Session in /tasks:', req.session.username);
+    if(req.session.username){
+        // console.log(req.session.username);
+        taskServices.getTasks()
         .then((tasks) => {
             res.status(200).json({ task_list:tasks });
         })
         .catch((error) => {
             res.status(500).json({ error })
         });
+    }else{
+        return res.status(401).send();
+    }
 });
 
 // add new task to task list, will be marked with assigned=false
@@ -257,13 +293,17 @@ app.delete('/tasks/:id', async (req, res) => {
 
 //get poll
 app.get('/polls', (req, res) => {
-    pollServices.getPolls()
-        .then((polls) => {
-            res.status(200).json( { poll_list:polls });
-        })
-        .catch((error) => {
-            res.status(500).json({ error })
-        });
+    if(!req.session.username){
+        return res.status(401).send();
+    }else{
+        pollServices.getPolls()
+            .then((polls) => {
+                res.status(200).json( { poll_list:polls });
+            })
+            .catch((error) => {
+                res.status(500).json({ error })
+            });
+    }
 });
 
 app.delete('/polls/:id', async (req, res) => {

@@ -12,7 +12,7 @@ const Navbar = () => {
         return location.pathname === path ? 'active-button' : '';
     };
 
-    const includedPaths = ['/post', '/home', '/account'];
+    const includedPaths = ['/post', '/', '/home', '/account'];
 
     if (!includedPaths.includes(location.pathname)) {
         return null; 

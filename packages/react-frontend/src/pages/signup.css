@@ -74,19 +74,19 @@
     width: 390px;
 }
 
-.sign-up .overlap-2 {
+.sign-up .email-region {
     height: 764px;
     left: -67px;
     position: absolute;
-    top: 510px;
+    top: 680px;
     width: 710px;
 }
 
-.sign-up .overlap-3 {
-    height: 713px;
-    left: 0;
+.sign-up .password-region{
+    height: 603px;
+    left: -67px;
     position: absolute;
-    top: 51px;
+    top: 700px;
     width: 710px;
 }
 
@@ -104,7 +104,7 @@
     width: 233px;
 }
 
-.sign-up .rectangle-2 {
+.sign-up .password-field {
     background-color: #ffe78b;
     border-radius: 18px;
     height: 48px;
@@ -139,11 +139,15 @@
     width: 45px;
 }
 
-.sign-up .vector {
+.sign-up .ellipse:hover {
+    background-color: #ffe78b;
+  }
+
+.sign-up .submit.vector {
     height: 23px;
     left: 407px;
     position: absolute;
-    top: 258px;
+    top: 310px;
     width: 24px;
 }
 
@@ -161,21 +165,54 @@
     width: 233px;
 }
 
-.sign-up .rectangle-3 {
+.sign-up .email-field {
+    z-index: 2;
     background-color: #ffe78b;
     border-radius: 18px;
     height: 48px;
     left: 101px;
     position: absolute;
-    top: 89px;
+    top: 40px;
     width: 360px;
 }
 
-.sign-up .overlap-group-2 {
+.sign-up .name-region{
     height: 97px;
     left: 35px;
     position: absolute;
     top: 401px;
+    width: 360px;
+}
+
+.sign-up .username-region{
+    height: 97px;
+    left: 35px;
+    position: absolute;
+    top: 540px;
+    width: 360px;
+}
+
+.sign-up .text-wrapper-5 {
+    color: #388087;
+    font-family: "Inter-Regular", Helvetica;
+    font-size: 30px;
+    font-weight: 400;
+    left: 0px;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    text-align: center;
+    top: 0;
+    width: 403px;
+}
+
+.sign-up .username-field {
+    background-color: #ffe78b;
+    border-radius: 18px;
+    height: 48px;
+    left: 0;
+    position: absolute;
+    top: 49px;
     width: 360px;
 }
 
@@ -193,7 +230,7 @@
     width: 233px;
 }
 
-.sign-up .rectangle-4 {
+.sign-up .name-field {
     background-color: #ffe78b;
     border-radius: 18px;
     height: 48px;
