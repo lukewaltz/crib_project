@@ -5,8 +5,8 @@ function Home() {
   const [tasks, setTasks] = useState([]);
   const [polls, setPolls] = useState([]);
 
-  const connection_URL = "https://crib-app.azurewebsites.net";
-  // const connection_URL = "http://localhost:8000"
+  // const connection_URL = "https://crib-app.azurewebsites.net";
+  const connection_URL = "http://localhost:8000"
 
   useEffect(() => {
     listTasks()
@@ -195,7 +195,6 @@ function listPolls(){
     );
   }
 
-    // merged polllist component
     function PollList() {
       const boxes = polls.map((box) => {
         return (
@@ -203,24 +202,26 @@ function listPolls(){
             <div className='poll-title'>POLL: {box.title}</div>
             {/* <div className='chore-id'>{box._id}</div> */}
             <div className='button-container'>
-              <div className='poll-option1'>
-              <button onClick={() => voteForOption(box._id, 'option1')}>
-                  {box.option1}<br></br>
-                  {box.option1Votes}
-                </button>
+              <div className='poll-options-container'>
+                <div className='poll-option1'>
+                  {/* Yes button */}
+                  <button onClick={() => voteForOption(box._id, 'option1')}>
+                    {box.option1}
+                  </button>
+                </div>
+                <div className='poll-option2'>
+                  {/* No button */}
+                  <button onClick={() => voteForOption(box._id, 'option2')}>
+                    {box.option2}
+                  </button>
+                </div>
               </div>
-              <div className='poll-option2'>
-                <button onClick={() => voteForOption(box._id, 'option2')}>
-                  {box.option2}<br></br>
-                  {box.option2Votes}
-                </button>
-              </div>
-            </div>
-            <div className='complete-button'>
+              <div className='poll-delete'>
                 <button onClick={() => completePoll(box._id)}>
                   Delete Poll
                 </button>
               </div>
+            </div>
           </div>
         );
       });
@@ -257,9 +258,6 @@ function listPolls(){
                     <div className="group">
                         <img className="logo-group" alt="Logo group" src="logo-group.png" />
                     </div>
-                    <div className="overlap-group">
-                        <img className="vector" alt="Vector" src="vector.svg" />
-                    </div>
                 </div>
                 <div className="rectangle-tasks">
                     <Stack 
@@ -271,12 +269,8 @@ function listPolls(){
                         completeTask={completeTask} 
                     />
                 </div>
-                <div className="overlap-group-wrapper">
-                    <div className="div-wrapper">
-                        <div className="text-wrapper">HISTORY</div>
-                    </div>
-                </div>
-                <div className="text-wrapper-2">HOME</div>
+
+                <div className="home-text">HOME</div>
             </div>
         </div>
     );
