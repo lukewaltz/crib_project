@@ -8,7 +8,7 @@ function Home() {
   const [votedPolls, setVotedPolls] = useState([]);
   const navigate = useNavigate();
 
-//   const connection_URL = "https://crib-app.azurewebsites.net";
+  // const connection_URL = "https://crib-app.azurewebsites.net";
   const connection_URL = "http://localhost:8000"
 
     async function checkLogin(){
@@ -116,6 +116,8 @@ function listPolls(){
     }
     console.log(`Poll with ID ${pollId} deleted successfully`);
   }
+  
+  const [hasVoted, setHasVoted] = useState(false);
 
   async function voteForOption(pollId, option) {
 
@@ -145,16 +147,17 @@ function listPolls(){
         if (poll._id === pollId) {
           // Update the optionVotes based on the voted option
           return {
+            
             ...poll,
             option1Votes: option === 'option1' ? poll.option1Votes + 1 : poll.option1Votes,
             option2Votes: option === 'option2' ? poll.option2Votes + 1 : poll.option2Votes,
           };
         }
+        
         return poll;
       });
       return updatedPolls;
     });
-
     console.log(`Vote for ${option} in poll with ID ${pollId} recorded successfully`);
   }
   
@@ -199,37 +202,7 @@ function listPolls(){
       </div>
     );
   }
-
-  // merged polllist component
-//   function PollList() {
-//     const boxes = polls.map((box) => {
-//       return (
-//         <div className='poll-box' key = {box._id} >
-//           <div className='poll-title'>POLL: {box.title}</div>
-//           <div className='poll-option1'>DEADLINE: {box.option1}</div>
-          
-//           <div className='button-container'>
-//             <div className='remove-button'>
-//               <button onClick={() => removeTask(box._id)}> 
-//                 Remove
-//               </button>
-//             </div>
-//             <div className='vote-button'>
-//               <button onClick={() => completeTask(box._id)}>
-//           {/* onClick NEEDS TO CHANGE TO TRACK VOTES */}
-//                 Vote
-//               </button>
-//             </div>
-//           </div>
-//         </div>
-//       );
-//     });
-//     return (
-//       <div>
-//         {boxes}
-//       </div>
-//     );
-//   }
+  
 
     // merged polllist component
     function PollList() {
@@ -238,6 +211,7 @@ function listPolls(){
           <div className='chore-box' key = {box._id} >
             <div className='poll-title'>POLL: {box.title}</div>
             {/* <div className='chore-id'>{box._id}</div> */}
+            {!hasVoted && (
             <div className='button-container'>
                 {votedPolls.indexOf(box._id) !== -1 && (<p>Already voted</p>)}
               <div className='poll-option1'>
@@ -254,7 +228,8 @@ function listPolls(){
                   {box.option2Votes}
                 </button>
               </div>
-            </div>
+            </div>)}
+            {hasVoted && <p>Vote Recorded. Thank you!</p>}
             <div className='complete-button'>
                 <button onClick={() => completePoll(box._id)}>
                   Delete Poll
