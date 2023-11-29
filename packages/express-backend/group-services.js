@@ -49,7 +49,7 @@ function addGroup(group) {
 
 async function addUserToGroup(code, user) {
     try {
-        const existingGroup = await groupModel.findOne({ code: code }).exec();
+        const existingGroup = await groupModel.findOne({ code: code });
 
         if (!existingGroup) {
             console.error("Group not found with code:", code);
@@ -60,7 +60,7 @@ async function addUserToGroup(code, user) {
             { code: code },
             { $push: { members: user } },
             { new: true }
-        ).exec();
+        );
 
         return updatedGroup;
     } catch (error) {
