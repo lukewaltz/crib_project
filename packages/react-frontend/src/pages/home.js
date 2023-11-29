@@ -149,8 +149,8 @@ function listPolls(){
           return {
             
             ...poll,
-            option1Votes: option === 'option1' ? poll.option1Votes + 1 : poll.option1Votes,
-            option2Votes: option === 'option2' ? poll.option2Votes + 1 : poll.option2Votes,
+            option1Votes: option === 'option1' && votedPolls.indexOf(pollId) !== -1 ? poll.option1Votes + 1 : poll.option1Votes,
+            option2Votes: option === 'option2' && votedPolls.indexOf(pollId) !== -1 ? poll.option2Votes + 1 : poll.option2Votes,
           };
         }
         
@@ -161,17 +161,6 @@ function listPolls(){
     console.log(`Vote for ${option} in poll with ID ${pollId} recorded successfully`);
   }
   
-  
-    // merged tasklisthead component
-    function TaskListHead() {
-        return (
-            <thead>
-                <tr>
-                    <th>LIST OF CHORES:</th>
-                </tr>
-            </thead>
-        );
-    }
 
   // merged tasklist component
   function TaskList() {
@@ -210,8 +199,7 @@ function listPolls(){
         return (
           <div className='chore-box' key = {box._id} >
             <div className='poll-title'>POLL: {box.title}</div>
-            {/* <div className='chore-id'>{box._id}</div> */}
-            {!hasVoted && (
+           
             <div className='button-container'>
                 {votedPolls.indexOf(box._id) !== -1 && (<p>Already voted</p>)}
               <div className='poll-option1'>
@@ -228,8 +216,7 @@ function listPolls(){
                   {box.option2Votes}
                 </button>
               </div>
-            </div>)}
-            {hasVoted && <p>Vote Recorded. Thank you!</p>}
+            </div>
             <div className='complete-button'>
                 <button onClick={() => completePoll(box._id)}>
                   Delete Poll
