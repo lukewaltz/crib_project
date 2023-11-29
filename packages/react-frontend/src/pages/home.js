@@ -86,7 +86,7 @@ function listPolls(){
   }
 
   function removePoll(pollId) {
-    deleteTaskFromBackend(pollId)
+    deletePollFromBackend(pollId)
       .then(() => {
         //keep all polls that don't match polls id
         const updatedPolls = polls.filter(poll => poll._id !== pollId);
@@ -117,8 +117,6 @@ function listPolls(){
     console.log(`Poll with ID ${pollId} deleted successfully`);
   }
   
-  const [hasVoted, setHasVoted] = useState(false);
-
   async function voteForOption(pollId, option) {
 
     if (votedPolls.indexOf(pollId) !== -1) {
@@ -145,14 +143,16 @@ function listPolls(){
     setPolls((prevPolls) => {
       const updatedPolls = prevPolls.map((poll) => {
         if (poll._id === pollId) {
+          
           // Update the optionVotes based on the voted option
           return {
             
             ...poll,
-            option1Votes: option === 'option1' && votedPolls.indexOf(pollId) !== -1 ? poll.option1Votes + 1 : poll.option1Votes,
-            option2Votes: option === 'option2' && votedPolls.indexOf(pollId) !== -1 ? poll.option2Votes + 1 : poll.option2Votes,
+            option1Votes: option === 'option1' ? poll.option1Votes + 1 : poll.option1Votes,
+            option2Votes: option === 'option2' ? poll.option2Votes + 1 : poll.option2Votes,
           };
         }
+        
         
         return poll;
       });
@@ -218,7 +218,7 @@ function listPolls(){
               </div>
             </div>
             <div className='complete-button'>
-                <button onClick={() => completePoll(box._id)}>
+                <button onClick={() => removePoll(box._id)}>
                   Delete Poll
                 </button>
               </div>
