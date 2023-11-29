@@ -372,6 +372,7 @@ app.get('/polls', (req, res) => {
 
 app.delete('/polls/:id', async (req, res) => {
     const id = req.params.id;
+    console.log(id);
     await pollServices.deletePoll(id)
     .then(() => {
         res.json('Poll deleted successfully')
