@@ -39,7 +39,7 @@ const Login = () => {
             if (response.status === 200) {
                 console.log('User logged in');
                 navigate('/');
-                return response.json();
+                return response.status;
             } else if (response.status === 500) {
                 console.log('Could not login');
                 throw new Error('Could not login');

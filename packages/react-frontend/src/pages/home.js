@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 function Home() {
   const [tasks, setTasks] = useState([]);
   const [polls, setPolls] = useState([]);
+  const [votedPolls, setVotedPolls] = useState([]);
   const navigate = useNavigate();
 
 //   const connection_URL = "https://crib-app.azurewebsites.net";
@@ -96,7 +97,8 @@ function listPolls(){
   
   async function deleteTaskFromBackend(taskId) {
     const response = await fetch(`${connection_URL}/tasks/${taskId}`, {
-      method: 'DELETE'
+      method: 'DELETE',
+      credentials: 'include',
     });
     if (!response.ok) {
       throw new Error('Network response was not ok');
@@ -106,7 +108,8 @@ function listPolls(){
 
   async function deletePollFromBackend(pollId) {
     const response = await fetch(`${connection_URL}/polls/${pollId}`, {
-      method: 'DELETE'
+      method: 'DELETE',
+      credentials: 'include',
     });
     if (!response.ok) {
       throw new Error('Network response was not ok');
@@ -115,16 +118,27 @@ function listPolls(){
   }
 
   async function voteForOption(pollId, option) {
+
+    if (votedPolls.indexOf(pollId) !== -1) {
+        // User has already voted for this poll
+        console.log(`User already voted for poll with ID ${pollId}`);
+        return;
+    }
+
     const response = await fetch(`${connection_URL}/polls/${pollId}`, {
       method: 'POST',
+      credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ option }),
+    }).then((response) => {
+        if(response.status === 400){
+
+        }
     });
-    if (!response.ok) {
-      throw new Error('Error recording vote');
-    }
+
+    setVotedPolls((prevVotedPolls) => [...prevVotedPolls, pollId]);
 
     setPolls((prevPolls) => {
       const updatedPolls = prevPolls.map((poll) => {
@@ -187,35 +201,35 @@ function listPolls(){
   }
 
   // merged polllist component
-  function PollList() {
-    const boxes = polls.map((box) => {
-      return (
-        <div className='poll-box' key = {box._id} >
-          <div className='poll-title'>POLL: {box.title}</div>
-          <div className='poll-option1'>DEADLINE: {box.option1}</div>
+//   function PollList() {
+//     const boxes = polls.map((box) => {
+//       return (
+//         <div className='poll-box' key = {box._id} >
+//           <div className='poll-title'>POLL: {box.title}</div>
+//           <div className='poll-option1'>DEADLINE: {box.option1}</div>
           
-          <div className='button-container'>
-            <div className='remove-button'>
-              <button onClick={() => removeTask(box._id)}> 
-                Remove
-              </button>
-            </div>
-            <div className='vote-button'>
-              <button onClick={() => completeTask(box._id)}>
-          {/* onClick NEEDS TO CHANGE TO TRACK VOTES */}
-                Vote
-              </button>
-            </div>
-          </div>
-        </div>
-      );
-    });
-    return (
-      <div>
-        {boxes}
-      </div>
-    );
-  }
+//           <div className='button-container'>
+//             <div className='remove-button'>
+//               <button onClick={() => removeTask(box._id)}> 
+//                 Remove
+//               </button>
+//             </div>
+//             <div className='vote-button'>
+//               <button onClick={() => completeTask(box._id)}>
+//           {/* onClick NEEDS TO CHANGE TO TRACK VOTES */}
+//                 Vote
+//               </button>
+//             </div>
+//           </div>
+//         </div>
+//       );
+//     });
+//     return (
+//       <div>
+//         {boxes}
+//       </div>
+//     );
+//   }
 
     // merged polllist component
     function PollList() {
@@ -225,14 +239,17 @@ function listPolls(){
             <div className='poll-title'>POLL: {box.title}</div>
             {/* <div className='chore-id'>{box._id}</div> */}
             <div className='button-container'>
+                {votedPolls.indexOf(box._id) !== -1 && (<p>Already voted</p>)}
               <div className='poll-option1'>
-              <button onClick={() => voteForOption(box._id, 'option1')}>
+              <button onClick={() => voteForOption(box._id, 'option1')}
+              disabled={votedPolls.indexOf(box._id) !== -1}>
                   {box.option1}<br></br>
                   {box.option1Votes}
                 </button>
               </div>
               <div className='poll-option2'>
-                <button onClick={() => voteForOption(box._id, 'option2')}>
+                <button onClick={() => voteForOption(box._id, 'option2')}
+                disabled={votedPolls.indexOf(box._id) !== -1}>
                   {box.option2}<br></br>
                   {box.option2Votes}
                 </button>

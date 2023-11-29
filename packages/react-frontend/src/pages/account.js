@@ -17,6 +17,8 @@ const Account = () => {
         .then((response) => {
             if(response.status === 200){
                 setIsLoggedIn(true);
+            }else{
+                setIsLoggedIn(false);
             }
         });
     }
@@ -36,9 +38,9 @@ const Account = () => {
                 Welcome to Crib! Please login or signup!
             </h1>}
             <nav className="col">
-                <ul class='nav'>
-                {isLoggedIn ? <li><button onClick={logout}>Log Out</button></li> : <div><Link to='/account/login'><li>Login</li></Link> 
-                <Link to='/account/signup'><li>Signup</li></Link> </div> }
+                <ul className='nav'>
+                    {isLoggedIn ? <li><button onClick={logout}>Log Out</button></li> : <div><Link to='/account/login'><li>Login</li></Link> 
+                    <Link to='/account/signup'><li>Signup</li></Link> </div> }
                 </ul>
             </nav>
         </div>
