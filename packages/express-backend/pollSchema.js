@@ -26,7 +26,10 @@ const PollSchema = new mongoose.Schema(
         option2Votes: {
             type: Number,
             default: 0, // Default to zero votes
-        }
+        },
+        whoVoted: [{
+            type: String,
+        }]
     }, { collection: "poll_list" }
 );
 
