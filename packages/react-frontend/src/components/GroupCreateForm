@@ -1,0 +1,41 @@
+import React, {useState} from 'react';
+
+function GroupNameForm(props) {
+  const [group, setGroupName] = useState(
+     {
+        groupName: ""
+     }
+  );
+
+  function submitGroupNameForm() {
+    props.handleSubmit(group);
+    setGroupName({groupName: ''});
+  }
+
+
+
+  function handleChange(event) {
+    const { value } = event.target;
+      setGroupName(
+         {groupName: value}
+      );
+    }
+
+
+  return (
+        <form>
+        <input
+            type="text"
+            name="groupName"
+            id="groupName"
+            value={group.groupName}
+            onChange={handleChange} 
+            className="title2-field"
+            />
+        <input type="submit" value="Post" className="group-submit" onClick={submitGroupNameForm}/>
+        </form>
+    );
+
+}
+
+export default GroupNameForm;
