@@ -25,12 +25,17 @@ const UserSchema = new mongoose.Schema(
             required: true,
             trim: true,
         },
+        group: {
+            type: mongoose.Schema.ObjectId, ref: "Group",
+            unique: true,
+        },
         tasks: [
             {
                 type: mongoose.Schema.Types.ObjectId,
                 ref: "Task",
             }
         ]
+        // need to add group user belongs to
     },
     { collection: "users_list" }
 );

@@ -9,6 +9,7 @@ import { createRequire } from 'module';
 import taskServices from "./task-services.js";
 import backlogServices from "./backlog-services.js";
 import pollServices from "./poll-services.js";
+import groupServices from "./group-services.js";
 
 const require = createRequire(import.meta.url);
 
@@ -34,6 +35,67 @@ app.use(cors({
 
 app.use(express.json());
 app.use(cookieParser());
+
+
+// Group endpoints
+app.post('/group', async (req, res) => {
+    if(req.session.username){
+        const user = await userServices.findUserByUsername(req.session.username);
+
+        if (!user) {
+            return res.status(404).send('User not found');
+        }
+        if (user.group){
+            return res.status(401).send('user already in group');
+        }
+
+        groupServices.addGroup(req.body).then((e) =>{
+            if(e == 500){
+                return res.status(500).send('Unable to create group');
+            }else{
+                userServices.addToGroup(req.session.username, e).then((error) => {
+                    if(error == 500) {
+                        return res.status(500).send('Unable to add user');
+                    }
+                });
+                return res.status(201).send('Created group');
+            }
+        });
+    }else{
+        return res.status(401).send();
+    }
+});
+
+app.post('/join-group', async (req, res) => {
+    try {
+        const user = await userServices.findUserByEmail(req.body.email);
+
+        if (!user) {
+            return res.status(404).send('User not found');
+        }
+        if (user.group){
+            return res.status(401).send('user already in group');
+        }
+
+        groupServices.addUserToGroup(req.body.code, user).then((e) => {
+            if(e == 500 || e ==404){
+                return res.status(500).send('Unable to add user');
+            }
+
+            userServices.addToGroup(user.username, e).then((error) => {
+                if(error == 500) {
+                    return res.status(500).send('Unable to add user');
+                }else{
+                    return res.status(201).send('added user');
+                }
+            });
+            
+        });
+    } catch (err) {
+        console.error(err);
+        return res.status(500).send('Internal server error');
+    }
+});
 
 
 //Users Endpoints
