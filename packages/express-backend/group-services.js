@@ -47,17 +47,26 @@ function addGroup(group) {
 
 //     return promise;
 
-function addUserToGroup(code, user){
-    const promise = groupModel.findOneAndUpdate(
-        { code:  code}, 
-        { $push: { members: user } }, 
-        { new: true }
-    ).catch((error) => {
-        console.error("Error adding user:", error);
-        return 500;
-    });
+async function addUserToGroup(code, user) {
+    try {
+        const existingGroup = await groupModel.findOne({ code: code }).exec();
 
-    return promise;
+        if (!existingGroup) {
+            console.error("Group not found with code:", code);
+            return 404;
+        }
+
+        const updatedGroup = await groupModel.findOneAndUpdate(
+            { code: code },
+            { $push: { members: user } },
+            { new: true }
+        ).exec();
+
+        return updatedGroup;
+    } catch (error) {
+        console.error("Error adding user:", error);
+        return Promise.reject(500);
+    }
 }
 
 export default {

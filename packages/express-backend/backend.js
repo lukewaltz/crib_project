@@ -39,14 +39,31 @@ app.use(cookieParser());
 
 // Group endpoints
 app.post('/group', async (req, res) => {
-    groupServices.addGroup(req.body).then((error) =>{
-        // change error code to reason unable to signup
-        if(error == 500){
-            return res.status(500).send('Unable to create group');
-        }else{
-            return res.status(201).send('Created group');
+    if(req.session.username){
+        const user = await userServices.findUserByUsername(req.session.username);
+
+        if (!user) {
+            return res.status(404).send('User not found');
         }
-    });
+        if (user.group){
+            return res.status(401).send('user already in group');
+        }
+
+        groupServices.addGroup(req.body).then((e) =>{
+            if(e == 500){
+                return res.status(500).send('Unable to create group');
+            }else{
+                userServices.addToGroup(req.session.username, e).then((error) => {
+                    if(error == 500) {
+                        return res.status(500).send('Unable to add user');
+                    }
+                });
+                return res.status(201).send('Created group');
+            }
+        });
+    }else{
+        return res.status(401).send();
+    }
 });
 
 app.post('/join-group', async (req, res) => {
@@ -56,9 +73,12 @@ app.post('/join-group', async (req, res) => {
         if (!user) {
             return res.status(404).send('User not found');
         }
+        if (user.group){
+            return res.status(401).send('user already in group');
+        }
 
         groupServices.addUserToGroup(req.body.code, user).then((e) => {
-            if(e == 500){
+            if(e == 500 || e ==404){
                 return res.status(500).send('Unable to add user');
             }
 
