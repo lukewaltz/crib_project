@@ -30,8 +30,9 @@ async function findPoll(id) {
         });
 }
 
-function getPolls() {
+function getPolls(email) {
     let promise = pollModel.find();
+    
     return promise;
 }
 

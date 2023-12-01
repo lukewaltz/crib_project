@@ -362,7 +362,15 @@ app.get('/polls', (req, res) => {
         // console.log(req.session.username);
         pollServices.getPolls()
             .then((polls) => {
-                res.status(200).json( { poll_list:polls });
+                userServices.findUserByUsername(req.session.username).then((user) => {
+                    for(let i = 0; i<polls.length; i++){
+                        let whoVoted = polls[i].whoVoted;
+                        let hasVoted = whoVoted.includes(user.email);
+                        polls[i].whoVoted = [];
+                        polls[i].hasVoted = hasVoted;
+                    }
+                    res.status(200).json( { poll_list:polls });
+                });
             })
             .catch((error) => {
                 res.status(500).json({ error })
