@@ -195,7 +195,9 @@ function listPolls(){
 
     // merged polllist component
     function PollList() {
-      const boxes = polls.map((box) => {
+      const boxes = polls
+      // .filter(poll => poll.whoVoted.indexOf(this.user.email) !== -1)
+      .map((box) => {
         return (
           <div className='chore-box' key = {box._id} >
             <div className='poll-title'>POLL: {box.title}</div>
@@ -217,6 +219,7 @@ function listPolls(){
                 </button>
               </div>
             </div>
+            <div className='whoVoted'>WHO VOTED: {box.whoVoted} </div>
             <div className='complete-button'>
                 <button onClick={() => removePoll(box._id)}>
                   Delete Poll

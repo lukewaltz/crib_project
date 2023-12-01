@@ -362,6 +362,8 @@ app.get('/polls', (req, res) => {
         // console.log(req.session.username);
         pollServices.getPolls()
             .then((polls) => {
+                let user = userServices.findUserByUsername(req.session.username);
+                polls.filter(poll => poll.whoVoted.indexOf(user.email) !== -1);
                 res.status(200).json( { poll_list:polls });
             })
             .catch((error) => {
