@@ -16,8 +16,28 @@ mongoose
         .then(() => console.log("Connected to MongoDB in user-services"))
         .catch((error) => console.error("MongoDB Connection Error:", error));
 
+async function addToGroup(username, group){
+    const promise = userModel.findOneAndUpdate(
+        { username: username }, 
+        { $push: { group: group } }
+    ).catch((error) => {
+        console.error("Error adding group:", error);
+        return 500;
+    });
+
+    return promise;
+}
+
 async function findUserByUsername(username) {
     return await userModel.findOne({ username: username }).catch((err) => {
+        if(err) {
+            return undefined;
+        }
+    });
+}
+
+async function findUserByEmail(email) {
+    return await userModel.findOne({ email: email }).catch((err) => {
         if(err) {
             return undefined;
         }
@@ -92,9 +112,11 @@ async function deleteUser(id) {
 export default {
     addUser,
     addTask,
+    addToGroup,
     removeTask,
     randomUser,
     getUsers,
     deleteUser,
     findUserByUsername,
+    findUserByEmail,
 };

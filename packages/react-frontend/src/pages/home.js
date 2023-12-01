@@ -1,14 +1,31 @@
 import React, { useState, useEffect } from 'react';
 import "./home.css";
+import { useNavigate } from 'react-router-dom';
 
 function Home() {
   const [tasks, setTasks] = useState([]);
   const [polls, setPolls] = useState([]);
+  const [votedPolls, setVotedPolls] = useState([]);
+  const navigate = useNavigate();
 
   // const connection_URL = "https://crib-app.azurewebsites.net";
   const connection_URL = "http://localhost:8000"
 
+    async function checkLogin(){
+        fetch(`${connection_URL}/isLoggedIn`, {
+            method: 'GET',
+            credentials: 'include',
+        })
+        .then((response) => {
+            if(response.status !== 200){
+                navigate('/account/');
+            }
+        });
+        
+    }
+
   useEffect(() => {
+    checkLogin();
     listTasks()
       .then(res => res.json())
       .then(json => setTasks(json["task_list"]))
@@ -23,12 +40,18 @@ function Home() {
   }, []);
 
 function listTasks(){
-    const promise = fetch(`${connection_URL}/tasks`);
+    const promise = fetch(`${connection_URL}/tasks`, {
+        method: 'GET',
+        credentials: 'include',
+    });
     return promise;
 }
 
 function listPolls(){
-    const promise = fetch(`${connection_URL}/polls`);
+    const promise = fetch(`${connection_URL}/polls`, {
+        method: 'GET',
+        credentials: 'include',
+    });
     return promise;
 }
 
@@ -74,7 +97,8 @@ function listPolls(){
   
   async function deleteTaskFromBackend(taskId) {
     const response = await fetch(`${connection_URL}/tasks/${taskId}`, {
-      method: 'DELETE'
+      method: 'DELETE',
+      credentials: 'include',
     });
     if (!response.ok) {
       throw new Error('Network response was not ok');
@@ -84,56 +108,60 @@ function listPolls(){
 
   async function deletePollFromBackend(pollId) {
     const response = await fetch(`${connection_URL}/polls/${pollId}`, {
-      method: 'DELETE'
+      method: 'DELETE',
+      credentials: 'include',
     });
     if (!response.ok) {
       throw new Error('Network response was not ok');
     }
     console.log(`Poll with ID ${pollId} deleted successfully`);
   }
+  
+  const [hasVoted, setHasVoted] = useState(false);
 
   async function voteForOption(pollId, option) {
+
+    if (votedPolls.indexOf(pollId) !== -1) {
+        // User has already voted for this poll
+        console.log(`User already voted for poll with ID ${pollId}`);
+        return;
+    }
+
     const response = await fetch(`${connection_URL}/polls/${pollId}`, {
       method: 'POST',
+      credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ option }),
+    }).then((response) => {
+        if(response.status === 400){
+
+        }
     });
-    if (!response.ok) {
-      throw new Error('Error recording vote');
-    }
+
+    setVotedPolls((prevVotedPolls) => [...prevVotedPolls, pollId]);
 
     setPolls((prevPolls) => {
       const updatedPolls = prevPolls.map((poll) => {
         if (poll._id === pollId) {
           // Update the optionVotes based on the voted option
           return {
+            
             ...poll,
             option1Votes: option === 'option1' ? poll.option1Votes + 1 : poll.option1Votes,
             option2Votes: option === 'option2' ? poll.option2Votes + 1 : poll.option2Votes,
           };
         }
+        
         return poll;
       });
       return updatedPolls;
     });
-
     console.log(`Vote for ${option} in poll with ID ${pollId} recorded successfully`);
   }
   
   
-    // merged tasklisthead component
-    function TaskListHead() {
-        return (
-            <thead>
-                <tr>
-                    <th>LIST OF CHORES:</th>
-                </tr>
-            </thead>
-        );
-    }
-
   // merged tasklist component
   function TaskList() {
     const boxes = tasks.map((box) => {
@@ -195,6 +223,7 @@ function listPolls(){
     );
   }
 
+    // merged polllist component
     function PollList() {
       const boxes = polls.map((box) => {
         return (
@@ -234,19 +263,20 @@ function listPolls(){
 
     function Stack(props) {
         return (
-            <div className='box-container'>
-                
-                <PollList 
-                  pollData={polls}
-                  removePoll={removePoll}
-                  completePoll={completePoll}
-                  />
-                
-                <TaskList 
-                    taskData={tasks} 
-                    removeTask={removeTask} 
-                    completeTask={completeTask}
-                />
+            <div className='scroll-container'>
+                <div className='box-container'>
+                    <PollList 
+                    pollData={polls}
+                    removePoll={removePoll}
+                    completePoll={completePoll}
+                    />
+                    
+                    <TaskList 
+                        taskData={tasks} 
+                        removeTask={removeTask} 
+                        completeTask={completeTask}
+                    />
+                </div>
             </div>
         );
     }
