@@ -34,7 +34,9 @@ function Home() {
 
   useEffect(() => {
     listPolls()
-      .then(res => res.json())
+      .then(res => res.json()
+      // .filter(res => res.whoVoted[0] === "false")
+      )
       .then(json => setPolls(json["poll_list"]))
       .catch(error => console.log(error));
   }, []);
@@ -119,6 +121,8 @@ function listPolls(){
   
   const [hasVoted, setHasVoted] = useState(false);
 
+
+
   async function voteForOption(pollId, option) {
 
     if (votedPolls.indexOf(pollId) !== -1) {
@@ -151,6 +155,7 @@ function listPolls(){
             ...poll,
             option1Votes: option === 'option1' ? poll.option1Votes + 1 : poll.option1Votes,
             option2Votes: option === 'option2' ? poll.option2Votes + 1 : poll.option2Votes,
+            whoVoted: ["true"]
           };
         }
         
@@ -211,26 +216,39 @@ function listPolls(){
           <div className='chore-box' key = {box._id} >
             <div className='poll-title'>POLL: {box.title}</div>
             {/* <div className='chore-id'>{box._id}</div> */}
-            {!hasVoted && (
+            {box.whoVoted[0] === "false" && (
             <div className='button-container'>
                 {votedPolls.indexOf(box._id) !== -1 && (<p>Already voted</p>)}
               <div className='poll-option1'>
               <button onClick={() => voteForOption(box._id, 'option1')}
               disabled={votedPolls.indexOf(box._id) !== -1}>
-                  {box.option1}<br></br>
-                  {box.option1Votes}
+                  {box.option1}
                 </button>
               </div>
               <div className='poll-option2'>
                 <button onClick={() => voteForOption(box._id, 'option2')}
                 disabled={votedPolls.indexOf(box._id) !== -1}>
-                  {box.option2}<br></br>
-                  {box.option2Votes}
+                  {box.option2}
                 </button>
               </div>
             </div>)}
-            {hasVoted && <p>Vote Recorded. Thank you!</p>}
-            <div className='complete-button'>
+            {box.whoVoted[0] === "true" && 
+            <div>
+              <p>Vote Recorded. Thank you!</p>
+              <div className='button-container'>
+                <div className='poll-option1'>
+                {box.option1}<br></br>
+                {box.option1Votes}
+                </div>
+                <div className='poll-option2'>
+                {box.option2}<br></br>
+                {box.option2Votes}
+                </div>
+              </div>
+              </div>
+              }
+              <div className='complete-button'>
+
                 <button onClick={() => completePoll(box._id)}>
                   Delete Poll
                 </button>
