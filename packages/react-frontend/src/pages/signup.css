@@ -1,10 +1,14 @@
 .sign-up {
-    background-color: #ffffff;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: center;
+    align-items: center;
+    height: 100vh;
     width: 100%;
+    background-color: #ffffff;
+    overflow: hidden;
 }
+
 
 .sign-up .div {
     background-color: #ffffff;
@@ -15,148 +19,129 @@
 }
 
 .sign-up .overlap {
-    height: 713px;
-    left: -116px;
-    position: absolute;
-    top: -343px;
+    height: 400px;
+    left: 0px;
+    position: relative;
+    top: 0px;
     width: 710px;
 }
 
-.sign-up .overlap-group {
-    height: 713px;
-    left: 0;
-    position: absolute;
-    top: 0;
-    width: 710px;
-}
 
+/* background rectangles */ 
 .sign-up .rectangle {
     background-color: #ecece9;
     border-radius: 26px;
     height: 519px;
-    left: 100px;
-    position: absolute;
-    top: 97px;
+    left: 10vh;
+    top: -10vh;
+    position: relative;
     transform: rotate(-32.66deg);
     width: 511px;
+
+}
+.sign-up .rectangle2{
+    background-color: #ecece9;
+    border-radius: 26px;
+    height: 519px;
+    top: 15vh;
+    position: relative;
+    transform: rotate(-32.66deg);
+    width: 511px;
+
+}
+
+.sign-up .form-container {
+    position: relative;
+    top: 10vh; 
+    width: 100%;
+    z-index: 100; 
+}
+
+.sign-up .name-region, .sign-up .email-region, .sign-up .username-region, .sign-up .password-region {
+    position: relative;
+    width: 360px;
+    margin: 0 auto; 
 }
 
 .sign-up .group {
     background: linear-gradient(180deg, rgba(217, 217, 217, 0) 0%, rgb(186, 223, 231) 100%);
     border-radius: 88.5px;
     height: 177px;
-    left: 243px;
-    position: absolute;
-    top: 382px;
+    left: 260px;
+    position: relative;
+    top: -300px;
     width: 177px;
 }
 
 .sign-up .logo-group {
     height: 144px;
     left: 21px;
-    position: absolute;
+    position: relative;
     top: 16px;
     width: 124px;
+    z-index: 3;
 }
 
-.sign-up .text-wrapper {
+.sign-up .signup-text {
     color: #388087;
     font-family: "Inter-Black", Helvetica;
     font-size: 80px;
     font-weight: 900;
-    left: 136px;
     letter-spacing: 5.2px;
     line-height: normal;
     position: absolute;
     text-align: center;
-    top: 619px;
+    top: 110%; 
+    left: 52%; 
+    transform: translate(-50%, -50%); 
     white-space: nowrap;
-    width: 390px;
+    width: 390px; 
 }
 
-.sign-up .email-region {
-    height: 764px;
-    left: -67px;
-    position: absolute;
-    top: 680px;
-    width: 710px;
+.sign-up .name-region{
+    height: 120px;
+    position: relative;
+    width: 360px;
+    z-index: 100;
 }
 
-.sign-up .password-region{
-    height: 603px;
-    left: -67px;
-    position: absolute;
-    top: 700px;
-    width: 710px;
-}
-
-.sign-up .text-wrapper-2 {
+.sign-up .name-text {
     color: #388087;
     font-family: "Inter-Regular", Helvetica;
     font-size: 30px;
     font-weight: 400;
-    left: 163px;
+    left: 64px;
     letter-spacing: 0;
     line-height: normal;
     position: absolute;
     text-align: center;
-    top: 95px;
+    top: 0;
     width: 233px;
 }
 
-.sign-up .password-field {
+.sign-up .name-field {
     background-color: #ffe78b;
     border-radius: 18px;
     height: 48px;
-    left: 101px;
     position: absolute;
-    top: 176px;
+    top: 49px;
     width: 360px;
+    z-index: 1;
 }
 
-.sign-up .p {
-    color: #388087;
-    font-family: "Inter-Regular", Helvetica;
-    font-size: 15px;
-    font-weight: 400;
-    left: 150px;
-    letter-spacing: 0;
-    line-height: normal;
-    position: absolute;
-    top: 324px;
-    white-space: nowrap;
+.sign-up .email-region {
+    height: 120px;
+    position: relative;
+    width: 360px;
+    z-index: 100;
+
 }
-
-.sign-up .ellipse {
-    background-color: #f2fbe0;
-    border: 1px solid;
-    border-color: #388087;
-    border-radius: 22.5px;
-    height: 45px;
-    left: 396px;
-    position: absolute;
-    top: 246px;
-    width: 45px;
-}
-
-.sign-up .ellipse:hover {
-    background-color: #ffe78b;
-  }
-
-.sign-up .submit.vector {
-    height: 23px;
-    left: 407px;
-    position: absolute;
-    top: 310px;
-    width: 24px;
-}
-
-.sign-up .text-wrapper-3 {
+.sign-up .email-text {
     color: #388087;
     font-family: "Inter-Regular", Helvetica;
     font-size: 30px;
     font-weight: 400;
-    left: 165px;
+    left: 64px;
     letter-spacing: 0;
     line-height: normal;
     position: absolute;
@@ -166,38 +151,29 @@
 }
 
 .sign-up .email-field {
-    z-index: 2;
     background-color: #ffe78b;
     border-radius: 18px;
     height: 48px;
-    left: 101px;
+    left: 0;
     position: absolute;
-    top: 40px;
+    top: 49px;
     width: 360px;
 }
 
-.sign-up .name-region{
-    height: 97px;
-    left: 35px;
-    position: absolute;
-    top: 401px;
-    width: 360px;
-}
 
 .sign-up .username-region{
-    height: 97px;
-    left: 35px;
-    position: absolute;
-    top: 540px;
+    height: 120px;
+    position: relative;
     width: 360px;
+    z-index: 100;
 }
 
-.sign-up .text-wrapper-5 {
+.sign-up .username-text {
     color: #388087;
     font-family: "Inter-Regular", Helvetica;
     font-size: 30px;
     font-weight: 400;
-    left: 0px;
+    left: -13px;
     letter-spacing: 0;
     line-height: normal;
     position: absolute;
@@ -216,21 +192,28 @@
     width: 360px;
 }
 
-.sign-up .text-wrapper-4 {
+.sign-up .password-region{
+    height: 607px;
+    position: relative;
+    width: 360px;
+    z-index: 100px;
+}
+
+.sign-up .password-text{
     color: #388087;
     font-family: "Inter-Regular", Helvetica;
     font-size: 30px;
     font-weight: 400;
-    left: 64px;
+    left: -13px;
     letter-spacing: 0;
     line-height: normal;
     position: absolute;
     text-align: center;
     top: 0;
-    width: 233px;
+    width: 403px;
 }
 
-.sign-up .name-field {
+.sign-up .password-field {
     background-color: #ffe78b;
     border-radius: 18px;
     height: 48px;
@@ -238,4 +221,53 @@
     position: absolute;
     top: 49px;
     width: 360px;
+}
+
+
+.sign-up .ellipse {
+    background-color: #f2fbe0;
+    border: 1px solid;
+    border-color: #388087;
+    border-radius: 22.5px;
+    height: 45px;
+    left: 15px;
+    position: relative;
+    top: 280px;
+    width: 45px;
+}
+
+.sign-up .ellipse:hover {
+    background-color: #ffe78b;
+  }
+
+.sign-up .submit.vector {
+    height: 23px;
+    left: 407px;
+    position: relative;
+    top: 310px;
+    width: 24px;
+}
+
+.sign-up .bottom-half {
+    position: fixed;
+    top: 55%;
+    left: 50%; 
+    transform: translate(-50%, -50%); 
+    width: 100%; 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    z-index: 100;
+}
+
+.sign-up .link {
+    color: #388087;
+    font-family: "Inter-Regular", Helvetica;
+    font-size: 15px;
+    font-weight: 400;
+    letter-spacing: 0;
+    line-height: normal;
+    position: relative;
+    top: 324px;
+    white-space: nowrap;
 }

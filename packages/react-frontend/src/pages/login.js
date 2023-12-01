@@ -4,6 +4,7 @@ import "./login.css";
 import Logo from "../logo-group.png"
 import Arrow from "./arrow.svg"
 import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
  
 const Login = () => {
 
@@ -55,18 +56,22 @@ const Login = () => {
     return (
         <div className="login">
             <form >
-                <div className="overlap">
+                <div className="rectangle" />
+                <div className="sign-in">
                     <div className="overlap-group">
-                        <div className="rectangle" />
+                        
                         <div className="group">
                             <img className="logo-group" alt="Logo group" src={Logo}/>
                         </div>
                     </div>
-                    <div className="text-wrapper">SIGN IN</div>
+                    <div className="welcomeback-container">
+                        <div className="welcomeback-text">WELCOME</div>
+                        <div className="welcomeback-text">BACK!</div>
+                    </div>
                 </div>
 
                 <div className="email-region">
-                    <div className="text-wrapper-3">ENTER EMAIL</div>
+                    <div className="email-text">ENTER EMAIL</div>
                     <input
                         type="text"
                         name="email"
@@ -75,10 +80,9 @@ const Login = () => {
                         className="email-field"
                     />
                 </div>
-
                 <div className="password-region">
-                    <div className="rectangle" />
-                    <div className="text-wrapper-2">ENTER PASSWORD</div>
+                    <div className="rectangle2" />
+                    <div className="password-text">ENTER PASSWORD</div>
                         <input
                             type="password"
                             name="password"
@@ -86,7 +90,9 @@ const Login = () => {
                             onChange={handleChange}
                             className="password-field"
                         />
-                    <p className="p">dont have an account? sign up here!</p>
+                    <p className="link">
+                        <Link to="/account/signup">don't have an account?  sign up here!</Link>
+                    </p>
                     <button type="submit" className="ellipse" onClick={handleSubmit}>
                         <img className="vector" alt="Vector" src={Arrow} />
                     </button>

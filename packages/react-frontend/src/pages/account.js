@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
- 
+import "./account.css";
+
 const Account = () => {
     const connection_URL = "http://localhost:8000"
     const[isLoggedIn, setIsLoggedIn] = useState(false);

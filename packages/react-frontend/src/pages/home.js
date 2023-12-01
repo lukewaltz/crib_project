@@ -192,37 +192,6 @@ function listPolls(){
     );
   }
 
-  // merged polllist component
-  function PollList() {
-    const boxes = polls.map((box) => {
-      return (
-        <div className='poll-box' key = {box._id} >
-          <div className='poll-title'>POLL: {box.title}</div>
-          <div className='poll-option1'>DEADLINE: {box.option1}</div>
-          
-          <div className='button-container'>
-            <div className='remove-button'>
-              <button onClick={() => removeTask(box._id)}> 
-                Remove
-              </button>
-            </div>
-            <div className='vote-button'>
-              <button onClick={() => completeTask(box._id)}>
-          {/* onClick NEEDS TO CHANGE TO TRACK VOTES */}
-                Vote
-              </button>
-            </div>
-          </div>
-        </div>
-      );
-    });
-    return (
-      <div>
-        {boxes}
-      </div>
-    );
-  }
-
     // merged polllist component
     function PollList() {
       const boxes = polls.map((box) => {

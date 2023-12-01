@@ -134,7 +134,7 @@
     position: absolute;
     top: 652px;
     width: 400px;
-    overflow: auto; /* adding a scroller if content exceeds space  */
+    overflow: auto; 
 }
 
 
@@ -374,8 +374,8 @@
     display: inline-block;
     border: 1px solid #fff; 
     border-radius: 10px;
-    background: #6fb3b8; /* White background for buttons */
-    color: white; /* Dark text color for buttons */
+    background: #6fb3b8; 
+    color: white;
     font-weight: 600;
     font-family: -apple-system, BlinkMacSystemFont, Helvetica Neue, Helvetica, Arial, sans-serif;
     font-size: 1rem;
@@ -401,8 +401,8 @@
   display: inline-block;
   border: 1px solid #fff; 
   border-radius: 10px;
-  background: #6fb3b8; /* White background for buttons */
-  color: white; /* Dark text color for buttons */
+  background: #6fb3b8; 
+  color: white; 
   font-weight: 600;
   font-family: -apple-system, BlinkMacSystemFont, Helvetica Neue, Helvetica, Arial, sans-serif;
   font-size: 1rem;
@@ -425,6 +425,6 @@
 .post-something [type=submit]:hover,
 .post-something [type=reset]:hover,
 .post-something [type=button]:hover {
-  border: 1px solid #ddd; /* Lighter border on hover */
-  background: #ffe78b; /* Lighter background on hover */
+  border: 1px solid #ddd;
+  background: #ffe78b; 
 }

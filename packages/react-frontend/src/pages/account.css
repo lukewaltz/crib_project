@@ -1,0 +1,32 @@
+.container .col button:hover,
+.container .col a.button:hover,
+.container .col [type=submit]:hover,
+.container .col [type=reset]:hover,
+.container .col [type=button]:hover {
+  display: inline-block;
+  border: 1px solid #fff;
+  border-radius: 10px;
+  background: #6fb3b8; 
+  color: white; 
+  font-weight: 600;
+  font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 1rem;
+  text-transform: none;
+  padding: 0.75rem 1.25rem;
+  margin: 0 0 0.5rem 0;
+  vertical-align: middle;
+  text-align: center;
+  cursor: pointer;
+  text-decoration: none;
+  line-height: 1;
+}
+
+
+.container .col button:hover,
+.container .col a.button:hover,
+.container .col [type=submit]:hover,
+.container .col [type=reset]:hover,
+.container .col [type=button]:hover {
+  border: 1px solid #ddd; 
+  background: #ffe78b; 
+}
