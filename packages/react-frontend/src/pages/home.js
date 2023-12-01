@@ -288,7 +288,7 @@ function listPolls(){
                 </div>
                 <div className="overlap-group-wrapper">
                     <div className="div-wrapper">
-                        <div className="text-wrapper">HISTORY</div>
+                      <div className="text-wrapper" onClick={() => navigate('/history')}>HISTORY</div>
                     </div>
                 </div>
                 <div className="text-wrapper-2">HOME</div>
