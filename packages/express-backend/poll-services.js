@@ -30,8 +30,9 @@ async function findPoll(id) {
         });
 }
 
-function getPolls() {
+function getPolls(email) {
     let promise = pollModel.find();
+    
     return promise;
 }
 
@@ -45,13 +46,21 @@ function addPoll(poll) {
     return promise;
 }
 
-async function deletePoll(id){
-    const promise = pollModel.findByIdAndRemove(id).catch((err) => {
-        if(err){
+async function deletePoll(id) {
+    try {
+        const poll = await findPoll(id);
+        
+        if (!poll) {
+            console.log(`Poll with ID ${id} not found`);
             return undefined;
         }
-    });
-    return promise;
+
+        const deletedPoll = await pollModel.deleteOne({ _id: id });;
+        return deletedPoll;
+    } catch (error) {
+        console.log(`Error deleting poll with ID ${id}`, error);
+        throw error;
+    }
 }
 
 async function voteForOption(pollId, option) {
