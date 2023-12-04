@@ -30,8 +30,8 @@ const PollSchema = new mongoose.Schema(
             type: String,
         }],
         groupId: {
-            type: String,
-            // required: true,
+            type: mongoose.Schema.ObjectId, ref: "Group",
+            required: true,
         },
     }, { collection: "poll_list" }
 );

@@ -25,7 +25,7 @@ const TaskSchema = new mongoose.Schema(
             trim: true,
         },
         groupId: {
-            type: String,
+            type: mongoose.Schema.ObjectId, ref: "Group",
             required: true,
         },
     }, { collection: "task_list" }
