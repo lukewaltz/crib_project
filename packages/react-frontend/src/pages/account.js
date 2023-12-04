@@ -34,18 +34,23 @@ const Account = () => {
     
 
     return (
-        <div className="container">
-            {isLoggedIn ? <h1>Account</h1> : <h1>
-                Welcome to Crib! Please login or signup!
-            </h1>}
+        <div className="account">
+            {isLoggedIn 
+            ? <h1 className="title-text">Account</h1> 
+            : <h1 className="title-text">Welcome to Crib!</h1>}
             <nav className="col">
                 <ul className='nav'>
-                    {isLoggedIn ? <li><button onClick={logout}>Log Out</button></li> : <div><Link to='/account/login'><li>Login</li></Link> 
-                    <Link to='/account/signup'><li>Signup</li></Link> </div> }
+                    {isLoggedIn 
+                        ? <li><button className="button" onClick={logout}>Log Out</button></li>
+                        : <>
+                            <li><Link className="button" to='/account/login'>Login</Link></li>
+                            <li><Link className="button" to='/account/signup'>Signup</Link></li>
+                          </>
+                    }
                 </ul>
             </nav>
         </div>
-    );
+    );   
 };
  
 export default Account;

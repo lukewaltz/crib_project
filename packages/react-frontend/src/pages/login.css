@@ -52,14 +52,13 @@
 }
 
 
-
 .login .group {
     background: linear-gradient(180deg, rgba(217, 217, 217, 0) 0%, rgb(186, 223, 231) 100%);
     border-radius: 88.5px;
     height: 177px;
-    left: 28vh;
+    left: 35%;
     position: relative;
-    top: -150px;
+    top: -90px;
     width: 177px;
 }
 
@@ -74,7 +73,7 @@
 .login .welcomeback-container {
     text-align: center;
     position: relative; 
-    top: -130px; 
+    top: -80px; 
 }
 
 .login .welcomeback-text {
@@ -93,10 +92,28 @@
     height: 204px;
     position: relative;
     left: 10%;
-    top: 40px;
+    top: 80px;
     width: 710px;
 }
 
+.login .email-field {
+    background-color: #ffe78b;
+    border-radius: 18px;
+    height: 48px;
+    left: 101px;
+    position: absolute;
+    top: -130px;
+    width: 360px;
+    z-index: 2;
+
+}
+
+.login .password-region{
+    position: relative;
+    left: 10%;
+    top: -260px;
+    width: 710px;
+}
 .login .password-text{
     color: #388087;
     font-family: "Inter-Regular", Helvetica;
@@ -111,12 +128,7 @@
     width: 233px;
 }
 
-.login .password-region{
-    position: relative;
-    left: 10%;
-    top: -300px;
-    width: 710px;
-}
+
 .login .password-field {
     background-color: #ffe78b;
     border-radius: 18px;
@@ -181,17 +193,7 @@
     
 }
 
-.login .email-field {
-    background-color: #ffe78b;
-    border-radius: 18px;
-    height: 48px;
-    left: 101px;
-    position: absolute;
-    top: -130px;
-    width: 360px;
-    z-index: 2;
 
-}
 
 
 

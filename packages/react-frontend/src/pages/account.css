@@ -1,19 +1,42 @@
-.container .col button:hover,
-.container .col a.button:hover,
-.container .col [type=submit]:hover,
-.container .col [type=reset]:hover,
-.container .col [type=button]:hover {
+.account {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; 
+  text-align: center;
+  margin-top: -250px; 
+}
+
+
+.nav {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column; 
+  align-items: center; 
+  gap: 20px; 
+}
+
+.account:not(.logged-in) .nav {
+  margin-top: 200px; /* Adjust this value as needed to move the buttons down */
+}
+
+
+.account .col button,
+.account .col a.button {
   display: inline-block;
   border: 1px solid #fff;
   border-radius: 10px;
-  background: #6fb3b8; 
-  color: white; 
+  background: #6fb3b8;
+  color: white;
   font-weight: 600;
   font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 1rem;
   text-transform: none;
   padding: 0.75rem 1.25rem;
-  margin: 0 0 0.5rem 0;
+  margin: 0;
   vertical-align: middle;
   text-align: center;
   cursor: pointer;
@@ -22,11 +45,24 @@
 }
 
 
-.container .col button:hover,
-.container .col a.button:hover,
-.container .col [type=submit]:hover,
-.container .col [type=reset]:hover,
-.container .col [type=button]:hover {
-  border: 1px solid #ddd; 
-  background: #ffe78b; 
+.account .col button:hover,
+.account .col a.button:hover {
+  border: 1px solid #ddd;
+  background: #ffe78b;
+  text-decoration: none;
 }
+
+.account .title-text {
+  color: #388087;
+  font-family: "Inter-Bold", Helvetica;
+  font-size: 50px;
+  font-weight: 700;
+  left: 50vh;
+  letter-spacing: 3.25px;
+  line-height: normal;
+  position: absolute; 
+  left: 50%; 
+  transform: translate(-50%, -50%); 
+}
+
+

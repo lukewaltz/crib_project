@@ -145,10 +145,10 @@
     text-align: center;
 }
 
-nav li:hover, 
+/* nav li:hover, 
 .button-container button:hover{
   background-color: #008080;
-}
+} */
 
 
 form{

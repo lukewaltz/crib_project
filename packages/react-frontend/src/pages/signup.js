@@ -57,6 +57,7 @@ const Signup = () => {
     }
 
     return (
+        
         <div className="sign-up">
             <form >
                 <div className="overlap">
