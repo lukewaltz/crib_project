@@ -433,8 +433,8 @@ app.post("/polls", function (req, res) {
     if (newPoll === undefined){
         res.status(404).send("newTask not found");
     }
-    // userServices.getGroup(req.session.username).then((groupId) => {
-    //     newPoll.groupId = groupId;
+    userServices.getGroup(req.session.username).then((groupId) => {
+        newPoll.groupId = groupId;
         pollServices.addPoll(newPoll)
         .then(() => {
             res.status(201).json({ message: "poll added successfully" });
@@ -442,9 +442,9 @@ app.post("/polls", function (req, res) {
         .catch((err) => {
             res.status(500).json({ err: "could not add poll"});
         });
-    // }).catch((err) => {
-    //     res.status(500).json({ err: "could not add poll"});
-    // });
+    }).catch((err) => {
+        res.status(500).json({ err: "could not add poll"});
+    });
 });
 
 app.post('/polls/:pollId', (req, res) => {
