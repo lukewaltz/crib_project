@@ -30,6 +30,21 @@ async function findPoll(id) {
         });
 }
 
+async function getGroup(id) {
+    return pollModel.findById(id)
+        .exec()
+        .then((poll) => {
+            if(!poll) {
+                return null;
+            }
+            return poll.group;
+        })
+        .catch((error) => {
+            console.error("error finding poll group: ", error);
+            throw error;
+        });
+}
+
 function getPolls(email) {
     let promise = pollModel.find();
     
@@ -99,6 +114,7 @@ async function voteForOption(pollId, option) {
 export default {
     findPoll,
     getPolls,
+    getGroup,
     addPoll,
     deletePoll,
     voteForOption

@@ -295,7 +295,7 @@ app.delete('/users/:id', async (req, res) => {
     const id = req.params.id;
     await userServices.deleteUser(id)
         .then(() => {
-            res.json('User deleted successfully')
+            res.json('User deleted successfully');
         })
         .catch(() => {
             res.status(404).json('Server error');
@@ -362,6 +362,7 @@ app.get('/polls', (req, res) => {
         // console.log(req.session.username);
         pollServices.getPolls()
             .then((polls) => {
+                polls.filter((poll) => userServices.getGroup(req.session.email) === pollServices.getGroup(poll.id));              
                 userServices.findUserByUsername(req.session.username).then((user) => {
                     for(let i = 0; i<polls.length; i++){
                         let whoVoted = polls[i].whoVoted;
@@ -453,59 +454,6 @@ app.post('/polls/:pollId', (req, res) => {
             res.status(500).json({ error: 'Internal Server Error' });
         });
 });
-
-// app.post('/polls/:pollId', (req, res) => {
-//     const { pollId } = req.params;
-//     const { option } = req.body;
-  
-//     try {
-//         const poll = await pollServices.findPoll(pollId);
-//         const user = await userServices.findUserByUsername(req.session.username);
-//         console.log(req.session.username);
-//         if (!poll) {
-//             return res.status(404).json({ message: 'Poll not found' });
-//         }
-
-//         // Check if the option is valid
-//         if (option !== 'option1' && option !== 'option2') {
-//             return res.status(400).json({ message: 'Invalid option' });
-//         }
-        
-//         if(poll.whoVoted.includes(user.email)){
-//             res.status(400).json({message: `User ${req.session.username} already voted`});
-//         }else{
-//             poll[`whoVoted`].push(user.email);
-//             // Increment the vote count for the selected option
-//             // console.log(user.email);
-//             poll[`${option}Votes`] += 1;
-
-//             // Save the updated poll document
-//             await poll.save();
-
-//             res.status(200).json({ message: `Vote for ${option} recorded successfully` });
-//         }
-//     } catch (error) {
-//       console.error('Error recording vote:', error);
-//       res.status(500).json({ error: 'Internal Server Error' });
-//     }
-//   });
-  
-
-
-// app.post('/tasks', (req, res) => {
-//     const newTask = req.body;
-//     taskServices.addTask(newTask)
-//         .then(() => {
-//             res.status(201).json({ message: 'Task added successfully' });
-//         })
-//         .catch((error) => {
-//             // Handle specific error or use a general error message
-//             res.status(500).json({ error: 'Could not add task' });
-//         });
-// });
-
-
-//backlog services
 
 
 app.get('/backlog', (req, res) => {

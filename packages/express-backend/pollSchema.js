@@ -29,7 +29,11 @@ const PollSchema = new mongoose.Schema(
         },
         whoVoted: [{
             type: String,
-        }]
+        }],
+        group: {
+            type: mongoose.Schema.ObjectId, ref: "Group",
+            unique: true,
+        },
     }, { collection: "poll_list" }
 );
 

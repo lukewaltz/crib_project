@@ -34,9 +34,7 @@ function Home() {
 
   useEffect(() => {
     listPolls()
-      .then(res => res.json()
-      // .filter(res => res.whoVoted[0] === "false")
-      )
+      .then(res => res.json())
       .then(json => setPolls(json["poll_list"]))
       .catch(error => console.log(error));
   }, []);
@@ -120,8 +118,6 @@ function listPolls(){
   }
   
   const [hasVoted, setHasVoted] = useState(false);
-
-
 
   async function voteForOption(pollId, option) {
 

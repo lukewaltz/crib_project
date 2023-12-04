@@ -28,6 +28,21 @@ async function addToGroup(username, group){
     return promise;
 }
 
+async function getGroup(email) {
+    return userModel.findUserByEmail(email)
+        .exec()
+        .then((user) => {
+            if(!user) {
+                return null;
+            }
+            return user.group;
+        })
+        .catch((error) => {
+            console.error("error finding user group: ", error);
+            throw error;
+        });
+}
+
 async function findUserByUsername(username) {
     return await userModel.findOne({ username: username }).catch((err) => {
         if(err) {
