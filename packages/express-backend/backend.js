@@ -349,6 +349,21 @@ app.post('/tasks', (req, res) => {
     }
 });
 
+app.post('/tasks/:id', async (req, res) => {
+    if(!req.session.username){   
+        return res.status(401).send();
+    }
+
+    const id = req.params.id;
+    await taskServices.cliamTask(id, req.session.username)
+        .then(() => {
+            res.json('Task deleted successfully')
+        })
+        .catch(() => {
+            res.status(404).json('Could not delete task');
+        });
+});
+
 // remove a task from the task list
 app.delete('/tasks/:id', async (req, res) => {
     if(!req.session.username){   
@@ -387,23 +402,6 @@ app.get('/polls', (req, res) => {
         .catch((error) => {
             res.status(500).json({ error })
         });
-
-        // pollServices.getPolls()
-        //     .then((polls) => {
-        //         polls.filter((poll) => userServices.getGroup(req.session.email) === pollServices.getGroup(poll.id));
-
-        //         userServices.findUserByUsername(req.session.username).then((user) => {
-        //             for(let i = 0; i<polls.length; i++){
-        //                 let whoVoted = polls[i].whoVoted;
-        //                 let hasVoted = whoVoted.includes(user.email);
-        //                 polls[i].whoVoted = [hasVoted];
-        //             }
-        //             res.status(200).json( { poll_list:polls });
-        //         });
-        //     })
-        //     .catch((error) => {
-        //         res.status(500).json({ error })
-        //     });
     }
 });
 
