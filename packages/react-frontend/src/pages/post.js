@@ -40,6 +40,7 @@ export const Post = (props) => {
         
         fetch(`${connection_URL}/tasks`, {
             method: 'POST',
+            credentials: 'include',
             headers: {
                 'Content-Type': 'application/json',
             },
@@ -64,6 +65,7 @@ export const Post = (props) => {
         
         fetch(`${connection_URL}/polls`, {
             method: 'POST',
+            credentials: 'include',
             headers: {
                 'Content-Type': 'application/json',
             },

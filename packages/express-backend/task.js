@@ -23,7 +23,11 @@ const TaskSchema = new mongoose.Schema(
             required: false,
             default: "none",
             trim: true,
-        }
+        },
+        groupId: {
+            type: String,
+            required: true,
+        },
     }, { collection: "task_list" }
 );
 

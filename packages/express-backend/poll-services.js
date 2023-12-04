@@ -17,7 +17,6 @@ mongoose
 
 async function findPoll(id) {
     return pollModel.findById(id)
-        .exec()
         .then((poll) => {
             if (!poll) {
                 return null;
@@ -32,12 +31,11 @@ async function findPoll(id) {
 
 async function getGroup(id) {
     return pollModel.findById(id)
-        .exec()
         .then((poll) => {
             if(!poll) {
                 return null;
             }
-            return poll.group;
+            return poll.groupId;
         })
         .catch((error) => {
             console.error("error finding poll group: ", error);
@@ -45,9 +43,13 @@ async function getGroup(id) {
         });
 }
 
-function getPolls(email) {
+function getPollsInGroup(groupId){
+    let promise = pollModel.find({groupId : groupId});
+    return promise;
+}
+
+function getPolls() {
     let promise = pollModel.find();
-    
     return promise;
 }
 
@@ -114,6 +116,7 @@ async function voteForOption(pollId, option) {
 export default {
     findPoll,
     getPolls,
+    getPollsInGroup,
     getGroup,
     addPoll,
     deletePoll,

@@ -28,9 +28,8 @@ async function addToGroup(username, group){
     return promise;
 }
 
-async function getGroup(email) {
-    return userModel.findUserByEmail(email)
-        .exec()
+async function getGroup(username) {
+    return userModel.findOne({username: username})
         .then((user) => {
             if(!user) {
                 return null;
@@ -131,6 +130,7 @@ export default {
     removeTask,
     randomUser,
     getUsers,
+    getGroup,
     deleteUser,
     findUserByUsername,
     findUserByEmail,
