@@ -50,7 +50,6 @@
     width: 51px;
 }
 
-
 .home-page .rectangle-tasks {
    
     border-radius: 24px;
@@ -60,7 +59,6 @@
     top: 215px;
     width: 328px;
 }
-
 
 .home-page .history-text {
     color: #388087;
@@ -144,12 +142,6 @@
     width: 100%; 
     text-align: center;
 }
-
-/* nav li:hover, 
-.button-container button:hover{
-  background-color: #008080;
-} */
-
 
 form{
     display: flex;

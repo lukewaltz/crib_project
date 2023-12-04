@@ -51,7 +51,6 @@
 
 }
 
-
 .login .group {
     background: linear-gradient(180deg, rgba(217, 217, 217, 0) 0%, rgb(186, 223, 231) 100%);
     border-radius: 88.5px;
@@ -128,7 +127,6 @@
     width: 233px;
 }
 
-
 .login .password-field {
     background-color: #ffe78b;
     border-radius: 18px;
@@ -166,7 +164,7 @@
 
 .login .ellipse:hover {
     background-color: #ffe78b;
-  }
+}
 
 .login .submit.vector {
     height: 23px;
@@ -175,7 +173,6 @@
     top: 310px;
     width: 24px;
 }
-
 
 .login .email-text {
     color: #388087;
@@ -192,9 +189,3 @@
     z-index: 2;
     
 }
-
-
-
-
-
-

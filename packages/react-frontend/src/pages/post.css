@@ -14,7 +14,6 @@
     width: 430px;
 }
 
-/* entire thing*/ 
 .post-something .task-box {
     background-color: #badfe7;
     height: 265px;
@@ -35,7 +34,6 @@
     width: 290px;
 }
 
-/* date field*/ 
 .post-something .duedate-field{
     background-color: #f2fbe0;
     border-radius: 49px;
@@ -45,7 +43,6 @@
     top: 70px;
     width: 233px;
 }
-
 
 .post-something .weight-field{
     background-color: #f2fbe0;
@@ -57,8 +54,6 @@
     width: 233px;
 }
 
-
-
 .post-something .assignee-field{
     background-color: #f2fbe0;
     border-radius: 49px;
@@ -69,8 +64,6 @@
     width: 233px;
 }
 
-
-/* task */
 .post-something .task-text {
     color: #388087;
     font-family: "Inter-Regular", Helvetica;
@@ -84,7 +77,6 @@
     width: 59px;
 }
 
-/* due date text */ 
 .post-something .due-date-text{
     color: #388087;
     font-family: "Inter-Regular", Helvetica;
@@ -98,7 +90,6 @@
     width: 103px;
 }
 
-/* weight text */
 .post-something .weight-text {
     color: #388087;
     font-family: "Inter-Regular", Helvetica;
@@ -112,7 +103,6 @@
     width: 170px;
 }
 
-/* assignee text */
 .post-something .assignee-text {
     color: #388087;
     font-family: "Inter-Regular", Helvetica;
@@ -178,8 +168,6 @@
 }
 
 
-
-/* title*/ 
 .post-something .title2-field{
     background-color: #f2fbe0;
     border-radius: 49px;
@@ -190,7 +178,7 @@
     width: 273px;
 }
 
-/* option 1*/ 
+
 .post-something .option1-field {
     background-color: #f2fbe0;
     border-radius: 49px;
@@ -201,7 +189,7 @@
     width: 246px;
 }
 
-/* option 2   */
+
 .post-something .option2-field{
     background-color: #f2fbe0;
     border-radius: 15px;
@@ -210,24 +198,6 @@
     position: absolute;
     top: 114px;
     width: 246px;
-}
-
-/* 2nd post button positioning*/ 
-.post-something .overlap-wrapper {
-    height: 37px;
-    left: 122px;
-    position: absolute;
-    top: 200px;
-    width: 149px;
-}
-
-/* "+" positioning */
-.post-something .overlap-3 {
-    height: 36px;
-    left: 370px;
-    position: absolute;
-    top: 132px;
-    width: 21px;
 }
 
 .post-something .ellipse {
@@ -242,7 +212,7 @@
 
 
 /* top rectangle */
-.post-something .overlap-4 {
+.post-something .top-rect {
     height: 351px;
     left: 0;
     position: absolute;
@@ -251,7 +221,7 @@
 }
 
 /* task text */
-.post-something .text-wrapper-9 {
+.post-something .task-header {
     -webkit-text-stroke: 0.3px #388087;
     color: #ffe78b;
     font-family: "Inter-Medium", Helvetica;
@@ -313,7 +283,7 @@
     width: 19px;
 }
 
-/* POST SOMETHING GROUP */
+
 .post-something .overlap-group-wrapper {
     height: 241px;
     left: 31px;
@@ -328,7 +298,7 @@
     width: 397px;
 }
 
-/* POST SOMETHING */
+
 .post-something .POST-SOMETHING {
     color: #388087;
     font-family: "Inter-Bold", Helvetica;
@@ -342,7 +312,7 @@
     top: 77px;
 }
 
-/* ! */
+
 .post-something .explanationpoint {
     color: #ffe78b;
     font-family: "Inter-Bold", Helvetica;
@@ -395,7 +365,6 @@
 .post-something a.button,
 .post-something button,
 .post-something nav li,
-/* .post-something [type=submit], */
 .post-something [type=reset],
 .post-something  .task-submit{
   display: inline-block;

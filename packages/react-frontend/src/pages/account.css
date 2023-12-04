@@ -20,7 +20,7 @@
 }
 
 .account:not(.logged-in) .nav {
-  margin-top: 200px; /* Adjust this value as needed to move the buttons down */
+  margin-top: 200px; 
 }
 
 
