@@ -268,7 +268,11 @@ function listPolls(){
                         completeTask={completeTask} 
                     />
                 </div>
-
+                <div className="overlap-group-wrapper">
+                    <div className="div-wrapper">
+                      <div className="text-wrapper" onClick={() => navigate('/history')}>HISTORY</div>
+                    </div>
+                </div>
                 <div className="home-text">HOME</div>
             </div>
         </div>

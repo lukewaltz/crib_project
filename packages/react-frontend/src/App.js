@@ -6,6 +6,7 @@ import Home from './pages/home';
 import Signup from './pages/signup';
 import Login from './pages/login';
 import Post from './pages/post';
+// import Backlog from './pages/backlog';
 
 function MyApp() {
   // State to hold tasks
@@ -28,6 +29,7 @@ function MyApp() {
             <Route path='/account' element={<Account />} />
             <Route path='/account/signup' element={<Signup />} />
             <Route path='/account/login' element={<Login />} />
+            {/* <Route path='/history' element={<Backlog />} /> */}
         </Routes>
     </Router>
   )
