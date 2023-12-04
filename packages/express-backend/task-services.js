@@ -17,7 +17,6 @@ mongoose
 
 function findTask(id) {
     return taskModel.findById(id)
-        .exec() // Add .exec() to return a promise
         .then((task) => {
             if (!task) {
                 // Task not found
@@ -29,6 +28,25 @@ function findTask(id) {
             console.error("Error finding task:", error);
             throw error; // Rethrow the error for proper handling
         });
+}
+
+async function getGroup(id) {
+    return taskModel.findById(id)
+        .then((task) => {
+            if(!task) {
+                return null;
+            }
+            return task.groupId;
+        })
+        .catch((error) => {
+            console.error("error finding poll group: ", error);
+            throw error;
+        });
+}
+
+function getTasksInGroup(groupId){
+    let promise = taskModel.find({groupId: groupId});
+    return promise;
 }
 
 function getTasks() {
@@ -58,6 +76,8 @@ async function deleteTask(id) {
 export default {
     findTask,
     getTasks,
+    getTasksInGroup,
+    getGroup,
     addTask,
     deleteTask,
 };

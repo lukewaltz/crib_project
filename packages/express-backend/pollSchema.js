@@ -7,7 +7,6 @@ const PollSchema = new mongoose.Schema(
             type: String,
             required: true,
             trim: true,
-            unique: true
         },
         option1: {
             type: String,
@@ -29,7 +28,11 @@ const PollSchema = new mongoose.Schema(
         },
         whoVoted: [{
             type: String,
-        }]
+        }],
+        groupId: {
+            type: String,
+            // required: true,
+        },
     }, { collection: "poll_list" }
 );
 

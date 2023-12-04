@@ -295,7 +295,7 @@ app.delete('/users/:id', async (req, res) => {
     const id = req.params.id;
     await userServices.deleteUser(id)
         .then(() => {
-            res.json('User deleted successfully')
+            res.json('User deleted successfully');
         })
         .catch(() => {
             res.status(404).json('Server error');
@@ -312,12 +312,14 @@ app.get('/tasks', (req, res) => {
     // console.log('Session in /tasks:', req.session.username);
     if(req.session.username){
         // console.log(req.session.username);
-        taskServices.getTasks()
-        .then((tasks) => {
-            res.status(200).json({ task_list:tasks });
-        })
-        .catch((error) => {
-            res.status(500).json({ error })
+        userServices.findUserByUsername(req.session.username).then((user) => {
+            taskServices.getTasksInGroup(user.group)
+                .then((tasks) => {
+                    res.status(200).json({ task_list:tasks });
+                })
+                .catch((error) => {
+                    res.status(500).json({ error })
+                });
         });
     }else{
         return res.status(401).send();
@@ -326,23 +328,33 @@ app.get('/tasks', (req, res) => {
 
 // add new task to task list, will be marked with assigned=false
 app.post('/tasks', (req, res) => {
-    const newTask = req.body
+    if(!req.session.username){   
+        return res.status(401).send();
+    }
+    const newTask = req.body;
     if (newTask === undefined){
         res.status(404).send("newTask not found");
     } else {
-    taskServices.addTask(newTask)
-        .then((error) =>{
-            if(error == 500){
-                return res.status(500).send('Could not add task');
-            } else {
-                return res.status(201).send('Added task');
-            }
+        userServices.getGroup(req.session.username).then((groupId) => {
+            newTask.groupId = groupId;
+            taskServices.addTask(newTask)
+                .then((error) =>{
+                    if(error == 500){
+                        return res.status(500).send('Could not add task');
+                    } else {
+                        return res.status(201).send('Added task');
+                    }
+                });
         });
     }
 });
 
 // remove a task from the task list
 app.delete('/tasks/:id', async (req, res) => {
+    if(!req.session.username){   
+        return res.status(401).send();
+    }
+
     const id = req.params.id;
     await taskServices.deleteTask(id)
         .then(() => {
@@ -359,10 +371,11 @@ app.get('/polls', (req, res) => {
         
         return res.status(401).send();
     }else{
-        // console.log(req.session.username);
-        pollServices.getPolls()
-            .then((polls) => {
-                userServices.findUserByUsername(req.session.username).then((user) => {
+        // get user's group id
+        
+        userServices.findUserByUsername(req.session.username).then((user) => {
+            pollServices.getPollsInGroup(user.group)
+                .then((polls) => {
                     for(let i = 0; i<polls.length; i++){
                         let whoVoted = polls[i].whoVoted;
                         let hasVoted = whoVoted.includes(user.email);
@@ -370,14 +383,35 @@ app.get('/polls', (req, res) => {
                     }
                     res.status(200).json( { poll_list:polls });
                 });
-            })
-            .catch((error) => {
-                res.status(500).json({ error })
-            });
+        })
+        .catch((error) => {
+            res.status(500).json({ error })
+        });
+
+        // pollServices.getPolls()
+        //     .then((polls) => {
+        //         polls.filter((poll) => userServices.getGroup(req.session.email) === pollServices.getGroup(poll.id));
+
+        //         userServices.findUserByUsername(req.session.username).then((user) => {
+        //             for(let i = 0; i<polls.length; i++){
+        //                 let whoVoted = polls[i].whoVoted;
+        //                 let hasVoted = whoVoted.includes(user.email);
+        //                 polls[i].whoVoted = [hasVoted];
+        //             }
+        //             res.status(200).json( { poll_list:polls });
+        //         });
+        //     })
+        //     .catch((error) => {
+        //         res.status(500).json({ error })
+        //     });
     }
 });
 
 app.delete('/polls/:id', async (req, res) => {
+    if(!req.session.username){   
+        return res.status(401).send();
+    }
+
     const id = req.params.id;
     console.log(id);
     await pollServices.deletePoll(id)
@@ -391,14 +425,26 @@ app.delete('/polls/:id', async (req, res) => {
 
 // post poll
 app.post("/polls", function (req, res) {  
+    if(!req.session.username){   
+        return res.status(401).send();
+    }
+
     const newPoll = req.body;
-    pollServices.addPoll(newPoll)
+    if (newPoll === undefined){
+        res.status(404).send("newTask not found");
+    }
+    // userServices.getGroup(req.session.username).then((groupId) => {
+    //     newPoll.groupId = groupId;
+        pollServices.addPoll(newPoll)
         .then(() => {
             res.status(201).json({ message: "poll added successfully" });
         })
         .catch((err) => {
             res.status(500).json({ err: "could not add poll"});
         });
+    // }).catch((err) => {
+    //     res.status(500).json({ err: "could not add poll"});
+    // });
 });
 
 app.post('/polls/:pollId', (req, res) => {
@@ -453,59 +499,6 @@ app.post('/polls/:pollId', (req, res) => {
             res.status(500).json({ error: 'Internal Server Error' });
         });
 });
-
-// app.post('/polls/:pollId', (req, res) => {
-//     const { pollId } = req.params;
-//     const { option } = req.body;
-  
-//     try {
-//         const poll = await pollServices.findPoll(pollId);
-//         const user = await userServices.findUserByUsername(req.session.username);
-//         console.log(req.session.username);
-//         if (!poll) {
-//             return res.status(404).json({ message: 'Poll not found' });
-//         }
-
-//         // Check if the option is valid
-//         if (option !== 'option1' && option !== 'option2') {
-//             return res.status(400).json({ message: 'Invalid option' });
-//         }
-        
-//         if(poll.whoVoted.includes(user.email)){
-//             res.status(400).json({message: `User ${req.session.username} already voted`});
-//         }else{
-//             poll[`whoVoted`].push(user.email);
-//             // Increment the vote count for the selected option
-//             // console.log(user.email);
-//             poll[`${option}Votes`] += 1;
-
-//             // Save the updated poll document
-//             await poll.save();
-
-//             res.status(200).json({ message: `Vote for ${option} recorded successfully` });
-//         }
-//     } catch (error) {
-//       console.error('Error recording vote:', error);
-//       res.status(500).json({ error: 'Internal Server Error' });
-//     }
-//   });
-  
-
-
-// app.post('/tasks', (req, res) => {
-//     const newTask = req.body;
-//     taskServices.addTask(newTask)
-//         .then(() => {
-//             res.status(201).json({ message: 'Task added successfully' });
-//         })
-//         .catch((error) => {
-//             // Handle specific error or use a general error message
-//             res.status(500).json({ error: 'Could not add task' });
-//         });
-// });
-
-
-//backlog services
 
 
 app.get('/backlog', (req, res) => {

@@ -28,6 +28,20 @@ async function addToGroup(username, group){
     return promise;
 }
 
+async function getGroup(username) {
+    return userModel.findOne({username: username})
+        .then((user) => {
+            if(!user) {
+                return null;
+            }
+            return user.group;
+        })
+        .catch((error) => {
+            console.error("error finding user group: ", error);
+            throw error;
+        });
+}
+
 async function findUserByUsername(username) {
     return await userModel.findOne({ username: username }).catch((err) => {
         if(err) {
@@ -116,6 +130,7 @@ export default {
     removeTask,
     randomUser,
     getUsers,
+    getGroup,
     deleteUser,
     findUserByUsername,
     findUserByEmail,
