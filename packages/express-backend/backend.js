@@ -326,6 +326,18 @@ app.get('/tasks', (req, res) => {
     }
 });
 
+app.get('/group', (req, res) => {
+    if (req.session.username){
+        userServices.getGroup(req.session.username).then((group) => {
+            groupServices.getGroupSize(group.code)
+            .then((size) => {
+                res.status(200).json(size)
+            })
+        })
+    }
+})
+
+
 // add new task to task list, will be marked with assigned=false
 app.post('/tasks', (req, res) => {
     if(!req.session.username){   
