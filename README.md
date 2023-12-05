@@ -1,7 +1,7 @@
 # crib_project
 Group Software Project for CSC-307.
 
-Contributors:
+**Contributors:**
 Luke Waltz, Kylie ODonnell, Bryce Raymundo, Tyler Baxter
 
 Project Topic: 
