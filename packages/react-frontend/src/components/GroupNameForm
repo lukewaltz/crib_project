@@ -13,7 +13,6 @@ function GroupNameForm(props) {
   }
 
 
-
   function handleChange(event) {
     const { value } = event.target;
       setGroupName(
@@ -32,7 +31,7 @@ function GroupNameForm(props) {
             onChange={handleChange} 
             className="title2-field"
             />
-        <input type="submit" value="Post" className="group-submit" onClick={submitGroupNameForm}/>
+        <input type="submit" value="Submit" className="group-submit" onClick={submitGroupNameForm}/>
         </form>
     );
 

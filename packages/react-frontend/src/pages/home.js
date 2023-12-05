@@ -116,6 +116,14 @@ function listPolls(){
     }
     console.log(`Poll with ID ${pollId} deleted successfully`);
   }
+
+  async function getGroupSize(){
+    const response = await fetch(`${connection_URL}/group`,  {
+      method: 'GET',
+      credentials: 'include',
+    });
+    return response;
+  }
   
   async function voteForOption(pollId, option) {
 
@@ -150,6 +158,7 @@ function listPolls(){
             ...poll,
             option1Votes: option === 'option1' ? poll.option1Votes + 1 : poll.option1Votes,
             option2Votes: option === 'option2' ? poll.option2Votes + 1 : poll.option2Votes,
+            whoVoted: ["true"]
           };
         }
         
@@ -161,6 +170,7 @@ function listPolls(){
     console.log(`Vote for ${option} in poll with ID ${pollId} recorded successfully`);
   }
   
+
 
   // merged tasklist component
   function TaskList() {
@@ -195,33 +205,59 @@ function listPolls(){
 
     // merged polllist component
     function PollList() {
+      
       const boxes = polls.map((box) => {
+        console.log("Group Size: ", getGroupSize())
         return (
           <div className='chore-box' key = {box._id} >
             <div className='poll-title'>POLL: {box.title}</div>
-           
+            {/* <div className='chore-id'>{box._id}</div> */}
+            {box.whoVoted[0] === "false" && (
             <div className='button-container'>
                 {votedPolls.indexOf(box._id) !== -1 && (<p>Already voted</p>)}
               <div className='poll-option1'>
               <button onClick={() => voteForOption(box._id, 'option1')}
               disabled={votedPolls.indexOf(box._id) !== -1}>
-                  {box.option1}<br></br>
-                  {box.option1Votes}
+                  {box.option1}
                 </button>
               </div>
               <div className='poll-option2'>
                 <button onClick={() => voteForOption(box._id, 'option2')}
                 disabled={votedPolls.indexOf(box._id) !== -1}>
-                  {box.option2}<br></br>
-                  {box.option2Votes}
+                  {box.option2}
                 </button>
+              </div>
+            </div>)}
+            {box.whoVoted[0] === "true" && box.option1Votes + box.option2Votes !== getGroupSize() &&
+            <div>
+              <p>Vote Recorded. Thank you!</p>
+              <div className='button-container'>
+                <div className='poll-option1'>
+                {box.option1}<br></br>
+                {box.option1Votes}
+                </div>
+                <div className='poll-option2'>
+                {box.option2}<br></br>
+                {box.option2Votes}
+                </div>
               </div>
             </div>
-            <div className='complete-button'>
-                <button onClick={() => removePoll(box._id)}>
-                  Delete Poll
-                </button>
+            }
+            {box.option1Votes + box.option2Votes === getGroupSize() &&
+            <div>
+              <div>
+                Poll Complete!
               </div>
+              {box.option1Votes > box.option2Votes && <div>Winner: {box.option1}</div>}
+              {box.option2Votes > box.option1Votes && <div>Winner: {box.option2}</div>}
+              {box.option1Votes === box.option2Votes && <div>Tie!</div>}
+            </div>
+            }
+            <div className='complete-button'>
+              <button onClick={() => completePoll(box._id)}>
+                Delete Poll
+              </button>
+            </div>
           </div>
         );
       });
@@ -237,15 +273,15 @@ function listPolls(){
             <div className='scroll-container'>
                 <div className='box-container'>
                     <PollList 
-                    pollData={polls}
-                    removePoll={removePoll}
-                    completePoll={completePoll}
+                      pollData={polls}
+                      removePoll={removePoll}
+                      completePoll={completePoll}
                     />
                     
                     <TaskList 
-                        taskData={tasks} 
-                        removeTask={removeTask} 
-                        completeTask={completeTask}
+                      taskData={tasks} 
+                      removeTask={removeTask} 
+                      completeTask={completeTask}
                     />
                 </div>
             </div>

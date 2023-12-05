@@ -1,18 +1,16 @@
 import React, {useState} from 'react';
 
-function GroupForm(props) {
+function GroupCodeForm(props) {
   const [group, setGroup] = useState(
      {
         groupCode: ""
      }
   );
 
-  function submitGroupForm() {
+  function submitGroupCodeForm() {
     props.handleSubmit(group);
     setGroup({groupCode: ''});
   }
-
-
 
   function handleChange(event) {
     const { value } = event.target;
@@ -32,10 +30,10 @@ function GroupForm(props) {
             onChange={handleChange} 
             className="title2-field"
             />
-        <input type="submit" value="Post" className="group-submit" onClick={submitGroupForm}/>
+        <input type="submit" value="Submit" className="group-submit" onClick={submitGroupCodeForm}/>
         </form>
     );
 
 }
 
-export default GroupForm;
+export default GroupCodeForm;
