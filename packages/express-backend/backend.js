@@ -109,24 +109,27 @@ app.post('/join-group', async (req, res) => {
 // Login and create new user
 app.post('/login', async (req, res) => {
     try {
-        const user = await userServices.findUserByEmail(req.body.email);
+        userServices.findUserByEmail(req.body.email).then((user) => {
 
-        if (!user) {
-            return res.status(404).send('User not found');
-        }
-
-        user.comparePassword(req.body.password, function(err, isMatch){
-            if(isMatch){
-                req.session.username = user.username;
-                // console.log(req.session.username);
-                let isInGroup = true;
-                if(!user.group){
-                    isInGroup = false;
-                }
-                return res.status(200).send({isInGroup:isInGroup});
-            } else{
-                return res.status(401).send('cannot login');
+            if (!user) {
+                return res.status(404).send('User not found');
             }
+
+            user.comparePassword(req.body.password, function(err, isMatch){
+                if(isMatch){
+                    req.session.username = user.username;
+                    // console.log(req.session.username);
+                    console.log(user.username);
+                    let isInGroup = true;
+
+                    if(user.group == null){
+                        isInGroup = false;
+                    }
+                    return res.status(200).send({isInGroup:isInGroup});
+                } else{
+                    return res.status(401).send('cannot login');
+                }
+            });
         });
         
     } catch (err) {

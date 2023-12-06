@@ -209,7 +209,7 @@ function listPolls(){
     function PollList() {
       
       const boxes = polls.map((box) => {
-        console.log("Group Size: ", getGroupSize())
+        // console.log("Group Size: ", getGroupSize())
         return (
           <div className='chore-box' key = {box._id} >
             <div className='poll-title'>POLL: {box.title}</div>

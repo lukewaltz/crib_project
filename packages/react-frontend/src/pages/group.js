@@ -51,7 +51,6 @@ const Group = () => {
 
 function handleGroupNameSubmit(groupName) {
     // navigate('/home');
-    groupName.preventDefault();
       fetch(`${connection_URL}/group`, {
         method: "POST",
         credentials: 'include',

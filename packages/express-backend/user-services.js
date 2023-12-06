@@ -19,7 +19,7 @@ mongoose
 async function addToGroup(username, group){
     const promise = userModel.findOneAndUpdate(
         { username: username }, 
-        { $push: { group: group } }
+        { group: group },
     ).catch((error) => {
         console.error("Error adding group:", error);
         return 500;
@@ -34,6 +34,7 @@ async function getGroup(username) {
             if(!user) {
                 return null;
             }
+            console.log(user.group);
             return user.group;
         })
         .catch((error) => {

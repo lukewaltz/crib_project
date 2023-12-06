@@ -60,15 +60,15 @@ async function addUserToGroup(code, userId) {
 
 async function getGroupSize(group) {
     try {
-        const existingGroup = await groupModel.findOne(group);
+        groupModel.findOne(group).then((existingGroup) =>{
+            if (!existingGroup) {
+                console.error("Group not found with code: ", code);
+                return 404;
+            }    
+            const members = existingGroup.members;
+            return members.length;
+        });
 
-        if (!existingGroup) {
-            console.error("Group not found with code: ", code);
-            return 404;
-        }
-
-        const members = existingGroup.members;
-        return members.length();
     } catch (error) {
         console.error("Error finding size:", error);
         return Promise.reject(500);
