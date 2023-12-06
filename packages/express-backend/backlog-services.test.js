@@ -105,15 +105,16 @@ describe("addTask", () => {
 
     it("should add the task", async () => {
         const task = await Task.findOne({ task: "Test Task" });
-        console.log(task);
-        const result = await mut.addTask(task);
+        const result = await mut.addTask("John Doe", task);
         expect(result).not.toBeNull;
     });
     it("should throw an error", async () => {
-        const task = {
-            user: "John",
+        const task1 = await Task.findOne({ task: "Test Task" });
+        const task2 = {
+            task: "Test Task 2",
         };
-        const result = await mut.addTask(task);
+        const result = await mut.addTask("John Doe", task2);
+        expect(result).not.toBeNull;
         expect(result).tobeNull;
     });
 });

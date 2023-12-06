@@ -64,29 +64,20 @@ function addUser(user) {
 }
 
 function addTask(username, newTask) {
-    const promise = userModel
-        .findOneAndUpdate(
-            { username: username },
-            { $push: { tasks: newTask } },
-            { new: true }
-        )
-        .catch((error) => {
-            return error;
-        });
-
+    const promise = userModel.findOneAndUpdate(
+        { username: username },
+        { $push: { tasks: newTask } },
+        { new: true }
+    );
     return promise;
 }
 
 function removeTask(username, taskId) {
-    const promise = userModel
-        .findOneAndUpdate(
-            { username: username },
-            { $pull: { tasks: taskId } },
-            { new: true }
-        )
-        .catch((error) => {
-            return Promise.reject(error);
-        });
+    const promise = userModel.findOneAndUpdate(
+        { username: username },
+        { $pull: { tasks: taskId } },
+        { new: true }
+    );
 
     return promise;
 }

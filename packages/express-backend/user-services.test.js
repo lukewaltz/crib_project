@@ -4,7 +4,41 @@ import userServices from "./user-services.js";
 import User from "./user.js";
 import Group from "./group.js";
 import Task from "./task.js";
+/*
+describe("User Funcs", () => {
+    beforeAll(async () => {
+        await mongoose.disconnect();
+        await mongoose.connect("mongodb://localhost:27017/test-user-database", {
+            useNewUrlParser: true,
+            useUnifiedTopology: true,
+        });
+    });
 
+    afterAll(async () => {
+        await mongoose.disconnect();
+        await User.deleteMany({});
+    });
+
+    it("should correctly get the password", async () => {
+        // Create a user with a known password
+        const user = new User({
+            username: "testuser",
+            password: "testpassword",
+            email: "testemail",
+            name: "testname",
+        });
+
+        // Save the user to the database
+        await user.save();
+
+        // Use the comparePassword method to check if the password is correct
+        const isPasswordMatch = await user.comparePassword("testpassword");
+
+        // Assert that the password matches
+        expect(isPasswordMatch).toBe(true);
+    });
+});
+*/
 describe("userServices", () => {
     beforeAll(async () => {
         await mongoose.disconnect();
@@ -29,6 +63,10 @@ describe("userServices", () => {
                 email: "john.doe@example.com",
                 name: "John Doe",
                 password: "securepassword",
+                tasks: [
+                    new mongoose.Types.ObjectId(),
+                    new mongoose.Types.ObjectId(),
+                ],
             });
 
             const testGroup = await Group.create({

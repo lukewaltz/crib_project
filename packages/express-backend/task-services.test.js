@@ -95,7 +95,7 @@ describe("addTask", () => {
 
     it("should add the task", async () => {
         const task = {
-            task: "Test Task",
+            task: "Test Task12",
             dueDate: "2023-12-31",
             weight: 5,
             assignee: "John Doe",

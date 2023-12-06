@@ -38,33 +38,6 @@ function getTasks() {
 }
 
 async function addTask(username, task) {
-    try {
-        let currentdate = new Date();
-        let datetime =
-            currentdate.getMonth() +
-            1 +
-            "/" +
-            currentdate.getDate() +
-            "/" +
-            currentdate.getFullYear() +
-            " " +
-            currentdate.getHours() +
-            ":" +
-            currentdate.getMinutes() +
-            ":" +
-            currentdate.getSeconds();
-
-        const taskToAdd = new backlogModel({
-            task: task.task,
-            completionDate: datetime,
-            completedBy: username,
-        });
-
-        await taskToAdd.save();
-    } catch (error) {
-        throw error;
-    }
-    /*
     let currentdate = new Date();
     let datetime =
         currentdate.getMonth() +
@@ -80,7 +53,11 @@ async function addTask(username, task) {
         ":" +
         currentdate.getSeconds();
 
-    return;*/
+    return new backlogModel({
+        task: task.task,
+        completionDate: datetime,
+        completedBy: username,
+    });
 }
 
 async function deleteTask(id) {

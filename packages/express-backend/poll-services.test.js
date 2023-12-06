@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 import pollServices from "./poll-services.js";
-import PollModel from "./poll.js";
+import Poll from "./pollSchema.js";
 
 describe("pollServices", () => {
     beforeAll(async () => {
@@ -16,12 +16,12 @@ describe("pollServices", () => {
     });
 
     afterEach(async () => {
-        await PollModel.deleteMany({});
+        await Poll.deleteMany({});
     });
 
     describe("findPoll", () => {
         it("should find a poll by title", async () => {
-            const testPoll = new PollModel({
+            const testPoll = new Poll({
                 title: "Test Poll",
                 option1: "Option A",
                 option2: "Option B",
@@ -43,13 +43,13 @@ describe("pollServices", () => {
 
     describe("getPolls", () => {
         it("should return an array of polls", async () => {
-            await PollModel.create({
+            await Poll.create({
                 title: "Test Poll 1",
                 option1: "Option A",
                 option2: "Option B",
             });
 
-            await PollModel.create({
+            await Poll.create({
                 title: "Test Poll 2",
                 option1: "Option X",
                 option2: "Option Y",
@@ -89,7 +89,7 @@ describe("pollServices", () => {
 
     describe("deletePoll", () => {
         it("should delete a poll", async () => {
-            const testPoll = new PollModel({
+            const testPoll = new Poll({
                 title: "Test Poll",
                 option1: "Option A",
                 option2: "Option B",
@@ -98,7 +98,7 @@ describe("pollServices", () => {
 
             await pollServices.deletePoll(testPoll._id.toString());
 
-            const deletedPoll = await PollModel.findById(testPoll._id);
+            const deletedPoll = await Poll.findById(testPoll._id);
             expect(deletedPoll).toBeNull();
         });
 
@@ -111,7 +111,7 @@ describe("pollServices", () => {
 
     describe("voteForOption", () => {
         it("should record a vote for an option", async () => {
-            const testPoll = new PollModel({
+            const testPoll = new Poll({
                 title: "Test Poll",
                 option1: "Option A",
                 option2: "Option B",

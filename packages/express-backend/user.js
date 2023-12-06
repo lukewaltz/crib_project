@@ -6,7 +6,7 @@ var SALT_WORK_FACTOR = 10;
 
 const UserSchema = new mongoose.Schema(
     {
-        password:{
+        password: {
             type: String,
             required: true,
         },
@@ -26,26 +26,27 @@ const UserSchema = new mongoose.Schema(
             trim: true,
         },
         group: {
-            type: mongoose.Schema.ObjectId, ref: "Group",
+            type: mongoose.Schema.ObjectId,
+            ref: "Group",
             unique: true,
         },
         tasks: [
             {
                 type: mongoose.Schema.Types.ObjectId,
                 ref: "Task",
-            }
-        ]
+            },
+        ],
         // need to add group user belongs to
     },
     { collection: "users_list" }
 );
 
 // From https://www.mongodb.com/blog/post/password-authentication-with-mongoose-part-1
-UserSchema.pre('save', function(next){
+UserSchema.pre("save", function(next) {
     var user = this;
 
     // only hash the password if it has been modified (or is new)
-    if (!user.isModified('password')) return next();
+    if (!user.isModified("password")) return next();
 
     // generate a salt
     bcrypt.genSalt(SALT_WORK_FACTOR, function(err, salt) {
@@ -67,7 +68,6 @@ UserSchema.methods.comparePassword = function(candidatePassword, cb) {
         cb(null, isMatch);
     });
 };
-
 
 const User = mongoose.model("User", UserSchema);
 
