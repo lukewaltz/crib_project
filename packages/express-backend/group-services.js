@@ -58,9 +58,9 @@ async function addUserToGroup(code, userId) {
     }
 }
 
-async function getGroupSize(code) {
+async function getGroupSize(group) {
     try {
-        const existingGroup = await groupModel.findOne({ code: code });
+        const existingGroup = await groupModel.findOne(group);
 
         if (!existingGroup) {
             console.error("Group not found with code: ", code);

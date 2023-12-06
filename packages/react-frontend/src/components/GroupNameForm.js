@@ -3,7 +3,8 @@ import React, {useState} from 'react';
 function GroupNameForm(props) {
   const [group, setGroupName] = useState("");
 
-  function submitGroupNameForm() {
+  function submitGroupNameForm(event) {
+    event.preventDefault();
     props.handleSubmit(group);
   }
 

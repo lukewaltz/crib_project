@@ -3,8 +3,9 @@ import React, {useState} from 'react';
 function GroupCodeForm(props) {
   const [group, setGroup] = useState("");
 
-  function submitGroupCodeForm() {
-    // setGroup("");
+  function submitGroupCodeForm(event) {
+
+    event.preventDefault();
     props.handleSubmit(group);
   }
 
