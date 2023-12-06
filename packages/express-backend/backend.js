@@ -127,6 +127,20 @@ app.post('/login', async (req, res) => {
     }
 });
 
+// create new user
+app.post('/signup', async (req, res) => {
+    userServices.addUser(req.body).then((error) =>{
+        // change error code to reason unable to signup
+        if(error == 500){
+            return res.status(500).send('Unable to sign up');
+        }else{
+            req.session.username = req.body.username;
+            return res.status(201).send('Successful signup');
+        }
+    });
+});
+
+
 app.get('/isLoggedIn', (req, res) => {
     // console.log('Session in /isLoggedIn:', req.session.username);
     if(req.session.username) {
@@ -143,18 +157,6 @@ app.get('/logout', (req, res) => {
     return res.status(200).send();
 });
 
-// create new user
-app.post('/signup', async (req, res) => {
-    userServices.addUser(req.body).then((error) =>{
-        // change error code to reason unable to signup
-        if(error == 500){
-            return res.status(500).send('Unable to sign up');
-        }else{
-            req.session.username = req.body.username;
-            return res.status(201).send('Successful signup');
-        }
-    });
-});
 
 // homescreen
 app.get('/', (req, res) => {
@@ -381,7 +383,7 @@ app.delete('/polls/:id', async (req, res) => {
     })
 });
 
-// post poll
+
 app.post("/polls", function (req, res) {  
     const newPoll = req.body;
     pollServices.addPoll(newPoll)
@@ -446,59 +448,6 @@ app.post('/polls/:pollId', (req, res) => {
         });
 });
 
-// app.post('/polls/:pollId', (req, res) => {
-//     const { pollId } = req.params;
-//     const { option } = req.body;
-  
-//     try {
-//         const poll = await pollServices.findPoll(pollId);
-//         const user = await userServices.findUserByUsername(req.session.username);
-//         console.log(req.session.username);
-//         if (!poll) {
-//             return res.status(404).json({ message: 'Poll not found' });
-//         }
-
-//         // Check if the option is valid
-//         if (option !== 'option1' && option !== 'option2') {
-//             return res.status(400).json({ message: 'Invalid option' });
-//         }
-        
-//         if(poll.whoVoted.includes(user.email)){
-//             res.status(400).json({message: `User ${req.session.username} already voted`});
-//         }else{
-//             poll[`whoVoted`].push(user.email);
-//             // Increment the vote count for the selected option
-//             // console.log(user.email);
-//             poll[`${option}Votes`] += 1;
-
-//             // Save the updated poll document
-//             await poll.save();
-
-//             res.status(200).json({ message: `Vote for ${option} recorded successfully` });
-//         }
-//     } catch (error) {
-//       console.error('Error recording vote:', error);
-//       res.status(500).json({ error: 'Internal Server Error' });
-//     }
-//   });
-  
-
-
-// app.post('/tasks', (req, res) => {
-//     const newTask = req.body;
-//     taskServices.addTask(newTask)
-//         .then(() => {
-//             res.status(201).json({ message: 'Task added successfully' });
-//         })
-//         .catch((error) => {
-//             // Handle specific error or use a general error message
-//             res.status(500).json({ error: 'Could not add task' });
-//         });
-// });
-
-
-//backlog services
-
 
 app.get('/backlog', (req, res) => {
     backlogServices.getTasks()
@@ -521,7 +470,6 @@ app.delete('/backlog/:id', async (req, res) => {
         })
 });
 
-// all
 app.listen(process.env.PORT || port, () => {
     console.log(`rest api is listening`);
     console.log("mongo: ", process.env.MONGO_URL)

@@ -84,9 +84,6 @@ async function voteForOption(pollId, option) {
     }
 }
 
-
-
-
 export default {
     findPoll,
     getPolls,

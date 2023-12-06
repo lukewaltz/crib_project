@@ -35,17 +35,6 @@ function addGroup(group) {
     return promise;
 }
 
-// function addTask(username, newTask) {
-//     const promise = userModel.findOneAndUpdate(
-//         { username: username }, 
-//         { $push: { tasks: newTask } }, 
-//         { new: true }
-//     ).catch((error) => {
-//         console.error("Error adding task:", error);
-//         return Promise.reject(error);
-//     });
-
-//     return promise;
 
 async function addUserToGroup(code, user) {
     try {
