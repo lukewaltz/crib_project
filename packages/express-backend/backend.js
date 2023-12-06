@@ -38,6 +38,8 @@ app.use(cookieParser());
 
 
 // Group endpoints
+
+//Creates a new group
 app.post('/group', async (req, res) => {
     if(req.session.username){
         const user = await userServices.findUserByUsername(req.session.username);
@@ -48,17 +50,18 @@ app.post('/group', async (req, res) => {
         if (user.group){
             return res.status(401).send('user already in group');
         }
-
-        groupServices.addGroup(req.body).then((e) =>{
+        let group = req.body;
+        group.owner = user;
+        groupServices.addGroup(group).then((e) =>{
             if(e == 500){
                 return res.status(500).send('Unable to create group');
             }else{
-                userServices.addToGroup(req.session.username, e).then((error) => {
+                userServices.addToGroup(req.session.username, e._id).then((error) => {
                     if(error == 500) {
                         return res.status(500).send('Unable to add user');
                     }
-                });
-                return res.status(201).send('Created group');
+                    return res.status(201).send('Created group');
+                })   
             }
         });
     }else{
@@ -66,9 +69,10 @@ app.post('/group', async (req, res) => {
     }
 });
 
+//add user to group
 app.post('/join-group', async (req, res) => {
     try {
-        const user = await userServices.findUserByEmail(req.body.email);
+        const user = await userServices.findUserByUsername(req.session.username);
 
         if (!user) {
             return res.status(404).send('User not found');
@@ -77,12 +81,12 @@ app.post('/join-group', async (req, res) => {
             return res.status(401).send('user already in group');
         }
 
-        groupServices.addUserToGroup(req.body.code, user).then((e) => {
+        groupServices.addUserToGroup(req.body.code, user._id).then((e) => {
             if(e == 500 || e ==404){
                 return res.status(500).send('Unable to add user');
             }
 
-            userServices.addToGroup(user.username, e).then((error) => {
+            userServices.addToGroup(user.username, e._id).then((error) => {
                 if(error == 500) {
                     return res.status(500).send('Unable to add user');
                 }else{
@@ -115,7 +119,11 @@ app.post('/login', async (req, res) => {
             if(isMatch){
                 req.session.username = user.username;
                 // console.log(req.session.username);
-                return res.status(200).send('login successful');
+                let isInGroup = true;
+                if(!user.group){
+                    isInGroup = false;
+                }
+                return res.status(200).send({isInGroup:isInGroup});
             } else{
                 return res.status(401).send('cannot login');
             }
@@ -325,6 +333,18 @@ app.get('/tasks', (req, res) => {
         return res.status(401).send();
     }
 });
+
+app.get('/group', (req, res) => {
+    if (req.session.username){
+        userServices.getGroup(req.session.username).then((group) => {
+            groupServices.getGroupSize(group.code)
+            .then((size) => {
+                res.status(200).json(size)
+            })
+        })
+    }
+})
+
 
 // add new task to task list, will be marked with assigned=false
 app.post('/tasks', (req, res) => {

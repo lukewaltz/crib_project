@@ -88,7 +88,7 @@ function listPolls(){
   }
 
   function removePoll(pollId) {
-    deleteTaskFromBackend(pollId)
+    deletePollFromBackend(pollId)
       .then(() => {
         //keep all polls that don't match polls id
         const updatedPolls = polls.filter(poll => poll._id !== pollId);
@@ -118,9 +118,15 @@ function listPolls(){
     }
     console.log(`Poll with ID ${pollId} deleted successfully`);
   }
-  
-  const [hasVoted, setHasVoted] = useState(false);
 
+  async function getGroupSize(){
+    const response = await fetch(`${connection_URL}/group`,  {
+      method: 'GET',
+      credentials: 'include',
+    });
+    return response;
+  }
+  
   async function voteForOption(pollId, option) {
 
     if (votedPolls.indexOf(pollId) !== -1) {
@@ -129,7 +135,7 @@ function listPolls(){
         return;
     }
 
-    const response = await fetch(`${connection_URL}/polls/${pollId}`, {
+    await fetch(`${connection_URL}/polls/${pollId}`, {
       method: 'POST',
       credentials: 'include',
       headers: {
@@ -147,6 +153,7 @@ function listPolls(){
     setPolls((prevPolls) => {
       const updatedPolls = prevPolls.map((poll) => {
         if (poll._id === pollId) {
+          
           // Update the optionVotes based on the voted option
           return {
             
@@ -157,6 +164,7 @@ function listPolls(){
           };
         }
         
+        
         return poll;
       });
       return updatedPolls;
@@ -164,17 +172,7 @@ function listPolls(){
     console.log(`Vote for ${option} in poll with ID ${pollId} recorded successfully`);
   }
   
-  
-    // merged tasklisthead component
-    function TaskListHead() {
-        return (
-            <thead>
-                <tr>
-                    <th>LIST OF CHORES:</th>
-                </tr>
-            </thead>
-        );
-    }
+
 
   // merged tasklist component
   function TaskList() {
@@ -209,7 +207,9 @@ function listPolls(){
 
     // merged polllist component
     function PollList() {
+      
       const boxes = polls.map((box) => {
+        console.log("Group Size: ", getGroupSize())
         return (
           <div className='chore-box' key = {box._id} >
             <div className='poll-title'>POLL: {box.title}</div>
@@ -230,7 +230,7 @@ function listPolls(){
                 </button>
               </div>
             </div>)}
-            {box.whoVoted[0] === "true" && 
+            {box.whoVoted[0] === "true" && box.option1Votes + box.option2Votes !== getGroupSize() &&
             <div>
               <p>Vote Recorded. Thank you!</p>
               <div className='button-container'>
@@ -243,14 +243,23 @@ function listPolls(){
                 {box.option2Votes}
                 </div>
               </div>
+            </div>
+            }
+            {box.option1Votes + box.option2Votes === getGroupSize() &&
+            <div>
+              <div>
+                Poll Complete!
               </div>
-              }
-              <div className='complete-button'>
-
-                <button onClick={() => completePoll(box._id)}>
-                  Delete Poll
-                </button>
-              </div>
+              {box.option1Votes > box.option2Votes && <div>Winner: {box.option1}</div>}
+              {box.option2Votes > box.option1Votes && <div>Winner: {box.option2}</div>}
+              {box.option1Votes === box.option2Votes && <div>Tie!</div>}
+            </div>
+            }
+            <div className='complete-button'>
+              <button onClick={() => completePoll(box._id)}>
+                Delete Poll
+              </button>
+            </div>
           </div>
         );
       });
@@ -266,9 +275,9 @@ function listPolls(){
             <div className='scroll-container'>
                 <div className='box-container'>
                     <PollList 
-                    pollData={polls}
-                    removePoll={removePoll}
-                    completePoll={completePoll}
+                      pollData={polls}
+                      removePoll={removePoll}
+                      completePoll={completePoll}
                     />
                     
                     <TaskList 

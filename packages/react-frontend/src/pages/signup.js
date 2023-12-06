@@ -41,7 +41,7 @@ const Signup = () => {
         .then((response) => {
             if (response.status === 201) {
                 console.log('User signed up successfully');
-                navigate('/');
+                navigate('/group');
                 return response.json();
             } else if (response.status === 500) {
                 console.log('Could not signup');

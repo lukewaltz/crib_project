@@ -6,6 +6,7 @@ import Home from './pages/home';
 import Signup from './pages/signup';
 import Login from './pages/login';
 import Post from './pages/post';
+import Group from './pages/group';
 
 function MyApp() {
   // State to hold tasks
@@ -25,6 +26,7 @@ function MyApp() {
             <Route path="/" element={<Navigate to="/home" />} />
             <Route path='/post' element={<Post handleSubmit={handlePostSubmit} />} />
             <Route path='/home' element={<Home tasks={tasks} />} />
+            <Route path='/group' element={<Group/>} />
             <Route path='/account' element={<Account />} />
             <Route path='/account/signup' element={<Signup />} />
             <Route path='/account/login' element={<Login />} />
