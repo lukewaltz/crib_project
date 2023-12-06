@@ -39,32 +39,32 @@ function getTasks() {
 }
 
 async function addTask(username, task) {
-    let currentdate = new Date();
-    let datetime =
-        currentdate.getMonth() +
-        1 +
-        "/" +
-        currentdate.getDate() +
-        "/" +
-        currentdate.getFullYear() +
-        " " +
-        currentdate.getHours() +
-        ":" +
-        currentdate.getMinutes() +
-        ":" +
-        currentdate.getSeconds();
+    try {
+        let currentdate = new Date();
+        let datetime =
+            currentdate.getMonth() +
+            1 +
+            "/" +
+            currentdate.getDate() +
+            "/" +
+            currentdate.getFullYear() +
+            " " +
+            currentdate.getHours() +
+            ":" +
+            currentdate.getMinutes() +
+            ":" +
+            currentdate.getSeconds();
 
-    const taskToAdd = new backlogModel({
-        completionDate: datetime,
-        completedBy: username,
-        task: task.task,
-    });
-    const promise = taskToAdd.save().catch((e) => {
-        if (e) {
-            return 500;
-        }
-    });
-    return promise;
+        const taskToAdd = new backlogModel({
+            completionDate: datetime,
+            completedBy: username,
+            task: task.task,
+        });
+
+        await taskToAdd.save();
+    } catch (error) {
+        throw new Error("Failed to add the task to the backlog");
+    }
 }
 
 async function deleteTask(id) {
