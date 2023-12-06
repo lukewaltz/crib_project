@@ -431,7 +431,6 @@ describe("userServices", () => {
         });
 
         it("should correctly compare passwords", async () => {
-            // Create a test user with a known password
             const testUser = await User.create({
                 username: "JohnDoe",
                 email: "john.doe@example.com",
@@ -439,16 +438,12 @@ describe("userServices", () => {
                 password: "securepassword",
             });
 
-            // Use the comparePassword method to check if the password is correct
             testUser.comparePassword("securepassword", (err, isMatch) => {
-                // Assert that the password matches
                 expect(err).toBeNull();
                 expect(isMatch).toBe(true);
             });
 
-            // Use the comparePassword method to check if an incorrect password is rejected
             testUser.comparePassword("wrongpassword", (err, isMatch) => {
-                // Assert that the password does not match
                 expect(err).toBeNull();
                 expect(isMatch).toBe(false);
             });

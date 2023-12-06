@@ -123,7 +123,7 @@ describe("deleteTask", () => {
     });
     beforeEach(async () => {
         await Task.create({
-            task: "Test Task",
+            task: "Test Task55",
             dueDate: "2023-12-31",
             weight: 5,
             assignee: "John Doe",
@@ -134,7 +134,7 @@ describe("deleteTask", () => {
     });
 
     it("should delete the task", async () => {
-        const testTask = await Task.findOne({ task: "Test Task" });
+        const testTask = await Task.findOne({ task: "Test Task55" });
         const taskId = testTask._id.toString();
 
         await mut.deleteTask(taskId);
