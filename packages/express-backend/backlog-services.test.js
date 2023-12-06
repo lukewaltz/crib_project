@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import Backlog from "./backlog.js";
+import Task from "./task.js";
 import mut from "./backlog-services.js";
 
 describe("findTask", () => {
@@ -91,16 +92,21 @@ describe("addTask", () => {
     });
     afterEach(async () => {
         await Backlog.deleteMany({});
+        await Task.deleteMany({});
+    });
+    beforeEach(async () => {
+        await Task.create({
+            task: "Test Task",
+            dueDate: "2023-12-31",
+            weight: 5,
+            assignee: "John Doe",
+        });
     });
 
     it("should add the task", async () => {
-        const task = {
-            task: "Test Task",
-            completionDate: "2023-12-31",
-            completedBy: "John Doe",
-        };
+        const task = await Task.findOne({ task: "Test Task" });
+        console.log(task);
         const result = await mut.addTask(task);
-        console.log(result);
         expect(result).not.toBeNull;
     });
     it("should throw an error", async () => {

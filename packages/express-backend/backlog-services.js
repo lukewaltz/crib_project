@@ -20,16 +20,15 @@ mongoose
 function findTask(id) {
     return backlogModel
         .findById(id)
-        .exec() // Add .exec() to return a promise
+        .exec()
         .then((task) => {
             if (!task) {
-                // Task not found
                 return null;
             }
-            return task; // Return the found task
+            return task;
         })
         .catch((error) => {
-            throw error; // Rethrow the error for proper handling
+            throw error;
         });
 }
 
@@ -56,15 +55,32 @@ async function addTask(username, task) {
             currentdate.getSeconds();
 
         const taskToAdd = new backlogModel({
+            task: task.task,
             completionDate: datetime,
             completedBy: username,
-            task: task.task,
         });
 
         await taskToAdd.save();
     } catch (error) {
-        throw new Error("Failed to add the task to the backlog");
+        throw error;
     }
+    /*
+    let currentdate = new Date();
+    let datetime =
+        currentdate.getMonth() +
+        1 +
+        "/" +
+        currentdate.getDate() +
+        "/" +
+        currentdate.getFullYear() +
+        " " +
+        currentdate.getHours() +
+        ":" +
+        currentdate.getMinutes() +
+        ":" +
+        currentdate.getSeconds();
+
+    return;*/
 }
 
 async function deleteTask(id) {

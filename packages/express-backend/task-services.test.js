@@ -101,7 +101,6 @@ describe("addTask", () => {
             assignee: "John Doe",
         };
         const result = await mut.addTask(task);
-        console.log(result);
         expect(result).not.toBeNull;
     });
     it("should throw an error", async () => {
