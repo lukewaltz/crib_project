@@ -10,8 +10,8 @@ mongoose
         useNewUrlParser: true,
         useUnifiedTopology: true,
     })
-    .then(() => console.log("Connected to MongoDB in task-services"))
-    .catch((error) => console.error("MongoDB Connection Error:", error));
+    .then(() => console.log("Connected to MongoDB in task-services"));
+//.catch((error) => console.error("MongoDB Connection Error:", error));
 
 function findTask(id) {
     return taskModel
@@ -38,9 +38,7 @@ function getTasks() {
 function addTask(task) {
     const taskToAdd = new taskModel(task);
     const promise = taskToAdd.save().catch((e) => {
-        if (e) {
-            return 500;
-        }
+        return 500;
     });
     return promise;
 }

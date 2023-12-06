@@ -11,8 +11,8 @@ mongoose
         useNewUrlParser: true,
         useUnifiedTopology: true,
     })
-    .then(() => console.log("Connected to MongoDB in user-services"))
-    .catch((error) => console.error("MongoDB Connection Error:", error));
+    .then(() => console.log("Connected to MongoDB in user-services"));
+//.catch((error) => console.error("MongoDB Connection Error:", error));
 
 async function findGroupByName(name) {
     return groupModel.findOne({ name: name }).then((group) => {
@@ -23,10 +23,8 @@ async function findGroupByName(name) {
 function addGroup(group) {
     const groupToAdd = new groupModel(group);
     const promise = groupToAdd.save().catch((e) => {
-        if (e) {
-            console.log(e);
-            return 500;
-        }
+        console.log(e);
+        return 500;
     });
     return promise;
 }

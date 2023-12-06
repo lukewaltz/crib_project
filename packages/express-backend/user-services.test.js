@@ -4,41 +4,7 @@ import userServices from "./user-services.js";
 import User from "./user.js";
 import Group from "./group.js";
 import Task from "./task.js";
-/*
-describe("User Funcs", () => {
-    beforeAll(async () => {
-        await mongoose.disconnect();
-        await mongoose.connect("mongodb://localhost:27017/test-user-database", {
-            useNewUrlParser: true,
-            useUnifiedTopology: true,
-        });
-    });
 
-    afterAll(async () => {
-        await mongoose.disconnect();
-        await User.deleteMany({});
-    });
-
-    it("should correctly get the password", async () => {
-        // Create a user with a known password
-        const user = new User({
-            username: "testuser",
-            password: "testpassword",
-            email: "testemail",
-            name: "testname",
-        });
-
-        // Save the user to the database
-        await user.save();
-
-        // Use the comparePassword method to check if the password is correct
-        const isPasswordMatch = await user.comparePassword("testpassword");
-
-        // Assert that the password matches
-        expect(isPasswordMatch).toBe(true);
-    });
-});
-*/
 describe("userServices", () => {
     beforeAll(async () => {
         await mongoose.disconnect();
@@ -441,6 +407,51 @@ describe("userServices", () => {
         afterAll(async () => {
             // Clean up: remove the test user (if not already deleted)
             await User.findByIdAndDelete(testUserId).exec();
+        });
+    });
+
+    describe("UserSchema.methods.comparePassword", () => {
+        beforeAll(async () => {
+            await mongoose.disconnect();
+            await mongoose.connect(
+                "mongodb://localhost:27017/test-user-database",
+                {
+                    useNewUrlParser: true,
+                    useUnifiedTopology: true,
+                }
+            );
+        });
+
+        afterAll(async () => {
+            await mongoose.disconnect();
+        });
+
+        afterEach(async () => {
+            await User.deleteMany({});
+        });
+
+        it("should correctly compare passwords", async () => {
+            // Create a test user with a known password
+            const testUser = await User.create({
+                username: "JohnDoe",
+                email: "john.doe@example.com",
+                name: "John Doe",
+                password: "securepassword",
+            });
+
+            // Use the comparePassword method to check if the password is correct
+            testUser.comparePassword("securepassword", (err, isMatch) => {
+                // Assert that the password matches
+                expect(err).toBeNull();
+                expect(isMatch).toBe(true);
+            });
+
+            // Use the comparePassword method to check if an incorrect password is rejected
+            testUser.comparePassword("wrongpassword", (err, isMatch) => {
+                // Assert that the password does not match
+                expect(err).toBeNull();
+                expect(isMatch).toBe(false);
+            });
         });
     });
 });

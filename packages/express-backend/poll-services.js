@@ -10,8 +10,8 @@ mongoose
         useNewUrlParser: true,
         useUnifiedTopology: true,
     })
-    .then(() => console.log("Connected to MongoDB in poll-services"))
-    .catch((error) => console.error("MongoDB Connection Error:", error));
+    .then(() => console.log("Connected to MongoDB in poll-services"));
+//.catch((error) => console.error("MongoDB Connection Error:", error));
 
 async function findPoll(id) {
     return pollModel
@@ -33,9 +33,7 @@ function getPolls() {
 function addPoll(poll) {
     const pollToAdd = new pollModel(poll);
     const promise = pollToAdd.save().catch((e) => {
-        if (e) {
-            return 500;
-        }
+        return 500;
     });
     return promise;
 }
@@ -45,9 +43,7 @@ async function deletePoll(id) {
         .findByIdAndDelete(id)
         .exec()
         .catch((err) => {
-            if (err) {
-                return undefined;
-            }
+            return undefined;
         });
     return promise;
 }

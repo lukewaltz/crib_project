@@ -3,7 +3,6 @@ import Task from "./task.js";
 import mut from "./task-services.js";
 
 describe("findTask", () => {
-    // formatting functions to setup database for each test
     beforeAll(async () => {
         await mongoose.disconnect();
         await mongoose.connect("mongodb://localhost:27017/test-task-database", {
@@ -16,7 +15,7 @@ describe("findTask", () => {
     });
     beforeEach(async () => {
         await Task.create({
-            task: "Test Task",
+            task: "Test Task777",
             dueDate: "2023-12-31",
             weight: 5,
             assignee: "John Doe",
@@ -26,15 +25,14 @@ describe("findTask", () => {
         await Task.deleteMany({});
     });
 
-    // tests
     it("should find a task by ID", async () => {
-        const testTask = await Task.findOne({ task: "Test Task" });
+        const testTask = await Task.findOne({ task: "Test Task777" });
         const taskId = testTask._id.toString();
 
         const result = await mut.findTask(taskId);
 
         expect(result).not.toBeNull();
-        expect(result.task).toBe("Test Task");
+        expect(result.task).toBe("Test Task777");
         expect(result.dueDate).toBe("2023-12-31");
         expect(result.weight).toBe(5);
         expect(result.assignee).toBe("John Doe");
@@ -45,7 +43,7 @@ describe("findTask", () => {
         expect(result).toBeNull();
     });
     it("should handle errors and throw an error", async () => {
-        await expect(mut.findTask("invalid-id")).rejects.toThrow();
+        await expect(mut.findTask("invalid-id444")).rejects.toThrow();
     });
 });
 
@@ -62,7 +60,7 @@ describe("getTasks", () => {
     });
     beforeEach(async () => {
         await Task.create({
-            task: "Test Task",
+            task: "Test Task90",
             dueDate: "2023-12-31",
             weight: 5,
             assignee: "John Doe",
@@ -94,13 +92,13 @@ describe("addTask", () => {
     });
 
     it("should add the task", async () => {
-        const task = {
+        const task2 = {
             task: "Test Task12",
             dueDate: "2023-12-31",
             weight: 5,
             assignee: "John Doe",
         };
-        const result = await mut.addTask(task);
+        const result = await mut.addTask(task2);
         expect(result).not.toBeNull;
     });
     it("should throw an error", async () => {

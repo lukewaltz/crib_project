@@ -11,8 +11,8 @@ mongoose
         useNewUrlParser: true,
         useUnifiedTopology: true,
     })
-    .then(() => console.log("Connected to MongoDB in user-services"))
-    .catch((error) => console.error("MongoDB Connection Error:", error));
+    .then(() => console.log("Connected to MongoDB in user-services"));
+//.catch((error) => console.error("MongoDB Connection Error:", error));
 
 async function addToGroup(username, group) {
     const promise = userModel
@@ -56,9 +56,7 @@ async function randomUser() {
 function addUser(user) {
     const userToAdd = new userModel(user);
     const promise = userToAdd.save().catch((e) => {
-        if (e) {
-            return 500;
-        }
+        return 500;
     });
     return promise;
 }
@@ -87,9 +85,7 @@ async function deleteUser(id) {
         .findByIdAndDelete(id)
         .exec()
         .catch((err) => {
-            if (err) {
-                return undefined;
-            }
+            return undefined;
         });
     return promise;
 }
