@@ -13,11 +13,13 @@ mongoose
         {
             useNewUrlParser: true,
             useUnifiedTopology: true,
-        })
+        }
+    )
     .catch((error) => console.log(error));
 
 function findTask(id) {
-    return backlogModel.findById(id)
+    return backlogModel
+        .findById(id)
         .exec() // Add .exec() to return a promise
         .then((task) => {
             if (!task) {
@@ -27,7 +29,6 @@ function findTask(id) {
             return task; // Return the found task
         })
         .catch((error) => {
-            console.error("Error finding task:", error);
             throw error; // Rethrow the error for proper handling
         });
 }
@@ -38,35 +39,41 @@ function getTasks() {
 }
 
 async function addTask(username, task) {
-    try {
-        let currentdate = new Date();
-        let datetime =
-            (currentdate.getMonth() + 1) + "/" +
-            currentdate.getDate() + "/" +
-            currentdate.getFullYear() + " " + 
-            currentdate.getHours() + ":" +
-            currentdate.getMinutes() + ":" +
-            currentdate.getSeconds();
-        
-        const taskToAdd = new backlogModel({
-            completionDate: datetime,
-            completedBy: username,
-            task: task.task
-        });
-        
-        await taskToAdd.save();
-    } catch (error) {
-        throw new Error('Failed to add the task to the backlog');
-    }
-}
+    let currentdate = new Date();
+    let datetime =
+        currentdate.getMonth() +
+        1 +
+        "/" +
+        currentdate.getDate() +
+        "/" +
+        currentdate.getFullYear() +
+        " " +
+        currentdate.getHours() +
+        ":" +
+        currentdate.getMinutes() +
+        ":" +
+        currentdate.getSeconds();
 
-
-async function deleteTask(id) {
-    const promise = backlogModel.findByIdAndRemove(id).catch((err) => {
-        if(err) {
-            return undefined;
+    const taskToAdd = new backlogModel({
+        completionDate: datetime,
+        completedBy: username,
+        task: task.task,
+    });
+    const promise = taskToAdd.save().catch((e) => {
+        if (e) {
+            return 500;
         }
     });
+    return promise;
+}
+
+async function deleteTask(id) {
+    const promise = backlogModel
+        .findByIdAndDelete(id)
+        .exec()
+        .catch((err) => {
+            throw err;
+        });
     return promise;
 }
 

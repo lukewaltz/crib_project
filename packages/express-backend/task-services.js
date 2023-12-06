@@ -6,17 +6,16 @@ mongoose.set("debug", true);
 dotenv.config();
 
 mongoose
-    .connect(
-        process.env.MONGO_URL,
-        {
-            useNewUrlParser: true,
-            useUnifiedTopology: true,
-        })
-        .then(() => console.log("Connected to MongoDB in task-services"))
-        .catch((error) => console.error("MongoDB Connection Error:", error));
+    .connect(process.env.MONGO_URL, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+    })
+    .then(() => console.log("Connected to MongoDB in task-services"))
+    .catch((error) => console.error("MongoDB Connection Error:", error));
 
 function findTask(id) {
-    return taskModel.findById(id)
+    return taskModel
+        .findById(id)
         .exec() // Add .exec() to return a promise
         .then((task) => {
             if (!task) {
@@ -26,7 +25,7 @@ function findTask(id) {
             return task; // Return the found task
         })
         .catch((error) => {
-            console.error("Error finding task:", error);
+            //console.error("Error finding task:", error);
             throw error; // Rethrow the error for proper handling
         });
 }
@@ -38,8 +37,8 @@ function getTasks() {
 
 function addTask(task) {
     const taskToAdd = new taskModel(task);
-    const promise = taskToAdd.save().catch((e) =>{
-        if(e){
+    const promise = taskToAdd.save().catch((e) => {
+        if (e) {
             return 500;
         }
     });
@@ -47,11 +46,12 @@ function addTask(task) {
 }
 
 async function deleteTask(id) {
-    const promise = taskModel.findByIdAndRemove(id).catch((err) => {
-        if(err) {
-            return undefined;
-        }
-    });
+    const promise = taskModel
+        .findByIdAndDelete(id)
+        .exec()
+        .catch((err) => {
+            throw err;
+        });
     return promise;
 }
 
