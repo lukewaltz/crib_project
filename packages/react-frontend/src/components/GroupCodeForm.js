@@ -1,22 +1,16 @@
 import React, {useState} from 'react';
 
 function GroupCodeForm(props) {
-  const [group, setGroup] = useState(
-     {
-        groupCode: ""
-     }
-  );
+  const [group, setGroup] = useState("");
 
   function submitGroupCodeForm() {
     props.handleSubmit(group);
-    setGroup({groupCode: ''});
+    setGroup("");
   }
 
   function handleChange(event) {
     const { value } = event.target;
-      setGroup(
-         {groupCode: value}
-      );
+      setGroup(value);
     }
 
 

@@ -81,12 +81,12 @@ app.post('/join-group', async (req, res) => {
             return res.status(401).send('user already in group');
         }
 
-        groupServices.addUserToGroup(req.body.code, user).then((e) => {
+        groupServices.addUserToGroup(req.body.code, user._id).then((e) => {
             if(e == 500 || e ==404){
                 return res.status(500).send('Unable to add user');
             }
 
-            userServices.addToGroup(user.username, e).then((error) => {
+            userServices.addToGroup(user.username, e._id).then((error) => {
                 if(error == 500) {
                     return res.status(500).send('Unable to add user');
                 }else{

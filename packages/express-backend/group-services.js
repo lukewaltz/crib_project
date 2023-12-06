@@ -36,7 +36,7 @@ function addGroup(group) {
 }
 
 
-async function addUserToGroup(code, user) {
+async function addUserToGroup(code, userId) {
     try {
         const existingGroup = await groupModel.findOne({ code: code });
 
@@ -47,7 +47,7 @@ async function addUserToGroup(code, user) {
 
         const updatedGroup = await groupModel.findOneAndUpdate(
             { code: code },
-            { $push: { members: user } },
+            { $push: { members: userId } },
             { new: true }
         );
 

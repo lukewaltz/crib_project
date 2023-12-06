@@ -25,30 +25,30 @@ const Group = () => {
 //     }, []);
 
   async function handleGroupCodeSubmit(groupCode) {
-    // try {
-    //   const response = await fetch(`${connection_URL}/join-group`, {
-    //     method: "POST",
-    //     credentials: 'include',
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //       credentials: 'include',
-    //     },
-    //     body: JSON.stringify({
-    //       code: groupCode,
-    //     }),
-    //   });
+    try {
+      const response = await fetch(`${connection_URL}/join-group`, {
+        method: "POST",
+        credentials: 'include',
+        headers: {
+          "Content-Type": "application/json",
+          credentials: 'include',
+        },
+        body: JSON.stringify({
+          code: groupCode,
+        }),
+      });
 
-    //   if (response.ok) {
-    //     // Group joined successfully
-    //     console.log("User joined group");
-    //     navigate('/home');
-    //   } else {
-    //     const errorMessage = await response.text();
-    //     console.error(`Error joining group: ${errorMessage}`);
-    //   }
-    // } catch (error) {
-    //   console.error("Error joining group:", error);
-    // }
+      if (response.ok) {
+        // Group joined successfully
+        console.log("User joined group");
+        navigate('/home');
+      } else {
+        const errorMessage = await response.text();
+        console.error(`Error joining group: ${errorMessage}`);
+      }
+    } catch (error) {
+      console.error("Error joining group:", error);
+    }
   }
 
 function handleGroupNameSubmit(groupName) {
