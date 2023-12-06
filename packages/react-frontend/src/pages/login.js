@@ -45,11 +45,6 @@ const Login = () => {
                         navigate('/group')
                     }
                 });
-                // if(!response.group){
-                //     console.log(response.json());
-                // }else{
-                //     navigate('/');
-                // }
                 return response.status;
             } else if (response.status === 500) {
                 console.log('Could not login');
