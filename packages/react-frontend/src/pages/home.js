@@ -162,7 +162,6 @@ function listPolls(){
   }
   
   
-  // merged tasklist component
   function TaskList() {
     const boxes = tasks.map((box) => {
       return (
@@ -192,44 +191,39 @@ function listPolls(){
     );
   }
 
-    // merged polllist component
-    function PollList() {
-      const boxes = polls.map((box) => {
-        return (
-          <div className='chore-box' key = {box._id} >
-            <div className='poll-title'>POLL: {box.title}</div>
-            {/* <div className='chore-id'>{box._id}</div> */}
-            <div className='button-container'>
-              <div className='poll-options-container'>
-                <div className='poll-option1'>
-                  {/* Yes button */}
-                  <button onClick={() => voteForOption(box._id, 'option1')}>
-                    {box.option1}
-                  </button>
-                </div>
-                <div className='poll-option2'>
-                  {/* No button */}
-                  <button onClick={() => voteForOption(box._id, 'option2')}>
-                    {box.option2}
-                  </button>
-                </div>
-              </div>
-              <div className='poll-delete'>
-                <button onClick={() => completePoll(box._id)}>
-                  Delete Poll
-                </button>
-              </div>
+  function PollList() {
+    const boxes = polls.map((box) => {
+      return (
+        <div className='chore-box' key={box._id} >
+          <div className='poll-title'>POLL: {box.title}</div>
+          <div className='poll-options-container'>
+            <div className='poll-option1'>
+              <button onClick={() => voteForOption(box._id, 'option1')}>
+                {box.option1}
+              </button>
+            </div>
+            <div className='poll-option2'>
+              <button onClick={() => voteForOption(box._id, 'option2')}>
+                {box.option2}
+              </button>
             </div>
           </div>
-        );
-      });
-      return (
-        <div>
-          {boxes}
+          <div className='poll-delete'>
+            <button onClick={() => completePoll(box._id)}>
+              Delete Poll
+            </button>
+          </div>
         </div>
       );
-    }
-
+    });
+    return (
+      <div>
+        {boxes}
+      </div>
+    );
+  }
+  
+  
     function Stack(props) {
         return (
             <div className='scroll-container'>

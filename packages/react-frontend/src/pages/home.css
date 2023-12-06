@@ -85,13 +85,13 @@
     top: 133px;
 }
 
-.button-container .button,
-.button-container a.button,
-.button-container button,
-.button-container nav li,
-.button-container [type=submit],
-.button-container [type=reset],
-.button-container [type=button] {
+.poll-option1 .button,
+.poll-option1 a.button,
+.poll-option1 button,
+.poll-option1 nav li,
+.poll-option1 [type=submit],
+.poll-option1 [type=reset],
+.poll-option1 [type=button] {
   display: inline-block;
   border: 1px solid #fff; 
   border-radius: 10px;
@@ -113,35 +113,112 @@
   top: 10px;
 }
 
-.button-container .button:hover,
-.button-container a.button:hover,
-.button-container button:hover,
-.button-container nav li:hover,
-.button-container [type=submit]:hover,
-.button-container [type=reset]:hover,
-.button-container [type=button]:hover {
+.poll-option1 .button:hover,
+.poll-option1 a.button:hover,
+.poll-option1 button:hover,
+.poll-option1 nav li:hover,
+.poll-option1 [type=submit]:hover,
+.poll-option1 [type=reset]:hover,
+.poll-option1 [type=button]:hover {
   border: 1px solid #ddd; 
   background: #ffe78b; 
 }
 
-.poll-options-container {
-    display: flex;
-    justify-content: space-between; 
-    width: 100%;
-    gap: 40px; 
+.poll-option2 .button,
+.poll-option2 a.button,
+.poll-option2 button,
+.poll-option2 nav li,
+.poll-option2 [type=submit],
+.poll-option2 [type=reset],
+.poll-option2 [type=button] {
+  display: inline-block;
+  border: 1px solid #fff; 
+  border-radius: 10px;
+  background: #6fb3b8; 
+  color: white;
+  font-weight: 600;
+  font-family: -apple-system, BlinkMacSystemFont, Helvetica Neue, Helvetica, Arial, sans-serif;
+  font-size: 1rem;
+  text-transform: none;
+  padding: 0.75rem 1.25rem;
+  margin: 0 0 0.5rem 0;
+  vertical-align: middle;
+  text-align: center;
+  cursor: pointer;
+  text-decoration: none;
+  line-height: 1;
+  bottom: 20px;
+  position: relative;
+  top: 10px;
+}
+
+.poll-option2 .button:hover,
+.poll-option2 a.button:hover,
+.poll-option2 button:hover,
+.poll-option2 nav li:hover,
+.poll-option2 [type=submit]:hover,
+.poll-option2 [type=reset]:hover,
+.poll-option2 [type=button]:hover {
+  border: 1px solid #ddd; 
+  background: #ffe78b; 
 }
 
 
-.button-container {
+.poll-delete .button,
+.poll-delete a.button,
+.poll-delete button,
+.poll-delete nav li,
+.poll-delete [type=submit],
+.poll-delete [type=reset],
+.poll-delete [type=button] {
+  display: inline-block;
+  border: 1px solid #fff; 
+  border-radius: 10px;
+  background: #6fb3b8; 
+  color: white;
+  font-weight: 600;
+  font-family: -apple-system, BlinkMacSystemFont, Helvetica Neue, Helvetica, Arial, sans-serif;
+  font-size: 1rem;
+  text-transform: none;
+  padding: 0.75rem 1.25rem;
+  margin: 0 0 0.5rem 0;
+  vertical-align: middle;
+  text-align: center;
+  cursor: pointer;
+  text-decoration: none;
+  line-height: 1;
+  bottom: 20px;
+  position: relative;
+  top: 10px;
+}
+
+.poll-delete .button:hover,
+.poll-delete a.button:hover,
+.poll-delete button:hover,
+.poll-delete nav li:hover,
+.poll-delete [type=submit]:hover,
+.poll-delete [type=reset]:hover,
+.poll-delete [type=button]:hover {
+  border: 1px solid #ddd; 
+  background: #ffe78b; 
+}
+
+
+
+
+.poll-options-container {
     display: flex;
-    flex-direction: column;
-    align-items: center;
+    justify-content: center;
+    width: 100%;
+    gap: 40px;
+    margin-bottom: 10px; /* Adds space between options and delete button */
 }
 
 .poll-delete {
-    width: 100%; 
+    width: 100%;
     text-align: center;
 }
+
 
 .poll-title {
     color: #388087;
