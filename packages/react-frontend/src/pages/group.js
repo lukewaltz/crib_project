@@ -1,57 +1,80 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import GroupCodeForm from "../components/GroupCodeForm";
-import GroupNameForm from "../components/GroupNameForm";
+import GroupNameForm from "../components/GroupNameForm.js";
+import { useNavigate } from 'react-router-dom';
 
 const Group = () => {
   const connection_URL = "http://localhost:8000";
+  const navigate = useNavigate();
+
+//   async function checkLogin(){
+//     fetch(`${connection_URL}/isLoggedIn`, {
+//         method: 'GET',
+//         credentials: 'include',
+//     })
+//     .then((response) => {
+//         if(response.status !== 200){
+//             navigate('/account/');
+//         }
+//     });
+    
+//     }
+//     useEffect(() => {
+//         checkLogin();
+//     }, []);
 
   async function handleGroupCodeSubmit(groupCode) {
-    try {
-      const response = await fetch(`${connection_URL}/join-group`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          code: groupCode,
-        }),
-      });
+    // try {
+    //   const response = await fetch(`${connection_URL}/join-group`, {
+    //     method: "POST",
+    //     credentials: 'include',
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //       credentials: 'include',
+    //     },
+    //     body: JSON.stringify({
+    //       code: groupCode,
+    //     }),
+    //   });
 
-      if (response.ok) {
-        // Group joined successfully
-        console.log("User joined group");
-      } else {
-        const errorMessage = await response.text();
-        console.error(`Error joining group: ${errorMessage}`);
-      }
-    } catch (error) {
-      console.error("Error joining group:", error);
-    }
+    //   if (response.ok) {
+    //     // Group joined successfully
+    //     console.log("User joined group");
+    //     navigate('/home');
+    //   } else {
+    //     const errorMessage = await response.text();
+    //     console.error(`Error joining group: ${errorMessage}`);
+    //   }
+    // } catch (error) {
+    //   console.error("Error joining group:", error);
+    // }
   }
 
-  async function handleGroupNameSubmit(groupName) {
-    try {
-      const response = await fetch(`${connection_URL}/group`, {
+function handleGroupNameSubmit(groupName) {
+    // navigate('/home');
+      fetch(`${connection_URL}/group`, {
         method: "POST",
+        credentials: 'include',
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          groupName: groupName,
+          name: groupName,
         }),
+      }).then((e) => {
+        console.log("wait");
+        if (e.status === 201) {
+            console.log("Group created");
+            navigate('/home');
+            // Group created successfully
+          } 
+        //   else {
+        //     const errorMessage = e.text();
+        //     console.error(`Error creating group: ${errorMessage}`);
+        //   }
       });
 
-      if (response.ok) {
-        // Group created successfully
-        console.log("Group created");
-      } else {
-        const errorMessage = await response.text();
-        console.error(`Error creating group: ${errorMessage}`);
-      }
-    } catch (error) {
-      console.error("Error creating group:", error);
-    }
   }
 
   return (

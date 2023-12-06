@@ -38,6 +38,8 @@ app.use(cookieParser());
 
 
 // Group endpoints
+
+//Creates a new group
 app.post('/group', async (req, res) => {
     if(req.session.username){
         const user = await userServices.findUserByUsername(req.session.username);
@@ -48,17 +50,18 @@ app.post('/group', async (req, res) => {
         if (user.group){
             return res.status(401).send('user already in group');
         }
-
-        groupServices.addGroup(req.body).then((e) =>{
+        let group = req.body;
+        group.owner = user;
+        groupServices.addGroup(group).then((e) =>{
             if(e == 500){
                 return res.status(500).send('Unable to create group');
             }else{
-                userServices.addToGroup(req.session.username, e).then((error) => {
+                userServices.addToGroup(req.session.username, e._id).then((error) => {
                     if(error == 500) {
                         return res.status(500).send('Unable to add user');
                     }
-                });
-                return res.status(201).send('Created group');
+                    return res.status(201).send('Created group');
+                })   
             }
         });
     }else{
@@ -66,9 +69,10 @@ app.post('/group', async (req, res) => {
     }
 });
 
+//add user to group
 app.post('/join-group', async (req, res) => {
     try {
-        const user = await userServices.findUserByEmail(req.session.email);
+        const user = await userServices.findUserByUsername(req.session.username);
 
         if (!user) {
             return res.status(404).send('User not found');
@@ -361,6 +365,21 @@ app.post('/tasks', (req, res) => {
     }
 });
 
+app.post('/tasks/:id', async (req, res) => {
+    if(!req.session.username){   
+        return res.status(401).send();
+    }
+
+    const id = req.params.id;
+    await taskServices.cliamTask(id, req.session.username)
+        .then(() => {
+            res.json('Task deleted successfully')
+        })
+        .catch(() => {
+            res.status(404).json('Could not delete task');
+        });
+});
+
 // remove a task from the task list
 app.delete('/tasks/:id', async (req, res) => {
     if(!req.session.username){   
@@ -399,23 +418,6 @@ app.get('/polls', (req, res) => {
         .catch((error) => {
             res.status(500).json({ error })
         });
-
-        // pollServices.getPolls()
-        //     .then((polls) => {
-        //         polls.filter((poll) => userServices.getGroup(req.session.email) === pollServices.getGroup(poll.id));
-
-        //         userServices.findUserByUsername(req.session.username).then((user) => {
-        //             for(let i = 0; i<polls.length; i++){
-        //                 let whoVoted = polls[i].whoVoted;
-        //                 let hasVoted = whoVoted.includes(user.email);
-        //                 polls[i].whoVoted = [hasVoted];
-        //             }
-        //             res.status(200).json( { poll_list:polls });
-        //         });
-        //     })
-        //     .catch((error) => {
-        //         res.status(500).json({ error })
-        //     });
     }
 });
 

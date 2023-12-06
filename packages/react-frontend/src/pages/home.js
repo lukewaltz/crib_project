@@ -75,14 +75,16 @@ function listPolls(){
       .catch(error => console.error('Error deleting poll:', error));
   }
   
-  function removeTask(taskId) {
-    deleteTaskFromBackend(taskId)
-      .then(() => {
-        //keep all tasks that don't match task id
-        const updatedTasks = tasks.filter(task => task._id !== taskId);
-        setTasks(updatedTasks);
-      })
-      .catch(error => console.error('Error deleting task:', error));
+  function claimTask(taskId) {
+    fetch(`${connection_URL}/tasks/${taskId}`, {
+        method: 'POST',
+        credentials: 'include',
+      }).then((response) => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+          console.log(`Task with ID ${taskId} deleted successfully`);
+      });
   }
 
   function removePoll(pollId) {
@@ -133,7 +135,7 @@ function listPolls(){
         return;
     }
 
-    const response = await fetch(`${connection_URL}/polls/${pollId}`, {
+    await fetch(`${connection_URL}/polls/${pollId}`, {
       method: 'POST',
       credentials: 'include',
       headers: {
@@ -182,7 +184,7 @@ function listPolls(){
           <div className = 'chore-assignee'> ASSIGNED TO: {box.assignee}</div>
           <div className='button-container'>
             <div className='claim-button'>
-              <button onClick={() => removeTask(box._id)}>
+              <button onClick={() => claimTask(box._id)}>
                 Claim
               </button>
             </div>
@@ -279,9 +281,9 @@ function listPolls(){
                     />
                     
                     <TaskList 
-                      taskData={tasks} 
-                      removeTask={removeTask} 
-                      completeTask={completeTask}
+                        taskData={tasks} 
+                        claimTask={claimTask} 
+                        completeTask={completeTask}
                     />
                 </div>
             </div>
@@ -305,7 +307,7 @@ function listPolls(){
                         removePoll={removePoll}
                         completePoll={completePoll}
                         taskData={tasks} 
-                        removeTask={removeTask} 
+                        claimTask={claimTask} 
                         completeTask={completeTask} 
                     />
                 </div>

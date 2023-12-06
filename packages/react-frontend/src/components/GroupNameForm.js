@@ -1,23 +1,16 @@
 import React, {useState} from 'react';
 
 function GroupNameForm(props) {
-  const [group, setGroupName] = useState(
-     {
-        groupName: ""
-     }
-  );
+  const [group, setGroupName] = useState("");
 
   function submitGroupNameForm() {
     props.handleSubmit(group);
-    setGroupName({groupName: ''});
   }
 
 
   function handleChange(event) {
     const { value } = event.target;
-      setGroupName(
-         {groupName: value}
-      );
+      setGroupName(value);
     }
 
 
