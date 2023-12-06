@@ -69,10 +69,10 @@ function handleGroupNameSubmit(groupName) {
             navigate('/home');
             // Group created successfully
           } 
-        //   else {
-        //     const errorMessage = e.text();
-        //     console.error(`Error creating group: ${errorMessage}`);
-        //   }
+          else {
+            const errorMessage = e.text();
+            console.error(`Error creating group: ${errorMessage}`);
+          }
       });
 
   }

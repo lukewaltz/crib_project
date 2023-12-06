@@ -35,10 +35,21 @@ const Login = () => {
             body: JSON.stringify(formData),
             credentials: 'include'
         })
-        .then((response) => {
+        .then(async (response) => {
             if (response.status === 200) {
                 console.log('User logged in');
-                navigate('/');
+                response.json().then((data) => {
+                    if(data.isInGroup){
+                        navigate('/'); 
+                    }else{
+                        navigate('/group')
+                    }
+                });
+                // if(!response.group){
+                //     console.log(response.json());
+                // }else{
+                //     navigate('/');
+                // }
                 return response.status;
             } else if (response.status === 500) {
                 console.log('Could not login');

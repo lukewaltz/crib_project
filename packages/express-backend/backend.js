@@ -119,7 +119,11 @@ app.post('/login', async (req, res) => {
             if(isMatch){
                 req.session.username = user.username;
                 // console.log(req.session.username);
-                return res.status(200).send('login successful');
+                let isInGroup = true;
+                if(!user.group){
+                    isInGroup = false;
+                }
+                return res.status(200).send({isInGroup:isInGroup});
             } else{
                 return res.status(401).send('cannot login');
             }

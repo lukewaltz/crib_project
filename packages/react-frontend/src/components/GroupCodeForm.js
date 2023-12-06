@@ -4,8 +4,8 @@ function GroupCodeForm(props) {
   const [group, setGroup] = useState("");
 
   function submitGroupCodeForm() {
+    // setGroup("");
     props.handleSubmit(group);
-    setGroup("");
   }
 
   function handleChange(event) {
