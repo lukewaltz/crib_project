@@ -7,14 +7,12 @@ mongoose.set("debug", true);
 dotenv.config();
 
 mongoose
-    .connect(
-        process.env.MONGO_URL,
-        {
-            useNewUrlParser: true,
-            useUnifiedTopology: true,
-        })
-        .then(() => console.log("Connected to MongoDB in user-services"))
-        .catch((error) => console.error("MongoDB Connection Error:", error));
+    .connect(process.env.MONGO_URL, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+    })
+    .then(() => console.log("Connected to MongoDB in user-services"));
+//.catch((error) => console.error("MongoDB Connection Error:", error));
 
 async function findGroup(groupId){
     return await groupModel.find({_id: groupId})
@@ -27,45 +25,26 @@ async function findGroup(groupId){
     });
 }
 async function findGroupByName(name) {
-    return await groupModel.findOne({ name: username }).catch((err) => {
-        if(err) {
-            return undefined;
-        }
+    return groupModel.findOne({ name: name }).then((group) => {
+        return group;
     });
 }
 
 function addGroup(group) {
     const groupToAdd = new groupModel(group);
-    const promise = groupToAdd.save().catch((e) =>{
-        if(e){
-            console.log(e);
-            return 500;
-        }
+    const promise = groupToAdd.save().catch((e) => {
+        return 500;
     });
     return promise;
 }
 
-
-async function addUserToGroup(code, userId) {
-    try {
-        const existingGroup = await groupModel.findOne({ code: code });
-
-        if (!existingGroup) {
-            console.error("Group not found with code:", code);
-            return 404;
-        }
-
-        const updatedGroup = await groupModel.findOneAndUpdate(
-            { code: code },
-            { $push: { members: userId } },
-            { new: true }
-        );
-
-        return updatedGroup;
-    } catch (error) {
-        console.error("Error adding user:", error);
-        return Promise.reject(500);
-    }
+async function addUserToGroup(code, user) {
+    const promise = groupModel.findOneAndUpdate(
+        { code: code },
+        { $push: { members: user } },
+        { new: true }
+    );
+    return promise;
 }
 
 // async function getGroupSize(groupId) {

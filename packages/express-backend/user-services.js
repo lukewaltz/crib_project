@@ -7,14 +7,12 @@ mongoose.set("debug", true);
 dotenv.config();
 
 mongoose
-    .connect(
-        process.env.MONGO_URL,
-        {
-            useNewUrlParser: true,
-            useUnifiedTopology: true,
-        })
-        .then(() => console.log("Connected to MongoDB in user-services"))
-        .catch((error) => console.error("MongoDB Connection Error:", error));
+    .connect(process.env.MONGO_URL, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+    })
+    .then(() => console.log("Connected to MongoDB in user-services"));
+//.catch((error) => console.error("MongoDB Connection Error:", error));
 
 async function findUser(userId){
     return userModel.findOne({_id: userId})
@@ -43,44 +41,33 @@ async function addToGroup(username, group){
 }
 
 async function getGroup(username) {
-    return userModel.findOne({username: username})
-        .then((user) => {
-            if(!user) {
-                return null;
-            }
-            console.log(user.group);
-            return user.group;
-        })
-        .catch((error) => {
-            console.error("error finding user group: ", error);
-            throw error;
-        });
+    return userModel.findOne({ username: username }).then((user) => {
+        if (!user) {
+            return null;
+        }
+        console.log(user.group);
+        return user.group;
+    });
 }
 
 async function findUserByUsername(username) {
-    return await userModel.findOne({ username: username }).catch((err) => {
-        if(err) {
-            return undefined;
-        }
+    return userModel.findOne({ username: username }).then((user) => {
+        return user;
     });
 }
 
 async function findUserByEmail(email) {
-    return await userModel.findOne({ email: email }).catch((err) => {
-        if(err) {
-            return undefined;
-        }
+    return userModel.findOne({ email: email }).then((user) => {
+        return user;
     });
 }
 
 function getUsers(username, email, name) {
     let promise;
     if (username) {
-        promise = findUserByUsername(username)
+        promise = findUserByUsername(username);
     } else if (email) {
         promise = findUserByEmail(email);
-    } else if (name) {
-        promise = findUserByName(name)
     } else {
         promise = userModel.find();
     }
@@ -94,47 +81,38 @@ async function randomUser() {
 
 function addUser(user) {
     const userToAdd = new userModel(user);
-    const promise = userToAdd.save().catch((e) =>{
-        if(e){
-            console.log(e);
-            return 500;
-        }
+    const promise = userToAdd.save().catch((e) => {
+        return 500;
     });
     return promise;
 }
 
 function addTask(username, newTask) {
     const promise = userModel.findOneAndUpdate(
-        { username: username }, 
-        { $push: { tasks: newTask } }, 
+        { username: username },
+        { $push: { tasks: newTask } },
         { new: true }
-    ).catch((error) => {
-        console.error("Error adding task:", error);
-        return Promise.reject(error);
-    });
-
+    );
     return promise;
 }
 
 function removeTask(username, taskId) {
     const promise = userModel.findOneAndUpdate(
-        { username: username }, 
-        { $pull: { tasks: taskId } }, 
+        { username: username },
+        { $pull: { tasks: taskId } },
         { new: true }
-    ).catch((error) => {
-        console.error("Error removing task:", error);
-        return Promise.reject(error);
-    });
+    );
 
     return promise;
 }
 
 async function deleteUser(id) {
-    const promise = userModel.findByIdAndRemove(id).catch((err) => {
-        if(err) {
+    const promise = userModel
+        .findByIdAndDelete(id)
+        .exec()
+        .catch((err) => {
             return undefined;
-        }
-    });
+        });
     return promise;
 }
 
