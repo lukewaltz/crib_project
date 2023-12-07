@@ -19,13 +19,28 @@ mongoose
 async function addToGroup(username, group){
     const promise = userModel.findOneAndUpdate(
         { username: username }, 
-        { $push: { group: group } }
+        { group: group },
     ).catch((error) => {
         console.error("Error adding group:", error);
         return 500;
     });
 
     return promise;
+}
+
+async function getGroup(username) {
+    return userModel.findOne({username: username})
+        .then((user) => {
+            if(!user) {
+                return null;
+            }
+            console.log(user.group);
+            return user.group;
+        })
+        .catch((error) => {
+            console.error("error finding user group: ", error);
+            throw error;
+        });
 }
 
 async function findUserByUsername(username) {
@@ -116,6 +131,7 @@ export default {
     removeTask,
     randomUser,
     getUsers,
+    getGroup,
     deleteUser,
     findUserByUsername,
     findUserByEmail,

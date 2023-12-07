@@ -17,7 +17,6 @@ mongoose
 
 function findTask(id) {
     return taskModel.findById(id)
-        .exec() // Add .exec() to return a promise
         .then((task) => {
             if (!task) {
                 // Task not found
@@ -29,6 +28,54 @@ function findTask(id) {
             console.error("Error finding task:", error);
             throw error; // Rethrow the error for proper handling
         });
+}
+
+async function cliamTask(taskId, username){
+    try {
+        const task = await taskModel.findById(taskId);
+
+        if (!task) {
+            return {
+                success: false,
+                message: 'Task not found',
+            };
+        }
+
+        task.assignee = username;
+
+        // Save the updated poll document
+        await task.save();
+
+        return {
+            success: true,
+            message: `${username} now assigned to task`,
+        };
+    } catch (error) {
+        console.error(`Error assigning task: ${error.message}`);
+        return {
+            success: false,
+            message: `Error assigning task: ${error.message}`,
+        };
+    }
+}
+
+async function getGroup(id) {
+    return taskModel.findById(id)
+        .then((task) => {
+            if(!task) {
+                return null;
+            }
+            return task.groupId;
+        })
+        .catch((error) => {
+            console.error("error finding poll group: ", error);
+            throw error;
+        });
+}
+
+function getTasksInGroup(groupId){
+    let promise = taskModel.find({groupId: groupId});
+    return promise;
 }
 
 function getTasks() {
@@ -47,17 +94,28 @@ function addTask(task) {
 }
 
 async function deleteTask(id) {
-    const promise = taskModel.findByIdAndRemove(id).catch((err) => {
-        if(err) {
+    try {
+        const poll = await findTask(id);
+        
+        if (!poll) {
+            console.log(`Poll with ID ${id} not found`);
             return undefined;
         }
-    });
-    return promise;
+
+        const deletedPoll = await taskModel.deleteOne({ _id: id });;
+        return deletedPoll;
+    } catch (error) {
+        console.log(`Error deleting poll with ID ${id}`, error);
+        throw error;
+    }
 }
 
 export default {
+    cliamTask,
     findTask,
     getTasks,
+    getTasksInGroup,
+    getGroup,
     addTask,
     deleteTask,
 };

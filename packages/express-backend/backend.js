@@ -38,6 +38,8 @@ app.use(cookieParser());
 
 
 // Group endpoints
+
+//Creates a new group
 app.post('/group', async (req, res) => {
     if(req.session.username){
         const user = await userServices.findUserByUsername(req.session.username);
@@ -48,17 +50,18 @@ app.post('/group', async (req, res) => {
         if (user.group){
             return res.status(401).send('user already in group');
         }
-
-        groupServices.addGroup(req.body).then((e) =>{
+        let group = req.body;
+        group.owner = user;
+        groupServices.addGroup(group).then((e) =>{
             if(e == 500){
                 return res.status(500).send('Unable to create group');
             }else{
-                userServices.addToGroup(req.session.username, e).then((error) => {
+                userServices.addToGroup(req.session.username, e._id).then((error) => {
                     if(error == 500) {
                         return res.status(500).send('Unable to add user');
                     }
-                });
-                return res.status(201).send('Created group');
+                    return res.status(201).send('Created group');
+                })   
             }
         });
     }else{
@@ -66,9 +69,10 @@ app.post('/group', async (req, res) => {
     }
 });
 
+//add user to group
 app.post('/join-group', async (req, res) => {
     try {
-        const user = await userServices.findUserByEmail(req.body.email);
+        const user = await userServices.findUserByUsername(req.session.username);
 
         if (!user) {
             return res.status(404).send('User not found');
@@ -77,12 +81,12 @@ app.post('/join-group', async (req, res) => {
             return res.status(401).send('user already in group');
         }
 
-        groupServices.addUserToGroup(req.body.code, user).then((e) => {
+        groupServices.addUserToGroup(req.body.code, user._id).then((e) => {
             if(e == 500 || e ==404){
                 return res.status(500).send('Unable to add user');
             }
 
-            userServices.addToGroup(user.username, e).then((error) => {
+            userServices.addToGroup(user.username, e._id).then((error) => {
                 if(error == 500) {
                     return res.status(500).send('Unable to add user');
                 }else{
@@ -105,20 +109,27 @@ app.post('/join-group', async (req, res) => {
 // Login and create new user
 app.post('/login', async (req, res) => {
     try {
-        const user = await userServices.findUserByEmail(req.body.email);
+        userServices.findUserByEmail(req.body.email).then((user) => {
 
-        if (!user) {
-            return res.status(404).send('User not found');
-        }
-
-        user.comparePassword(req.body.password, function(err, isMatch){
-            if(isMatch){
-                req.session.username = user.username;
-                // console.log(req.session.username);
-                return res.status(200).send('login successful');
-            } else{
-                return res.status(401).send('cannot login');
+            if (!user) {
+                return res.status(404).send('User not found');
             }
+
+            user.comparePassword(req.body.password, function(err, isMatch){
+                if(isMatch){
+                    req.session.username = user.username;
+                    // console.log(req.session.username);
+                    console.log(user.username);
+                    let isInGroup = true;
+
+                    if(user.group == null){
+                        isInGroup = false;
+                    }
+                    return res.status(200).send({isInGroup:isInGroup});
+                } else{
+                    return res.status(401).send('cannot login');
+                }
+            });
         });
         
     } catch (err) {
@@ -297,7 +308,7 @@ app.delete('/users/:id', async (req, res) => {
     const id = req.params.id;
     await userServices.deleteUser(id)
         .then(() => {
-            res.json('User deleted successfully')
+            res.json('User deleted successfully');
         })
         .catch(() => {
             res.status(404).json('Server error');
@@ -314,37 +325,76 @@ app.get('/tasks', (req, res) => {
     // console.log('Session in /tasks:', req.session.username);
     if(req.session.username){
         // console.log(req.session.username);
-        taskServices.getTasks()
-        .then((tasks) => {
-            res.status(200).json({ task_list:tasks });
-        })
-        .catch((error) => {
-            res.status(500).json({ error })
+        userServices.findUserByUsername(req.session.username).then((user) => {
+            taskServices.getTasksInGroup(user.group)
+                .then((tasks) => {
+                    res.status(200).json({ task_list:tasks });
+                })
+                .catch((error) => {
+                    res.status(500).json({ error })
+                });
         });
     }else{
         return res.status(401).send();
     }
 });
 
+app.get('/group', (req, res) => {
+    if (req.session.username){
+        userServices.getGroup(req.session.username).then((group) => {
+            groupServices.getGroupSize(group.code)
+            .then((size) => {
+                res.status(200).json(size)
+            })
+        })
+    }
+})
+
+
 // add new task to task list, will be marked with assigned=false
 app.post('/tasks', (req, res) => {
-    const newTask = req.body
+    if(!req.session.username){   
+        return res.status(401).send();
+    }
+    const newTask = req.body;
     if (newTask === undefined){
         res.status(404).send("newTask not found");
     } else {
-    taskServices.addTask(newTask)
-        .then((error) =>{
-            if(error == 500){
-                return res.status(500).send('Could not add task');
-            } else {
-                return res.status(201).send('Added task');
-            }
+        userServices.getGroup(req.session.username).then((groupId) => {
+            newTask.groupId = groupId;
+            taskServices.addTask(newTask)
+                .then((error) =>{
+                    if(error == 500){
+                        return res.status(500).send('Could not add task');
+                    } else {
+                        return res.status(201).send('Added task');
+                    }
+                });
         });
     }
 });
 
+app.post('/tasks/:id', async (req, res) => {
+    if(!req.session.username){   
+        return res.status(401).send();
+    }
+
+    const id = req.params.id;
+    await taskServices.cliamTask(id, req.session.username)
+        .then(() => {
+            res.json('Task deleted successfully')
+        })
+        .catch(() => {
+            res.status(404).json('Could not delete task');
+        });
+});
+
 // remove a task from the task list
 app.delete('/tasks/:id', async (req, res) => {
+    if(!req.session.username){   
+        return res.status(401).send();
+    }
+
     const id = req.params.id;
     await taskServices.deleteTask(id)
         .then(() => {
@@ -361,19 +411,32 @@ app.get('/polls', (req, res) => {
         
         return res.status(401).send();
     }else{
-        // console.log(req.session.username);
-        pollServices.getPolls()
-            .then((polls) => {
-                res.status(200).json( { poll_list:polls });
-            })
-            .catch((error) => {
-                res.status(500).json({ error })
-            });
+        // get user's group id
+        
+        userServices.findUserByUsername(req.session.username).then((user) => {
+            pollServices.getPollsInGroup(user.group)
+                .then((polls) => {
+                    for(let i = 0; i<polls.length; i++){
+                        let whoVoted = polls[i].whoVoted;
+                        let hasVoted = whoVoted.includes(user.email);
+                        polls[i].whoVoted = [hasVoted];
+                    }
+                    res.status(200).json( { poll_list:polls });
+                });
+        })
+        .catch((error) => {
+            res.status(500).json({ error })
+        });
     }
 });
 
 app.delete('/polls/:id', async (req, res) => {
+    if(!req.session.username){   
+        return res.status(401).send();
+    }
+
     const id = req.params.id;
+    console.log(id);
     await pollServices.deletePoll(id)
     .then(() => {
         res.json('Poll deleted successfully')
@@ -385,14 +448,26 @@ app.delete('/polls/:id', async (req, res) => {
 
 
 app.post("/polls", function (req, res) {  
+    if(!req.session.username){   
+        return res.status(401).send();
+    }
+
     const newPoll = req.body;
-    pollServices.addPoll(newPoll)
+    if (newPoll === undefined){
+        res.status(404).send("newTask not found");
+    }
+    userServices.getGroup(req.session.username).then((groupId) => {
+        newPoll.groupId = groupId;
+        pollServices.addPoll(newPoll)
         .then(() => {
             res.status(201).json({ message: "poll added successfully" });
         })
         .catch((err) => {
             res.status(500).json({ err: "could not add poll"});
         });
+    }).catch((err) => {
+        res.status(500).json({ err: "could not add poll"});
+    });
 });
 
 app.post('/polls/:pollId', (req, res) => {

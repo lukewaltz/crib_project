@@ -75,18 +75,20 @@ function listPolls(){
       .catch(error => console.error('Error deleting poll:', error));
   }
   
-  function removeTask(taskId) {
-    deleteTaskFromBackend(taskId)
-      .then(() => {
-        //keep all tasks that don't match task id
-        const updatedTasks = tasks.filter(task => task._id !== taskId);
-        setTasks(updatedTasks);
-      })
-      .catch(error => console.error('Error deleting task:', error));
+  function claimTask(taskId) {
+    fetch(`${connection_URL}/tasks/${taskId}`, {
+        method: 'POST',
+        credentials: 'include',
+      }).then((response) => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+          console.log(`Task with ID ${taskId} deleted successfully`);
+      });
   }
 
   function removePoll(pollId) {
-    deleteTaskFromBackend(pollId)
+    deletePollFromBackend(pollId)
       .then(() => {
         //keep all polls that don't match polls id
         const updatedPolls = polls.filter(poll => poll._id !== pollId);
@@ -116,9 +118,15 @@ function listPolls(){
     }
     console.log(`Poll with ID ${pollId} deleted successfully`);
   }
-  
-  const [hasVoted, setHasVoted] = useState(false);
 
+  async function getGroupSize(){
+    const response = await fetch(`${connection_URL}/group`,  {
+      method: 'GET',
+      credentials: 'include',
+    });
+    return response;
+  }
+  
   async function voteForOption(pollId, option) {
 
     if (votedPolls.indexOf(pollId) !== -1) {
@@ -127,7 +135,7 @@ function listPolls(){
         return;
     }
 
-    const response = await fetch(`${connection_URL}/polls/${pollId}`, {
+    await fetch(`${connection_URL}/polls/${pollId}`, {
       method: 'POST',
       credentials: 'include',
       headers: {
@@ -145,14 +153,17 @@ function listPolls(){
     setPolls((prevPolls) => {
       const updatedPolls = prevPolls.map((poll) => {
         if (poll._id === pollId) {
+          
           // Update the optionVotes based on the voted option
           return {
             
             ...poll,
             option1Votes: option === 'option1' ? poll.option1Votes + 1 : poll.option1Votes,
             option2Votes: option === 'option2' ? poll.option2Votes + 1 : poll.option2Votes,
+            whoVoted: ["true"]
           };
         }
+        
         
         return poll;
       });
@@ -161,7 +172,9 @@ function listPolls(){
     console.log(`Vote for ${option} in poll with ID ${pollId} recorded successfully`);
   }
   
-  
+
+
+  // merged tasklist component
   function TaskList() {
     const boxes = tasks.map((box) => {
       return (
@@ -171,7 +184,7 @@ function listPolls(){
           <div className = 'chore-assignee'> ASSIGNED TO: {box.assignee}</div>
           <div className='button-container'>
             <div className='claim-button'>
-              <button onClick={() => removeTask(box._id)}>
+              <button onClick={() => claimTask(box._id)}>
                 Claim
               </button>
             </div>
@@ -191,37 +204,70 @@ function listPolls(){
     );
   }
 
-  function PollList() {
-    const boxes = polls.map((box) => {
-      return (
-        <div className='chore-box' key={box._id} >
-          <div className='poll-title'>POLL: {box.title}</div>
-          <div className='poll-options-container'>
-            <div className='poll-option1'>
-              <button onClick={() => voteForOption(box._id, 'option1')}>
-                {box.option1}
-              </button>
+    // merged polllist component
+    function PollList() {
+      
+      const boxes = polls.map((box) => {
+        // console.log("Group Size: ", getGroupSize())
+        return (
+          <div className='chore-box' key = {box._id} >
+            <div className='poll-title'>POLL: {box.title}</div>
+            {/* <div className='chore-id'>{box._id}</div> */}
+            {box.whoVoted[0] === "false" && (
+            <div className='button-container'>
+                {votedPolls.indexOf(box._id) !== -1 && (<p>Already voted</p>)}
+              <div className='poll-option1'>
+              <button onClick={() => voteForOption(box._id, 'option1')}
+              disabled={votedPolls.indexOf(box._id) !== -1}>
+                  {box.option1}
+                </button>
+              </div>
+              <div className='poll-option2'>
+                <button onClick={() => voteForOption(box._id, 'option2')}
+                disabled={votedPolls.indexOf(box._id) !== -1}>
+                  {box.option2}
+                </button>
+              </div>
+            </div>)}
+            {box.whoVoted[0] === "true" && box.option1Votes + box.option2Votes !== getGroupSize() &&
+            <div>
+              <p>Vote Recorded. Thank you!</p>
+              <div className='button-container'>
+                <div className='poll-option1'>
+                {box.option1}<br></br>
+                {box.option1Votes}
+                </div>
+                <div className='poll-option2'>
+                {box.option2}<br></br>
+                {box.option2Votes}
+                </div>
+              </div>
             </div>
-            <div className='poll-option2'>
-              <button onClick={() => voteForOption(box._id, 'option2')}>
-                {box.option2}
+            }
+            {box.option1Votes + box.option2Votes === getGroupSize() &&
+            <div>
+              <div>
+                Poll Complete!
+              </div>
+              {box.option1Votes > box.option2Votes && <div>Winner: {box.option1}</div>}
+              {box.option2Votes > box.option1Votes && <div>Winner: {box.option2}</div>}
+              {box.option1Votes === box.option2Votes && <div>Tie!</div>}
+            </div>
+            }
+            <div className='complete-button'>
+              <button onClick={() => completePoll(box._id)}>
+                Delete Poll
               </button>
             </div>
           </div>
-          <div className='poll-delete'>
-            <button onClick={() => completePoll(box._id)}>
-              Delete Poll
-            </button>
-          </div>
-        </div>
-      );
-    });
+        );
+      });
     return (
       <div>
         {boxes}
       </div>
     );
-  }
+    }
   
   
     function Stack(props) {
@@ -229,14 +275,14 @@ function listPolls(){
             <div className='scroll-container'>
                 <div className='box-container'>
                     <PollList 
-                    pollData={polls}
-                    removePoll={removePoll}
-                    completePoll={completePoll}
+                      pollData={polls}
+                      removePoll={removePoll}
+                      completePoll={completePoll}
                     />
                     
                     <TaskList 
                         taskData={tasks} 
-                        removeTask={removeTask} 
+                        claimTask={claimTask} 
                         completeTask={completeTask}
                     />
                 </div>
@@ -258,7 +304,7 @@ function listPolls(){
                         removePoll={removePoll}
                         completePoll={completePoll}
                         taskData={tasks} 
-                        removeTask={removeTask} 
+                        claimTask={claimTask} 
                         completeTask={completeTask} 
                     />
                 </div>

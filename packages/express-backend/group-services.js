@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import groupModel from "./group.js";
+import groupModel from "./groupSchema.js";
 
 import dotenv from "dotenv";
 
@@ -36,7 +36,7 @@ function addGroup(group) {
 }
 
 
-async function addUserToGroup(code, user) {
+async function addUserToGroup(code, userId) {
     try {
         const existingGroup = await groupModel.findOne({ code: code });
 
@@ -47,7 +47,7 @@ async function addUserToGroup(code, user) {
 
         const updatedGroup = await groupModel.findOneAndUpdate(
             { code: code },
-            { $push: { members: user } },
+            { $push: { members: userId } },
             { new: true }
         );
 
@@ -58,8 +58,26 @@ async function addUserToGroup(code, user) {
     }
 }
 
+async function getGroupSize(group) {
+    try {
+        groupModel.findOne(group).then((existingGroup) =>{
+            if (!existingGroup) {
+                console.error("Group not found with code: ", code);
+                return 404;
+            }    
+            const members = existingGroup.members;
+            return members.length;
+        });
+
+    } catch (error) {
+        console.error("Error finding size:", error);
+        return Promise.reject(500);
+    }
+}
+
 export default {
     findGroupByName,
     addGroup,
     addUserToGroup,
+    getGroupSize,
 };
