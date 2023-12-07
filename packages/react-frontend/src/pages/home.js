@@ -203,7 +203,6 @@ function listPolls(){
       </div>
     );
   }
-  
 
     // merged polllist component
     function PollList() {
@@ -263,13 +262,14 @@ function listPolls(){
           </div>
         );
       });
-      return (
-        <div>
-          {boxes}
-        </div>
-      );
+    return (
+      <div>
+        {boxes}
+      </div>
+    );
     }
-
+  
+  
     function Stack(props) {
         return (
             <div className='scroll-container'>
@@ -297,9 +297,6 @@ function listPolls(){
                     <div className="group">
                         <img className="logo-group" alt="Logo group" src="logo-group.png" />
                     </div>
-                    <div className="overlap-group">
-                        <img className="vector" alt="Vector" src="vector.svg" />
-                    </div>
                 </div>
                 <div className="rectangle-tasks">
                     <Stack 
@@ -313,10 +310,10 @@ function listPolls(){
                 </div>
                 <div className="overlap-group-wrapper">
                     <div className="div-wrapper">
-                        <div className="text-wrapper">HISTORY</div>
+                      <div className="text-wrapper" onClick={() => navigate('/history')}>HISTORY</div>
                     </div>
                 </div>
-                <div className="text-wrapper-2">HOME</div>
+                <div className="home-text">HOME</div>
             </div>
         </div>
     );

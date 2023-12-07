@@ -138,6 +138,20 @@ app.post('/login', async (req, res) => {
     }
 });
 
+// create new user
+app.post('/signup', async (req, res) => {
+    userServices.addUser(req.body).then((error) =>{
+        // change error code to reason unable to signup
+        if(error == 500){
+            return res.status(500).send('Unable to sign up');
+        }else{
+            req.session.username = req.body.username;
+            return res.status(201).send('Successful signup');
+        }
+    });
+});
+
+
 app.get('/isLoggedIn', (req, res) => {
     // console.log('Session in /isLoggedIn:', req.session.username);
     if(req.session.username) {
@@ -154,18 +168,6 @@ app.get('/logout', (req, res) => {
     return res.status(200).send();
 });
 
-// create new user
-app.post('/signup', async (req, res) => {
-    userServices.addUser(req.body).then((error) =>{
-        // change error code to reason unable to signup
-        if(error == 500){
-            return res.status(500).send('Unable to sign up');
-        }else{
-            req.session.username = req.body.username;
-            return res.status(201).send('Successful signup');
-        }
-    });
-});
 
 // homescreen
 app.get('/', (req, res) => {
@@ -444,7 +446,7 @@ app.delete('/polls/:id', async (req, res) => {
     })
 });
 
-// post poll
+
 app.post("/polls", function (req, res) {  
     if(!req.session.username){   
         return res.status(401).send();
@@ -543,7 +545,6 @@ app.delete('/backlog/:id', async (req, res) => {
         })
 });
 
-// all
 app.listen(process.env.PORT || port, () => {
     console.log(`rest api is listening`);
     console.log("mongo: ", process.env.MONGO_URL)
