@@ -5,11 +5,25 @@ import "./account.css";
 const Account = () => {
     const connection_URL = "http://localhost:8000"
     const[isLoggedIn, setIsLoggedIn] = useState(false);
-
+    const[code, setCode] = useState("");
     useEffect(() =>{
         checkLogin();
+        getCode();
     });
 
+    async function getCode(){
+        fetch(`${connection_URL}/code`, {
+            method: 'GET',
+            credentials: 'include',
+        })
+        .then((response) => {
+            if(response.status === 200){
+                setCode(response.json());
+            }else{
+                setIsLoggedIn(false);
+            }
+        });
+    }
     async function checkLogin(){
         fetch(`${connection_URL}/isLoggedIn`, {
             method: 'GET',
@@ -41,7 +55,10 @@ const Account = () => {
             <nav className="col">
                 <ul className='nav'>
                     {isLoggedIn 
-                        ? <li><button className="button" onClick={logout}>Log Out</button></li>
+                        ? <>
+                            <li><button className="button" onClick={logout}>Log Out</button></li>
+                            <p>Group code: </p>
+                        </>
                         : <>
                             <li><Link className="button" to='/account/login'>Login</Link></li>
                             <li><Link className="button" to='/account/signup'>Signup</Link></li>

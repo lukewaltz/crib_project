@@ -16,6 +16,20 @@ mongoose
         .then(() => console.log("Connected to MongoDB in user-services"))
         .catch((error) => console.error("MongoDB Connection Error:", error));
 
+async function findUser(userId){
+    return userModel.findOne({_id: userId})
+        .then((user) => {
+            if(!user){
+                return null;
+            }
+            return user;
+        })
+        .catch((error) => {
+            console.error("error finding user: ", error);
+            throw error;
+        });
+}
+
 async function addToGroup(username, group){
     const promise = userModel.findOneAndUpdate(
         { username: username }, 
@@ -125,6 +139,7 @@ async function deleteUser(id) {
 }
 
 export default {
+    findUser,
     addUser,
     addTask,
     addToGroup,

@@ -10,6 +10,7 @@ import taskServices from "./task-services.js";
 import backlogServices from "./backlog-services.js";
 import pollServices from "./poll-services.js";
 import groupServices from "./group-services.js";
+import { ObjectId } from 'mongodb'
 
 const require = createRequire(import.meta.url);
 
@@ -39,6 +40,7 @@ app.use(cookieParser());
 
 // Group endpoints
 
+app.get
 //Creates a new group
 app.post('/group', async (req, res) => {
     if(req.session.username){
@@ -339,16 +341,39 @@ app.get('/tasks', (req, res) => {
     }
 });
 
-app.get('/group', (req, res) => {
+app.get('/groupInfo', async (req, res) =>{
     if (req.session.username){
         userServices.getGroup(req.session.username).then((group) => {
-            groupServices.getGroupSize(group.code)
-            .then((size) => {
-                res.status(200).json(size)
+            let groupObjectId = new ObjectId(group);
+            groupServices.findGroup(groupObjectId).then((groupInfo) => {
+                let names = [];
+                let members = groupInfo[0].members;
+                for(let i = 0; i<members.length; i++){
+                    names.push(groupInfo[0].members[i].name)
+
+                }
+                return res.status(200).send({code: groupInfo[0].code, name: groupInfo[0].name, names: names});
+            });
+        });
+    }else{
+        return res.status(401).send("not logged in");
+    }
+});
+
+app.get('/group', async (req, res) => {
+    if (req.session.username){
+        userServices.getGroup(req.session.username).then((group) => {
+            let groupObjectId = new ObjectId(group);
+            groupServices.findGroup(groupObjectId)
+            .then((groupInfo) => {
+                let groupSize = groupInfo[0].members.length;
+                return res.status(200).send({groupSize: groupSize});
             })
         })
+    }else{
+        return res.status(401).send('cannot login');
     }
-})
+});
 
 
 // add new task to task list, will be marked with assigned=false

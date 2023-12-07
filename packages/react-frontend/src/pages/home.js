@@ -124,7 +124,7 @@ function listPolls(){
       method: 'GET',
       credentials: 'include',
     });
-    return response;
+    return response.groupSize;
   }
   
   async function voteForOption(pollId, option) {
