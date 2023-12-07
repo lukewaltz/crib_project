@@ -5,6 +5,11 @@ import { useNavigate } from 'react-router-dom';
 function Home() {
   const [tasks, setTasks] = useState([]);
   const [polls, setPolls] = useState([]);
+  const[group, setGroupInfo] = useState([]);
+  const[members, setMembers] = useState([]);
+
+
+
   const [votedPolls, setVotedPolls] = useState([]);
   const navigate = useNavigate();
 
@@ -26,6 +31,18 @@ function Home() {
 
     useEffect(() => {
         checkLogin();
+        getGroup();
+        PollList();
+        TaskList();
+        listPolls()
+          .then(res => {
+            if (res.status === 401) {
+              navigate('/group');
+            }
+            return res.json();
+          })
+          .then(json => setPolls(json["poll_list"]))
+          .catch(error => console.log(error));
         listTasks()
           .then(res => {
             if (res.status === 401) {
@@ -36,18 +53,7 @@ function Home() {
           .then(json => setTasks(json["task_list"]))
           .catch(error => console.log(error));
       }, []);
-      
-      useEffect(() => {
-        listPolls()
-          .then(res => {
-            if (res.status === 401) {
-              navigate('/group');
-            }
-            return res.json();
-          })
-          .then(json => setPolls(json["poll_list"]))
-          .catch(error => console.log(error));
-      }, []);
+        
 
 function listTasks(){
     const promise = fetch(`${connection_URL}/tasks`, {
@@ -128,14 +134,6 @@ function listPolls(){
     }
     console.log(`Poll with ID ${pollId} deleted successfully`);
   }
-
-  async function getGroupSize(){
-    const response = await fetch(`${connection_URL}/group`,  {
-      method: 'GET',
-      credentials: 'include',
-    });
-    return response.groupSize;
-  }
   
   async function voteForOption(pollId, option) {
 
@@ -181,7 +179,24 @@ function listPolls(){
     });
     console.log(`Vote for ${option} in poll with ID ${pollId} recorded successfully`);
   }
-  
+
+async function getGroup(){
+  fetch(`${connection_URL}/groupInfo`, {
+      method: 'GET',
+      credentials: 'include',
+  })
+  .then((response) => {
+      if(response.status === 200){
+          
+          response.json().then((data) =>{
+              setGroupInfo(data);
+              setMembers(data.members);
+          })
+      }else{
+          // setIsLoggedIn(false);
+      }
+  });
+}
 
 
   // merged tasklist component
@@ -239,9 +254,9 @@ function listPolls(){
                 </button>
               </div>
             </div>)}
-            {box.whoVoted[0] === "true" && box.option1Votes + box.option2Votes !== getGroupSize() &&
-            <div>
-              <p>Vote Recorded. Thank you!</p>
+            {box.whoVoted[0] === "true" && box.option1Votes + box.option2Votes !== members.length &&
+            <div className='vote-recorded'>
+              <p>Vote Recorded!</p>
               <div className='button-container'>
                 <div className='poll-option1'>
                 {box.option1}<br></br>
@@ -254,14 +269,13 @@ function listPolls(){
               </div>
             </div>
             }
-            {box.option1Votes + box.option2Votes === getGroupSize() &&
-            <div>
+            {box.option1Votes + box.option2Votes === members.length &&
+            <div className='poll-complete'>
               <div>
-                Poll Complete!
               </div>
               {box.option1Votes > box.option2Votes && <div>Winner: {box.option1}</div>}
               {box.option2Votes > box.option1Votes && <div>Winner: {box.option2}</div>}
-              {box.option1Votes === box.option2Votes && <div>Tie!</div>}
+              {box.option1Votes === box.option2Votes && <div>Tie! <br/>{box.option1} & {box.option2}</div>}
             </div>
             }
             <div className='poll-delete'>

@@ -380,6 +380,7 @@ app.get('/groupInfo', async (req, res) =>{
         return res.status(401).send("not logged in");
     }
 });
+
 app.delete('/group', async (req, res) => {
     //remove the user's group
     if (req.session.username) {

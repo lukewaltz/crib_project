@@ -63,6 +63,23 @@
   position: absolute; 
   left: 50%; 
   transform: translate(-50%, -50%); 
+  padding-top: 200px;
 }
+
+.account .col .nav{
+  display: flex;
+  color: #388087;
+  flex-direction: column;
+  gap: 0px;
+  padding: 0;
+  font-family: "Inter-Bold", Helvetica;
+  font-size: 25px;
+}
+
+.account .memberBox{
+  flex-direction: column;
+  font-size: 15px;
+}
+
 
 

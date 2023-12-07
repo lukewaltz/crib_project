@@ -91,13 +91,13 @@ const Account = () => {
         const boxes = members.map((box, index) =>{
             return(
                 <div className="memberBox" key = {box.username}>
-                    {index ===0 ?<p>ADMIN:</p> : null}
-                    {index === 1 ? <p>Members in Group:</p> : null}
+                    {index ===0 ?<p><strong>Admin: </strong></p> : null}
+                    {index === 1 ? <p><strong>Members in Group: </strong></p>: null}
                     <p>{box.name}</p>
-                    
                     {group.isOwner  && index !== 0 ? <button onClick={() => removeUser(box.username)} disabled={buttonDisabledMap[box.username]}>
                         Remove user from group?
                         </button> : null}
+
                 </div>
             );
         });
@@ -111,16 +111,17 @@ const Account = () => {
 
     return (
         <div className="account">
-            {isLoggedIn 
-            ? <h1 className="title-text">Account</h1> 
-            : <h1 className="title-text">Welcome to Crib!</h1>}
+            
             <nav className="col">
+                {isLoggedIn 
+                ? <h1 className="title-text">Account</h1> 
+                : <h1 className="title-text">Welcome to Crib!</h1>}
                 <ul className='nav'>
                     {isLoggedIn 
                         ? <>
                             <li><button className="button" onClick={logout}>Log Out</button></li>
-                            <p>Group code: {group.code} </p>
-                            <p>Group name: {group.name}</p>
+                            <p><strong>Group code:</strong> {group.code} </p>
+                            <p><strong>Group name:</strong> {group.name}</p>
                             <Members/>
                         </>
                         : <>
