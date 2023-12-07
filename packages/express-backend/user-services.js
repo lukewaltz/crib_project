@@ -14,13 +14,28 @@ mongoose
     .then(() => console.log("Connected to MongoDB in user-services"));
 //.catch((error) => console.error("MongoDB Connection Error:", error));
 
-async function addToGroup(username, group) {
-    const promise = userModel
-        .findOneAndUpdate({ username: username }, { group: group })
+async function findUser(userId){
+    return userModel.findOne({_id: userId})
+        .then((user) => {
+            if(!user){
+                return null;
+            }
+            return user;
+        })
         .catch((error) => {
-            console.error("Error adding group:", error);
-            return 500;
+            console.error("error finding user: ", error);
+            throw error;
         });
+}
+
+async function addToGroup(username, group){
+    const promise = userModel.findOneAndUpdate(
+        { username: username }, 
+        { group: group },
+    ).catch((error) => {
+        console.error("Error adding group:", error);
+        return 500;
+    });
 
     return promise;
 }
@@ -30,9 +45,16 @@ async function getGroup(username) {
         if (!user) {
             return null;
         }
-        console.log(user.group);
+        // console.log(user.group);
         return user.group;
     });
+}
+
+async function removeGroup(username){
+    return userModel.findOneAndUpdate(
+        { username: username },
+        { group: ""},
+        { new: true });
 }
 
 async function findUserByUsername(username) {
@@ -102,6 +124,7 @@ async function deleteUser(id) {
 }
 
 export default {
+    findUser,
     addUser,
     addTask,
     addToGroup,
@@ -112,4 +135,5 @@ export default {
     deleteUser,
     findUserByUsername,
     findUserByEmail,
+    removeGroup,
 };

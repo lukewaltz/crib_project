@@ -28,8 +28,7 @@ const UserSchema = new mongoose.Schema(
             unique: true,
         },
         group: {
-            type: mongoose.Schema.ObjectId,
-            ref: "Group",
+            type: String,
             unique: true,
         },
         tasks: [

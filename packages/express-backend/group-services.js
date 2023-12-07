@@ -14,6 +14,17 @@ mongoose
     .then(() => console.log("Connected to MongoDB in user-services"));
 //.catch((error) => console.error("MongoDB Connection Error:", error));
 
+async function findGroup(groupId){
+    return await groupModel.find({_id: groupId})
+    .populate('owner')
+    .populate('members').
+    exec()
+    .catch((err) => {
+        if(err){
+            return undefined;
+        }
+    });
+}
 async function findGroupByName(name) {
     return groupModel.findOne({ name: name }).then((group) => {
         return group;
@@ -28,27 +39,28 @@ function addGroup(group) {
     return promise;
 }
 
-async function addUserToGroup(code, user) {
+async function addUserToGroup(code, userId) {
     const promise = groupModel.findOneAndUpdate(
         { code: code },
-        { $push: { members: user } },
+        { $push: { members: userId } },
         { new: true }
     );
     return promise;
 }
 
-async function getGroupSize(group) {
-    if (!group._id) {
-        return 404;
-    }
-    return groupModel.findById(group._id).then((group) => {
-        return group.members.length;
-    });
+async function removeUserFromGroup(code, userId){
+    const promise = groupModel.findOneAndUpdate(
+        { code: code },
+        { $pull: { members: userId } },
+        { new: true }
+    );
+    return promise;
 }
 
 export default {
+    findGroup,
     findGroupByName,
     addGroup,
     addUserToGroup,
-    getGroupSize,
+    removeUserFromGroup
 };
