@@ -91,7 +91,8 @@ const Account = () => {
         const boxes = members.map((box, index) =>{
             return(
                 <div className="memberBox" key = {box.username}>
-                    {index ===0 ?<p>ADMIN:</p> : <p>Members in Group:</p>}
+                    {index ===0 ?<p>ADMIN:</p> : null}
+                    {index === 1 ? <p>Members in Group:</p> : null}
                     <p>{box.name}</p>
                     
                     {group.isOwner  && index !== 0 ? <button onClick={() => removeUser(box.username)} disabled={buttonDisabledMap[box.username]}>
