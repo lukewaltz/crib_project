@@ -6,7 +6,7 @@ const TaskSchema = new mongoose.Schema(
             type: String,
             required: true,
             trim: true,
-            unique: true
+            unique: true,
         },
         dueDate: {
             type: String,
@@ -25,10 +25,12 @@ const TaskSchema = new mongoose.Schema(
             trim: true,
         },
         groupId: {
-            type: mongoose.Schema.ObjectId, ref: "Group",
+            type: mongoose.Schema.ObjectId,
+            ref: "Group",
             required: true,
         },
-    }, { collection: "task_list" }
+    },
+    { collection: "task_list" }
 );
 
 const Task = mongoose.model("Task", TaskSchema);

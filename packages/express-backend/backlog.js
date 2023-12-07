@@ -15,9 +15,10 @@ const BacklogSchema = new mongoose.Schema(
         completedBy: {
             type: String,
             required: true,
-            trim: true
-        }
-    }, { collection: "backlog" }
+            trim: true,
+        },
+    },
+    { collection: "backlog" }
 );
 
 const Backlog = mongoose.model("Backlog", BacklogSchema);
