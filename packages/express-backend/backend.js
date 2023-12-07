@@ -416,40 +416,6 @@ app.delete('/group', async (req, res) => {
     }
 });
 
-// //remove user from a group
-// app.delete('/group', async (req, res) => {
-//     //remove the user's group
-//     if(req.session.username){
-//         userServices.findUserByUsername(req.body.username).then((user) =>{
-//             userServices.getGroup(req.session.username).then((group) => {
-//                 if(group == ""){
-//                     throw new Error("not in group");
-//                 }else{
-//                     let groupObjectId = new ObjectId(group);
-//                     groupServices.findGroup(groupObjectId).then((groupInfo) => {
-//                         // checks if either the user is an admin or the user is trying to remove themselves
-//                         if(req.session.username !== groupInfo[0].owner.username || 
-//                             req.session.username !== req.body.username){
-//                             throw new Error('Not admin of the group');
-//                         }
-//                         //remove the user from the list of members
-//                         groupServices.removeUserFromGroup(groupInfo[0].code, user._id);
-//                     });
-//                 }
-//             }).catch(() => {
-//                 return res.status(404).json("Could not remove group");
-//             });
-//             userServices.removeGroup(user.username).then((e) =>{
-//                return res.status(202).json("Removed from group");
-//             });
-//         }).catch(() => {
-//             return res.status(404).json("Could not remove group");
-//         });
-//     }else{
-//         return res.status(401).send('not logged in');
-//     }
-    
-// });
 
 //remove user from group, check if user who is calling is the owner of the group or not
 
