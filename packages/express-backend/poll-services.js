@@ -6,28 +6,37 @@ mongoose.set("debug", true);
 dotenv.config();
 
 mongoose
-    .connect(
-        process.env.MONGO_URL,
-        {
-            useNewUrlParser: true,
-            useUnifiedTopology: true,
-        })
-        .then(() => console.log("Connected to MongoDB in poll-services"))
-        .catch((error) => console.error("MongoDB Connection Error:", error));
+    .connect(process.env.MONGO_URL, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+    })
+    .then(() => console.log("Connected to MongoDB in poll-services"));
+//.catch((error) => console.error("MongoDB Connection Error:", error));
 
 async function findPoll(id) {
-    return pollModel.findById(id)
+    return pollModel
+        .findById(id)
         .exec()
         .then((poll) => {
-            if (!poll) {
-                return null;
-            }
             return poll;
         })
         .catch((error) => {
-            console.error("error finding poll: ", error);
             throw error;
         });
+}
+
+async function getGroup(id) {
+    return pollModel.findById(id).then((poll) => {
+        if (!poll) {
+            return null;
+        }
+        return poll.groupId;
+    });
+}
+
+function getPollsInGroup(groupId) {
+    let promise = pollModel.find({ groupId: groupId });
+    return promise;
 }
 
 function getPolls() {
@@ -38,32 +47,24 @@ function getPolls() {
 function addPoll(poll) {
     const pollToAdd = new pollModel(poll);
     const promise = pollToAdd.save().catch((e) => {
-        if(e){
-            return 500;
-        }
+        return 500;
     });
     return promise;
 }
 
-async function deletePoll(id){
-    const promise = pollModel.findByIdAndRemove(id).catch((err) => {
-        if(err){
+async function deletePoll(id) {
+    const promise = pollModel
+        .findByIdAndDelete(id)
+        .exec()
+        .catch((err) => {
             return undefined;
-        }
-    });
+        });
     return promise;
 }
 
 async function voteForOption(pollId, option) {
     try {
         const poll = await pollModel.findById(pollId);
-
-        if (!poll) {
-            return {
-                success: false,
-                message: 'Poll not found',
-            };
-        }
 
         // Increment the vote count for the selected option
         poll[`${option}Votes`] += 1;
@@ -76,7 +77,6 @@ async function voteForOption(pollId, option) {
             message: `Vote for ${option} recorded successfully`,
         };
     } catch (error) {
-        console.error(`Error recording vote: ${error.message}`);
         return {
             success: false,
             message: `Error recording vote: ${error.message}`,
@@ -84,13 +84,12 @@ async function voteForOption(pollId, option) {
     }
 }
 
-
-
-
 export default {
     findPoll,
     getPolls,
+    getPollsInGroup,
+    getGroup,
     addPoll,
     deletePoll,
-    voteForOption
+    voteForOption,
 };

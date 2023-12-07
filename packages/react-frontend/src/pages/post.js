@@ -40,6 +40,7 @@ export const Post = (props) => {
         
         fetch(`${connection_URL}/tasks`, {
             method: 'POST',
+            credentials: 'include',
             headers: {
                 'Content-Type': 'application/json',
             },
@@ -64,6 +65,7 @@ export const Post = (props) => {
         
         fetch(`${connection_URL}/polls`, {
             method: 'POST',
+            credentials: 'include',
             headers: {
                 'Content-Type': 'application/json',
             },
@@ -109,8 +111,8 @@ export const Post = (props) => {
                             <div className="option1-text ">OPTION 1</div>
                             <div className="option2-text ">OPTION 2</div>
                         </div>
-                        <div className="overlap-4">
-                            <div className="text-wrapper-9">TASK</div>
+                        <div className="top-rect">
+                            <div className="task-header">TASK</div>
                             <div className="rectangle-7" />
                             <div className="logo-group-wrapper">
                                 <img className="logo-group" alt="Logo group" src="logo-group.png" />
