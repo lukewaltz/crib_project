@@ -9,6 +9,25 @@ import "./group.css";
 const Group = () => {
   const connection_URL = "http://localhost:8000";
   const navigate = useNavigate();
+  const[isLoggedIn, setIsLoggedIn] = useState(false);
+  
+  useEffect(() =>{
+    checkLogin();
+  }, []);
+
+  async function checkLogin(){
+    fetch(`${connection_URL}/isLoggedIn`, {
+        method: 'GET',
+        credentials: 'include',
+    })
+    .then((response) => {
+        if(response.status === 200){
+            setIsLoggedIn(true);
+        }else{
+            navigate('/account/');
+        }
+    });
+}
 
   async function handleGroupCodeSubmit(groupCode) {
     try {
