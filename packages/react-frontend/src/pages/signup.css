@@ -9,13 +9,13 @@
     overflow: hidden;
 }
 
-
 .sign-up .div {
     background-color: #ffffff;
     height: 932px;
     overflow: hidden;
     position: relative;
-    width: 430px;
+    width: 100%;
+    max-width: 430px;
 }
 
 .sign-up .overlap {
@@ -23,10 +23,10 @@
     left: 0px;
     position: relative;
     top: 0px;
-    width: 710px;
+    width: 130%; 
+    max-width: 710px; 
 }
 
-/* background rectangles */ 
 .sign-up .rectangle {
     background-color: #ecece9;
     border-radius: 26px;
@@ -38,6 +38,7 @@
     width: 511px;
 
 }
+
 .sign-up .rectangle2{
     background-color: #ecece9;
     border-radius: 26px;

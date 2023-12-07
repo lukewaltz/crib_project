@@ -14,20 +14,21 @@
     height: 932px;
     overflow: hidden;
     position: relative;
-    width: 430px;
+    width: 100%;
+    max-width: 430px;
+    
 }
-
 
 .login .sign-in {
     height: 400px;
     left: 0px;
     position: relative;
     top: 0px;
-    width: 710px;
+    width: 100%;
+    max-width: 710px;
+    
 }
 
-
-/* background rectangles */ 
 .login .rectangle {
     background-color: #ecece9;
     border-radius: 26px;
@@ -113,6 +114,7 @@
     top: -260px;
     width: 710px;
 }
+
 .login .password-text{
     color: #388087;
     font-family: "Inter-Regular", Helvetica;

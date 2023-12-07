@@ -254,7 +254,7 @@ function listPolls(){
               {box.option1Votes === box.option2Votes && <div>Tie!</div>}
             </div>
             }
-            <div className='complete-button'>
+            <div className='poll-delete'>
               <button onClick={() => completePoll(box._id)}>
                 Delete Poll
               </button>

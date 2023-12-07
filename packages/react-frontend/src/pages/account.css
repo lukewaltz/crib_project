@@ -5,7 +5,6 @@
   align-items: center;
   height: 100vh; 
   text-align: center;
-  margin-top: -250px; 
 }
 
 
@@ -20,7 +19,7 @@
 }
 
 .account:not(.logged-in) .nav {
-  margin-top: 200px; 
+  margin-top: 100px; 
 }
 
 
@@ -57,12 +56,8 @@
   font-family: "Inter-Bold", Helvetica;
   font-size: 50px;
   font-weight: 700;
-  left: 50vh;
   letter-spacing: 3.25px;
   line-height: normal;
-  position: absolute; 
-  left: 50%; 
-  transform: translate(-50%, -50%); 
+  margin-top: 0; 
+  position: relative;
 }
-
-
