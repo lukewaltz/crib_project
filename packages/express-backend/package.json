@@ -17,7 +17,7 @@
     "name": "express-backend",
     "version": "1.0.0",
     "scripts": {
-        "test": "cross-env NODE_OPTIONS=--experimental-vm-modules jest --coverage",
+        "test": "cross-env NODE_OPTIONS=--experimental-vm-modules jest --coverage ",
         "start": "node backend.js"
     },
     "jest": {},

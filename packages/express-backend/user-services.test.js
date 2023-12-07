@@ -418,7 +418,7 @@ describe("userServices", () => {
             await User.findByIdAndDelete(testUserId).exec();
         });
     });
-    /*
+
     describe("User Authentication", () => {
         beforeAll(async () => {
             await mongoose.disconnect();
@@ -495,5 +495,5 @@ describe("userServices", () => {
             expect(unchangedUser).toBeDefined();
             expect(unchangedUser.password).toEqual(testUser.password);
         });
-    });*/
+    });
 });
