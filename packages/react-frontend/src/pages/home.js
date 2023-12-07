@@ -24,20 +24,30 @@ function Home() {
         
     }
 
-  useEffect(() => {
-    checkLogin();
-    listTasks()
-      .then(res => res.json())
-      .then(json => setTasks(json["task_list"]))
-      .catch(error => console.log(error));
-  }, []);
-
-  useEffect(() => {
-    listPolls()
-      .then(res => res.json())
-      .then(json => setPolls(json["poll_list"]))
-      .catch(error => console.log(error));
-  }, []);
+    useEffect(() => {
+        checkLogin();
+        listTasks()
+          .then(res => {
+            if (res.status === 401) {
+              navigate('/group');
+            }
+            return res.json();
+          })
+          .then(json => setTasks(json["task_list"]))
+          .catch(error => console.log(error));
+      }, []);
+      
+      useEffect(() => {
+        listPolls()
+          .then(res => {
+            if (res.status === 401) {
+              navigate('/group');
+            }
+            return res.json();
+          })
+          .then(json => setPolls(json["poll_list"]))
+          .catch(error => console.log(error));
+      }, []);
 
 function listTasks(){
     const promise = fetch(`${connection_URL}/tasks`, {

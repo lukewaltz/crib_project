@@ -16,7 +16,8 @@ mongoose
 
 async function findGroup(groupId){
     return await groupModel.find({_id: groupId})
-    .populate('members', 'name').
+    .populate('owner')
+    .populate('members').
     exec()
     .catch((err) => {
         if(err){
@@ -38,35 +39,28 @@ function addGroup(group) {
     return promise;
 }
 
-async function addUserToGroup(code, user) {
+async function addUserToGroup(code, userId) {
     const promise = groupModel.findOneAndUpdate(
         { code: code },
-        { $push: { members: user } },
+        { $push: { members: userId } },
         { new: true }
     );
     return promise;
 }
 
-// async function getGroupSize(groupId) {
-//     try {
-//         groupModel.findOne({_id: groupId}).then((existingGroup) =>{
-//             if (!existingGroup) {
-//                 console.error("Group not found with code: ", code);
-//                 return 404;
-//             }    
-//             const members = existingGroup.members;
-//             return members.length;
-//         });
-
-//     } catch (error) {
-//         console.error("Error finding size:", error);
-//         return Promise.reject(500);
-//     }
-// }
+async function removeUserFromGroup(code, userId){
+    const promise = groupModel.findOneAndUpdate(
+        { code: code },
+        { $pull: { members: userId } },
+        { new: true }
+    );
+    return promise;
+}
 
 export default {
     findGroup,
     findGroupByName,
     addGroup,
     addUserToGroup,
+    removeUserFromGroup
 };

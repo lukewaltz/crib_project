@@ -45,9 +45,16 @@ async function getGroup(username) {
         if (!user) {
             return null;
         }
-        console.log(user.group);
+        // console.log(user.group);
         return user.group;
     });
+}
+
+async function removeGroup(username){
+    return userModel.findOneAndUpdate(
+        { username: username },
+        { group: ""},
+        { new: true });
 }
 
 async function findUserByUsername(username) {
@@ -128,4 +135,5 @@ export default {
     deleteUser,
     findUserByUsername,
     findUserByEmail,
+    removeGroup,
 };
