@@ -1,10 +1,12 @@
 import React, {useState} from 'react';
+import Arrow from "./arrow.svg";
 
 function GroupNameForm(props) {
   const [group, setGroupName] = useState("");
 
   function submitGroupNameForm(event) {
-    event.preventDefault();
+    // event.preventDefault();
+    console.log("wokring");
     props.handleSubmit(group);
   }
 
@@ -23,9 +25,13 @@ function GroupNameForm(props) {
             id="groupName"
             value={group.groupName}
             onChange={handleChange} 
-            className="title2-field"
+            className="house-name-field"
             />
-        <input type="submit" value="Submit" className="group-submit" onClick={submitGroupNameForm}/>
+            
+          <button type="submit" className="vector-arrow2" onClick={submitGroupNameForm}>
+            <img className="vector" alt="Vector" src={Arrow} />
+          </button>
+          
         </form>
     );
 

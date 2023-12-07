@@ -3,26 +3,12 @@ import { Link } from "react-router-dom";
 import GroupCodeForm from "../components/GroupCodeForm";
 import GroupNameForm from "../components/GroupNameForm.js";
 import { useNavigate } from 'react-router-dom';
+import "./group.css";
+
 
 const Group = () => {
   const connection_URL = "http://localhost:8000";
   const navigate = useNavigate();
-
-//   async function checkLogin(){
-//     fetch(`${connection_URL}/isLoggedIn`, {
-//         method: 'GET',
-//         credentials: 'include',
-//     })
-//     .then((response) => {
-//         if(response.status !== 200){
-//             navigate('/account/');
-//         }
-//     });
-    
-//     }
-//     useEffect(() => {
-//         checkLogin();
-//     }, []);
 
   async function handleGroupCodeSubmit(groupCode) {
     try {
@@ -50,7 +36,6 @@ const Group = () => {
   }
 
 function handleGroupNameSubmit(groupName) {
-    // navigate('/home');
       fetch(`${connection_URL}/group`, {
         method: "POST",
         credentials: 'include',
@@ -74,15 +59,27 @@ function handleGroupNameSubmit(groupName) {
 
   }
 
+
   return (
-    <div className="container">
-    
-      <h2>Enter Group Code:</h2>
-      <GroupCodeForm handleSubmit={handleGroupCodeSubmit} />
-      <h3>Don't Have a Group Code? Make a new Group:</h3>
-      <GroupNameForm handleSubmit={handleGroupNameSubmit}/>
-    </div>
+      <div className="join-household">
+          <div className="group-wrapper">
+              <div className="group">
+                  <div className="create-household">
+                      <div className="create-text">CREATE A HOUSEHOLD</div>
+                      <div className="div">NEW HOUSEHOLD NAME</div>
+                      <GroupNameForm handleSubmit={handleGroupNameSubmit} />  
+                  </div>
+                  <div className="div-3">
+                      <div className="join-text">JOIN A HOUSEHOLD</div>
+                      <div className="code-text">HOUSEHOLD CODE</div>
+                      <GroupCodeForm handleSubmit={handleGroupCodeSubmit} />
+                  </div>
+              </div>
+          </div>
+      </div>
   );
 };
+
+  
 
 export default Group;
