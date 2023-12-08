@@ -201,7 +201,8 @@ async function getGroup(){
 
   // merged tasklist component
   function TaskList() {
-    const boxes = tasks.map((box) => {
+    const boxes = tasks
+    .map((box) => {
       return (
         <div className='chore-box' key = {box._id} >
           <div className='chore-name'>TASK: {box.task}</div>
