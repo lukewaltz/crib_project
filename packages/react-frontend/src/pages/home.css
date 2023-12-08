@@ -231,9 +231,10 @@
 
 .chore-name {
     color: #388087;
-    font-family: "Inter-Regular", Helvetica;
+    font-family: "Inter-Bold", Helvetica;
     font-size: 20px;
     text-transform: uppercase;
+    font-weight: bolder;
 }
 
 .chore-date {
@@ -335,4 +336,18 @@ table{
     position: absolute;
     top: 0;
     white-space: nowrap;
+}
+
+.home-page .poll-complete{
+    color: #388087;
+    font-family: "Inter-Regular", Helvetica;
+    font-size: 20px;
+    text-transform: uppercase;
+}
+
+.home-page .vote-recorded{
+    color: #388087;
+    font-family: "Inter-Regular", Helvetica;
+    font-size: 15px;
+    text-transform: uppercase;
 }
