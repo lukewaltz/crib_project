@@ -9,11 +9,9 @@
 .post-something .div {
     background-color: #ffffff;
     height: 932px;
-    overflow: hidden;
     position: relative;
     width: 430px;
 }
-
 .post-something .task-box {
     background-color: #badfe7;
     height: 265px;
@@ -211,7 +209,6 @@
 }
 
 
-/* top rectangle */
 .post-something .top-rect {
     height: 351px;
     left: 0;

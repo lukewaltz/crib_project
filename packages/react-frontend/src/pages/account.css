@@ -4,7 +4,8 @@
   justify-content: center;
   align-items: center;
   /* height: 100vh;  */
-  height: 110vh;
+  /* height: 50vh; */
+  height: 120vh;
   text-align: center;
   margin-top: -255px; 
 }
@@ -64,7 +65,8 @@
   position: absolute; 
   left: 50%; 
   transform: translate(-50%, -50%); 
-  padding-top: 200px;
+  top: 140px;
+  z-index: 1;
 }
 
 .account .col .nav{
@@ -77,11 +79,39 @@
   font-size: 25px;
 }
 
-.account .memberBox{
-  flex-direction: column;
-  font-size: 15px;
+.content {
+  flex: 1;
+  overflow-y: auto; 
+  padding: 20px;
 }
 
+.account .div {
+  background-color: #ffffff;
+  height: 185px;
+  position: relative;
+  width: 430px;
+}
+
+.account .overlap {
+  background-color: #ecece9;
+  border-radius: 22px;
+  height: 139px;
+  left: 0;
+  position: absolute;
+  top: -125px;
+  width: 430px;
+  z-index: 1;
+}
+
+.account .group {
+  background: linear-gradient(180deg, rgba(217, 217, 217, 0) 0%, rgb(186, 223, 231) 100%);
+  border-radius: 36.5px;
+  height: 73px;
+  left: 178px;
+  position: absolute;
+  top: 53px;
+  width: 73px;
+}
 
 .account .logo-group {
   height: 59px;
