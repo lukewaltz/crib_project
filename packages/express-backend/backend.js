@@ -57,7 +57,9 @@ app.post("/group", async (req, res) => {
             return res.status(401).send("user already in group");
         }
         let group = req.body;
+        let members = Array(1).fill(user);
         group.owner = user;
+        group.members = members;
         groupServices.addGroup(group).then((e) => {
             if (e == 500) {
                 return res.status(500).send("Unable to create group");
