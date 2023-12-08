@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, json } from "react-router-dom";
 import "./account.css";
+import { useNavigate } from 'react-router-dom';
 
 const Account = () => {
     const connection_URL = "http://localhost:8000"
@@ -8,6 +9,7 @@ const Account = () => {
     const[group, setGroupInfo] = useState([]);
     const[members, setMembers] = useState([]);
     const [buttonDisabledMap, setButtonDisabledMap] = useState({});
+    const navigate = useNavigate();
 
     useEffect(() =>{
         checkLogin();
@@ -26,8 +28,8 @@ const Account = () => {
                     setGroupInfo(data);
                     setMembers(data.members);
                 })
-            }else{
-                setIsLoggedIn(false);
+            }else if(isLoggedIn){
+                navigate('/group');
             }
         });
     }

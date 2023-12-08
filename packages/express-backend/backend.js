@@ -349,29 +349,33 @@ app.get("/tasks", (req, res) => {
 app.get("/groupInfo", async (req, res) => {
     if (req.session.username) {
         userServices.getGroup(req.session.username).then((group) => {
-            let groupObjectId = new ObjectId(group);
-            groupServices.findGroup(groupObjectId).then((groupInfo) => {
-                let names = [];
-                let members = groupInfo[0].members;
-                let isOwner = false;
-                for (let i = 0; i < members.length; i++) {
-                    names.push({
-                        name: groupInfo[0].members[i].name,
-                        username: groupInfo[0].members[i].username,
+            if(group == "" || group == null){
+                return res.status(404).send("not in group");
+            }else{
+                let groupObjectId = new ObjectId(group);
+                groupServices.findGroup(groupObjectId).then((groupInfo) => {
+                    let names = [];
+                    let members = groupInfo[0].members;
+                    let isOwner = false;
+                    for (let i = 0; i < members.length; i++) {
+                        names.push({
+                            name: groupInfo[0].members[i].name,
+                            username: groupInfo[0].members[i].username,
+                        });
+                    }
+                    //check if user who is calling this is the owner or not
+                    if (req.session.username === groupInfo[0].owner.username) {
+                        isOwner = true;
+                    }
+                    console.log(groupInfo);
+                    return res.status(200).send({
+                        code: groupInfo[0].code,
+                        name: groupInfo[0].name,
+                        members: names,
+                        isOwner: isOwner,
                     });
-                }
-                //check if user who is calling this is the owner or not
-                if (req.session.username === groupInfo[0].owner.username) {
-                    isOwner = true;
-                }
-                console.log(groupInfo);
-                return res.status(200).send({
-                    code: groupInfo[0].code,
-                    name: groupInfo[0].name,
-                    members: names,
-                    isOwner: isOwner,
                 });
-            });
+            }
         });
     } else {
         return res.status(401).send("not logged in");
