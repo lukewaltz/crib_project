@@ -29,7 +29,6 @@ const UserSchema = new mongoose.Schema(
         },
         group: {
             type: String,
-            unique: true,
         },
         tasks: [
             {
