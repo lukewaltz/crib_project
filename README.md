@@ -19,6 +19,7 @@ polls that roommates can vote on so disputes can be settled calmly.
 UI Prototype: https://www.figma.com/file/86ziJabeijFvcQq8egcINK/cribs?type=design&node-id=0%3A1&mode=design&t=cky5cklEXrp2IU7x-1  
 Class Diagrams: https://drive.google.com/file/d/1Hho7h9R9o9_OgPqr5O75oNRk2CiaTRNN/view?usp=sharing  
 Demo Video: https://clipchamp.com/watch/8rjhxkdDNXn  
+Final Slides: https://docs.google.com/presentation/d/17tBHxGP-7T_O9Ul_dJdRGHj_lSv50PDgaoZ-PnZvrBM/edit?usp=sharing  
   
 **Contributing:**  
 If you haven't installed ESLint either locally or globally do so by running npm install eslint in the workspace
