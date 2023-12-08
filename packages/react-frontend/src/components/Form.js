@@ -83,7 +83,7 @@ function Form(props) {
         <option value="">Select Assignee</option>
         {groupMembers.map(member => (
           <option key={member.username} value={member.username}>
-            {member.username}
+            {member.name}
           </option>
         ))}
       </select>
