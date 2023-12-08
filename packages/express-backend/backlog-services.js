@@ -36,6 +36,13 @@ function getTasks() {
     return promise;
 }
 
+function getGroupTasks(groupId) {
+    let promise = backlogModel.find({
+        groupId: new mongoose.Types.ObjectId(groupId),
+    });
+    return promise;
+}
+
 async function addTask(username, task) {
     let currentdate = new Date();
     let datetime =
@@ -58,8 +65,8 @@ async function addTask(username, task) {
         completedBy: username,
         groupId: task.groupId,
     });
-    
-    const promise = backlogToAdd.save().catch((e) =>{
+
+    const promise = backlogToAdd.save().catch((e) => {
         return 500;
     });
 
@@ -79,6 +86,7 @@ async function deleteTask(id) {
 export default {
     findTask,
     getTasks,
+    getGroupTasks,
     addTask,
     deleteTask,
 };

@@ -29,6 +29,7 @@ const Backlog = (props) => {
         try {
             const response = await fetch(`${connection_URL}/backlog`, {
                 method: "GET",
+                credentials: "include",
             });
             const data = await response.json();
             return data;

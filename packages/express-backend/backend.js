@@ -244,18 +244,15 @@ app.put("/task", async (req, res) => {
 
     try {
         const user = await userServices.findUserByUsername(username);
-      
 
         // remove task from user's list
         await userServices.removeTask(username, taskId);
 
         // add task to backlog
         taskServices.findTask(taskId).then((task) => {
-            backlogServices.addTask(username, task).then(
-                (e) =>{
-                    taskServices.deleteTask(taskId);
-                }
-            );
+            backlogServices.addTask(username, task).then((e) => {
+                taskServices.deleteTask(taskId);
+            });
         });
 
         // If both operations are successful, send a success response
@@ -634,11 +631,22 @@ app.post("/polls/:pollId", (req, res) => {
         });
 });
 
-app.get("/backlog", (req, res) => {
-    backlogServices
-        .getTasks()
-        .then((tasks) => {
-            res.status(200).json({ backlog: tasks });
+app.get("/backlog", async (req, res) => {
+    const username = req.session.username;
+    userServices
+        .findUserByUsername(username)
+        .then((user) => {
+            backlogServices
+                .getGroupTasks(user.group)
+                .then((tasks) => {
+                    userServices
+                        .findUserByUsername(username)
+                        .then((user) => {});
+                    res.status(200).json({ backlog: tasks });
+                })
+                .catch((error) => {
+                    res.status(500).json({ error });
+                });
         })
         .catch((error) => {
             res.status(500).json({ error });
