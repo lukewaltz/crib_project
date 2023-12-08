@@ -10,7 +10,7 @@ import taskServices from "./task-services.js";
 import backlogServices from "./backlog-services.js";
 import pollServices from "./poll-services.js";
 import groupServices from "./group-services.js";
-import { ObjectId } from 'mongodb'
+import { ObjectId } from "mongodb";
 
 const require = createRequire(import.meta.url);
 
@@ -115,34 +115,32 @@ app.post("/join-group", async (req, res) => {
 //Users Endpoints
 
 // Login and create new user
-app.post('/login', async (req, res) => {
+app.post("/login", async (req, res) => {
     try {
         userServices.findUserByEmail(req.body.email).then((user) => {
-
             if (!user) {
-                return res.status(404).send('User not found');
+                return res.status(404).send("User not found");
             }
 
-            user.comparePassword(req.body.password, function(err, isMatch){
-                if(isMatch){
+            user.comparePassword(req.body.password, function(err, isMatch) {
+                if (isMatch) {
                     req.session.username = user.username;
                     // console.log(req.session.username);
                     console.log(user.username);
                     let isInGroup = true;
 
-                    if(user.group == null || user.group == ""){
+                    if (user.group == null || user.group == "") {
                         isInGroup = false;
                     }
-                    return res.status(200).send({isInGroup:isInGroup});
-                } else{
-                    return res.status(401).send('cannot login');
+                    return res.status(200).send({ isInGroup: isInGroup });
+                } else {
+                    return res.status(401).send("cannot login");
                 }
             });
         });
-        
     } catch (err) {
         console.error(err);
-        return res.status(500).send('Internal server error');
+        return res.status(500).send("Internal server error");
     }
 });
 
@@ -244,18 +242,13 @@ app.put("/users/:username/complete/:id", async (req, res) => {
     const username = req.params.username;
     const taskId = req.params.id;
 
-    userServices
-        .findUserByUsername(username)
-        .then((user) => {
-            if (user.tasks.indexOf(taskId) < 0) {
-                res.json({ message: "User does not have that task" });
-                return;
-            }
-        })
-        .catch((error) => {
-            res.status(500).json(error);
-        });
     try {
+        const user = await userServices.findUserByUsername(username);
+        if (user.tasks.indexOf(taskId) < 0) {
+            res.json({ message: "User does not have that task" });
+            return;
+        }
+
         // remove task from user's list
         await userServices.removeTask(username, taskId);
 
@@ -340,17 +333,17 @@ app.get("/tasks", (req, res) => {
     if (req.session.username) {
         // console.log(req.session.username);
         userServices.findUserByUsername(req.session.username).then((user) => {
-            if(user.group == null || user.group == ""){
-                res.status(401).json({isInGroup: false});
-            }else{
-            taskServices
-                .getTasksInGroup(user.group)
-                .then((tasks) => {
-                    res.status(200).json({ task_list: tasks });
-                })
-                .catch((error) => {
-                    res.status(500).json({ error });
-                });
+            if (user.group == null || user.group == "") {
+                res.status(401).json({ isInGroup: false });
+            } else {
+                taskServices
+                    .getTasksInGroup(user.group)
+                    .then((tasks) => {
+                        res.status(200).json({ task_list: tasks });
+                    })
+                    .catch((error) => {
+                        res.status(500).json({ error });
+                    });
             }
         });
     } else {
@@ -358,36 +351,45 @@ app.get("/tasks", (req, res) => {
     }
 });
 
-app.get('/groupInfo', async (req, res) =>{
-    if (req.session.username){
+app.get("/groupInfo", async (req, res) => {
+    if (req.session.username) {
         userServices.getGroup(req.session.username).then((group) => {
             let groupObjectId = new ObjectId(group);
             groupServices.findGroup(groupObjectId).then((groupInfo) => {
                 let names = [];
                 let members = groupInfo[0].members;
                 let isOwner = false;
-                for(let i = 0; i<members.length; i++){
-                    names.push({name:groupInfo[0].members[i].name, username: groupInfo[0].members[i].username});
-
+                for (let i = 0; i < members.length; i++) {
+                    names.push({
+                        name: groupInfo[0].members[i].name,
+                        username: groupInfo[0].members[i].username,
+                    });
                 }
                 //check if user who is calling this is the owner or not
-                if(req.session.username === groupInfo[0].owner.username){
+                if (req.session.username === groupInfo[0].owner.username) {
                     isOwner = true;
                 }
                 console.log(groupInfo);
-                return res.status(200).send({code: groupInfo[0].code, name: groupInfo[0].name, members: names, isOwner: isOwner});
+                return res.status(200).send({
+                    code: groupInfo[0].code,
+                    name: groupInfo[0].name,
+                    members: names,
+                    isOwner: isOwner,
+                });
             });
         });
-    }else{
+    } else {
         return res.status(401).send("not logged in");
     }
 });
 
-app.delete('/group', async (req, res) => {
+app.delete("/group", async (req, res) => {
     //remove the user's group
     if (req.session.username) {
         try {
-            const user = await userServices.findUserByUsername(req.body.username);
+            const user = await userServices.findUserByUsername(
+                req.body.username
+            );
             const group = await userServices.getGroup(req.session.username);
 
             if (group === "") {
@@ -398,14 +400,19 @@ app.delete('/group', async (req, res) => {
             const groupInfo = await groupServices.findGroup(groupObjectId);
 
             // checks if either the user is an admin or the user is trying to remove themselves
-            if (req.session.username != groupInfo[0].owner.username &&
-                req.session.username != req.body.username) {
+            if (
+                req.session.username != groupInfo[0].owner.username &&
+                req.session.username != req.body.username
+            ) {
                 console.log("not working");
-                throw new Error('Not admin of the group');
+                throw new Error("Not admin of the group");
             }
 
             // remove the user from the list of members
-            await groupServices.removeUserFromGroup(groupInfo[0].code, user._id);
+            await groupServices.removeUserFromGroup(
+                groupInfo[0].code,
+                user._id
+            );
 
             // remove group from user
             await userServices.removeGroup(user.username);
@@ -415,28 +422,25 @@ app.delete('/group', async (req, res) => {
             return res.status(404).json("Could not remove group");
         }
     } else {
-        return res.status(401).send('not logged in');
+        return res.status(401).send("not logged in");
     }
 });
-
 
 //remove user from group, check if user who is calling is the owner of the group or not
 
-app.get('/group', async (req, res) => {
-    if (req.session.username){
+app.get("/group", async (req, res) => {
+    if (req.session.username) {
         userServices.getGroup(req.session.username).then((group) => {
             let groupObjectId = new ObjectId(group);
-            groupServices.findGroup(groupObjectId)
-            .then((groupInfo) => {
+            groupServices.findGroup(groupObjectId).then((groupInfo) => {
                 let groupSize = groupInfo[0].members.length;
-                return res.status(200).send({groupSize: groupSize});
-            })
-        })
-    }else{
-        return res.status(401).send('cannot login');
+                return res.status(200).send({ groupSize: groupSize });
+            });
+        });
+    } else {
+        return res.status(401).send("cannot login");
     }
 });
-
 
 // add new task to task list, will be marked with assigned=false
 app.post("/tasks", (req, res) => {
@@ -503,9 +507,9 @@ app.get("/polls", (req, res) => {
         userServices
             .findUserByUsername(req.session.username)
             .then((user) => {
-                if(user.group == null || user.group == ""){
-                    res.status(401).json({isInGroup: false});
-                }else{
+                if (user.group == null || user.group == "") {
+                    res.status(401).json({ isInGroup: false });
+                } else {
                     pollServices.getPollsInGroup(user.group).then((polls) => {
                         for (let i = 0; i < polls.length; i++) {
                             let whoVoted = polls[i].whoVoted;
