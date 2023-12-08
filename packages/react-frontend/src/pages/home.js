@@ -71,15 +71,15 @@ function listPolls(){
     return promise;
 }
 
-  function completeTask(taskId) {
-    deleteTaskFromBackend(taskId)
-      .then(() => {
-        //keep all tasks that don't match task id
-        const updatedTasks = tasks.filter(task => task._id !== taskId);
-        setTasks(updatedTasks);
-      })
-      .catch(error => console.error('Error deleting task:', error));
-  }
+//   function completeTask(taskId) {
+//     deleteTaskFromBackend(taskId)
+//       .then(() => {
+//         //keep all tasks that don't match task id
+//         const updatedTasks = tasks.filter(task => task._id !== taskId);
+//         setTasks(updatedTasks);
+//       })
+//       .catch(error => console.error('Error deleting task:', error));
+//   }
 
     function completePoll(pollId) {
     deletePollFromBackend(pollId)
@@ -112,8 +112,31 @@ function listPolls(){
       })
       .catch(error => console.error('Error deleting poll:', error));
   }
+  async function completeTaskInBackend(username, taskId){
+    const response = await fetch(`${connection_URL}/task/`,{
+        method: 'PUT',
+        credentials: 'include',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ username: username, id: taskId }),
+    });
+    if (!response.ok) {
+        throw new Error('Network response was not ok');
+    }else{
+        if(response.status === 202){
+            const index = tasks.findIndex((task) => task._id === taskId);
+            console.log(index)
+            if (index > -1) {
+              const updatedTasks = [...tasks.slice(0, index), ...tasks.slice(index + 1)];
+              setTasks(updatedTasks);
+            }
+        }
+    }
+    console.log(`Task with ID ${taskId} completed successfully`);
+  }
   
-  async function deleteTaskFromBackend(taskId) {
+  async function  deleteTaskFromBackend(taskId) {
     const response = await fetch(`${connection_URL}/tasks/${taskId}`, {
       method: 'DELETE',
       credentials: 'include',
@@ -215,7 +238,7 @@ async function getGroup(){
               </button>
             </div>
             <div className='complete-button'>
-              <button onClick={() => completeTask(box._id)}>
+              <button onClick={() => completeTaskInBackend(box.assignee, box._id)}>
                 Complete
               </button>
             </div>
@@ -308,7 +331,7 @@ async function getGroup(){
                     <TaskList 
                         taskData={tasks} 
                         claimTask={claimTask} 
-                        completeTask={completeTask}
+                        completeTask={completeTaskInBackend}
                     />
                 </div>
             </div>
@@ -330,7 +353,7 @@ async function getGroup(){
                         completePoll={completePoll}
                         taskData={tasks} 
                         claimTask={claimTask} 
-                        completeTask={completeTask} 
+                        completeTask={completeTaskInBackend} 
                     />
                 </div>
                 <div className="overlap-group-wrapper">
