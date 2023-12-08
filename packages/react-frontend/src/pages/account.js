@@ -111,10 +111,17 @@ const Account = () => {
 
     return (
         <div className="account">
-            {isLoggedIn 
-            ? <h1 className="title-text">Account</h1> 
-            : <h1 className="title-text">Welcome to Crib!</h1>}
+            <div className="div">
+                <div className="overlap">
+                    <div className="group">
+                        <img className="logo-group" alt="Logo group" src="logo-group.png" />
+                    </div>
+                </div>
+            </div>
             <nav className="col">
+                {isLoggedIn 
+                ? <h1 className="title-text">Account</h1> 
+                : <h1 className="title-text">Welcome to Crib!</h1>}
                 <ul className='nav'>
                     {isLoggedIn 
                         ? <>
