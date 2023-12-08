@@ -43,12 +43,24 @@ function Form(props) {
 
   function handleChange(event) {
     const { name, value } = event.target;
-
-    setChore(prevChore => ({
-      ...prevChore,
-      [name]: value
-    }));
+    if (name === "date")
+      setChore(
+         {task: chore['task'], dueDate: value, assignee: chore['assignee'], weight: chore['weight']}
+      );
+    else if (name === "task")
+       setChore(
+         {task: value, dueDate: chore['dueDate'], assignee: chore['assignee'], weight: chore['weight']}   
+       );
+    else if (name === "weight")
+        setChore(
+          {task: chore['task'], dueDate: chore['dueDate'], assignee: chore['assignee'], weight: value}
+        );
+    else if (name === "assignee")
+        setChore(
+          {task: chore['task'], dueDate: chore['dueDate'], assignee: value, weight: chore['weight']}
+        )
   }
+
 
   return (
     <form onSubmit={submitForm}>
