@@ -39,5 +39,8 @@ Run locally with 'npm start' in both express backend and react-frontend director
 **Project Links:**  
 UI Prototype: https://www.figma.com/file/86ziJabeijFvcQq8egcINK/cribs?type=design&node-id=0%3A1&mode=design&t=cky5cklEXrp2IU7x-1  
 Class Diagrams: https://drive.google.com/file/d/1Hho7h9R9o9_OgPqr5O75oNRk2CiaTRNN/view?usp=sharing  
+Demo Video: https://clipchamp.com/watch/8rjhxkdDNXn  
+
+**Deployment Links:** (inactive)  
 Azure Frontend: https://black-beach-047e9eb1e.4.azurestaticapps.net/  
 Azure Backend: https://crib-app.azurewebsites.net/  
