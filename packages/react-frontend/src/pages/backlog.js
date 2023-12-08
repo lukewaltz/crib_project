@@ -74,13 +74,6 @@ const Backlog = (props) => {
                                     src="logo-group.png"
                                 />
                             </div>
-                            <div className="overlap-group">
-                                <img
-                                    className="vector"
-                                    alt="Vector"
-                                    src="vector.svg"
-                                />
-                            </div>
                         </div>
                         <div className="rectangle-tasks">
                             <div className="box-container">
