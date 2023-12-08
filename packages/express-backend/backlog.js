@@ -17,6 +17,11 @@ const BacklogSchema = new mongoose.Schema(
             required: true,
             trim: true,
         },
+        groupId: {
+            type: mongoose.Schema.ObjectId,
+            ref: "Group",
+            required: true,
+        },
     },
     { collection: "backlog" }
 );

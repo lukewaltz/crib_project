@@ -56,6 +56,7 @@ async function addTask(username, task) {
         task: task.task,
         completionDate: datetime,
         completedBy: username,
+        groupId: task.groupId,
     });
 }
 
