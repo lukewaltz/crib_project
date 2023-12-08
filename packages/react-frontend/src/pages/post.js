@@ -98,7 +98,7 @@ export const Post = (props) => {
                             </div>
                             <div className="task-text">TASK</div>
                             <div className="due-date-text">DUE DATE</div>
-                            <div className="weight-text">WEIGHT</div>
+                            <div className="weight-text">PRIORITY</div>
                             <div className = "assignee-text"> ASSIGNEE</div>
                         </div>
                         <div className="poll-box ">
