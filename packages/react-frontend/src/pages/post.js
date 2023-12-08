@@ -30,7 +30,7 @@ export const Post = (props) => {
         console.error('Error:', error);
     }
     }
-
+    
     useEffect(() => {
         checkLogin();
     }, []);
