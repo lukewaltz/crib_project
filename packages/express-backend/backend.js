@@ -244,24 +244,22 @@ app.put("/task", async (req, res) => {
 
     try {
         const user = await userServices.findUserByUsername(username);
-        if (user.tasks.indexOf(taskId) < 0) {
-            res.json({ message: "User does not have that task" });
-            return;
-        }
+      
 
         // remove task from user's list
         await userServices.removeTask(username, taskId);
 
         // add task to backlog
         taskServices.findTask(taskId).then((task) => {
-            return backlogServices.addTask(username, task);
+            backlogServices.addTask(username, task).then(
+                (e) =>{
+                    taskServices.deleteTask(taskId);
+                }
+            );
         });
 
-        // delete task from task list
-        await taskServices.deleteTask(taskId);
-
         // If both operations are successful, send a success response
-        res.json({ message: "Task completed successfully" });
+        res.status(202).json({ message: "Task completed successfully" });
     } catch (error) {
         // Handle errors appropriately
         res.status(500).json({ error: "Failed to delete task" });

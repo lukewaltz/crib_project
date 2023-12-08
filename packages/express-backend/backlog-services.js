@@ -52,12 +52,18 @@ async function addTask(username, task) {
         ":" +
         currentdate.getSeconds();
 
-    return new backlogModel({
+    const backlogToAdd = new backlogModel({
         task: task.task,
         completionDate: datetime,
         completedBy: username,
         groupId: task.groupId,
     });
+    
+    const promise = backlogToAdd.save().catch((e) =>{
+        return 500;
+    });
+
+    return promise;
 }
 
 async function deleteTask(id) {
