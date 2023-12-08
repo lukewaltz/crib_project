@@ -3,9 +3,10 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 100vh; 
+  /* height: 100vh;  */
+  height: 110vh;
   text-align: center;
-  margin-top: -250px; 
+  margin-top: -255px; 
 }
 
 
@@ -99,8 +100,9 @@
   height: 139px;
   left: 0;
   position: absolute;
-  top: -39px;
+  top: 215px;
   width: 430px;
+  z-index: 1;
 }
 
 .account .group {
