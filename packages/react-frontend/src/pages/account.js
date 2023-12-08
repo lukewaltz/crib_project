@@ -111,7 +111,6 @@ const Account = () => {
 
     return (
         <div className="account">
-            
             <nav className="col">
                 {isLoggedIn 
                 ? <h1 className="title-text">Account</h1> 
@@ -119,6 +118,13 @@ const Account = () => {
                 <ul className='nav'>
                     {isLoggedIn 
                         ? <>
+                            <div className="div">
+                                <div className="overlap">
+                                    <div className="group">
+                                        <img className="logo-group" alt="Logo group" src="logo-group.png" />
+                                    </div>
+                                </div>
+                            </div>                       
                             <li><button className="button" onClick={logout}>Log Out</button></li>
                             <p><strong>Group code:</strong> {group.code} </p>
                             <p><strong>Group name:</strong> {group.name}</p>

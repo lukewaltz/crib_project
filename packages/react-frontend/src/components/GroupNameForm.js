@@ -6,6 +6,7 @@ function GroupNameForm(props) {
 
   function submitGroupNameForm(event) {
     event.preventDefault();
+    console.log("wokring");
     props.handleSubmit(group);
   }
 
