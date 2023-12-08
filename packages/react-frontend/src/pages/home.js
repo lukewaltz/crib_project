@@ -180,7 +180,7 @@ function listPolls(){
     console.log(`Vote for ${option} in poll with ID ${pollId} recorded successfully`);
   }
 
-async function getGroup(){
+  async function getGroup() {
   fetch(`${connection_URL}/groupInfo`, {
       method: 'GET',
       credentials: 'include',
@@ -196,7 +196,7 @@ async function getGroup(){
           // setIsLoggedIn(false);
       }
   });
-}
+  }
 
 
   // merged tasklist component
