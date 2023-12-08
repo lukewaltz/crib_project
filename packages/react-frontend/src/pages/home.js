@@ -224,7 +224,8 @@ async function getGroup(){
 
   // merged tasklist component
   function TaskList() {
-    const boxes = tasks
+    const sortedTasks = tasks.slice().sort((a, b) => b.weight - a.weight);
+    const boxes = sortedTasks
     .map((box) => {
       return (
         <div className='chore-box' key = {box._id} >
